@@ -2,8 +2,8 @@
 //  DDRSAWrapper+openssl.h
 //  RSADemo
 //
-//  Created by 张桂杨 on 2017/10/27.
-//  Copyright © 2017年 Ive. All rights reserved.
+//  Created by Rony on 2017/10/27.
+//  Copyright © 2017年 Rony. All rights reserved.
 //
 
 #import "DDRSAWrapper.h"
@@ -31,4 +31,5 @@
 + (RSA *)openssl_publicKeyFormMod:(NSString *)mod exp:(NSString *)exp;
 + (char *)openssl_expFromPublicKey:(RSA *)publicKey;
 + (char *)openssl_modFromPublicKey:(RSA *)publicKey;
+
 @end

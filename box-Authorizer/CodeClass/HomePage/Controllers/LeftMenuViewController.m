@@ -9,9 +9,9 @@
 #import "LeftMenuViewController.h"
 #import "LeftMenuTableViewCell.h"
 #import "LeftMenuModel.h"
-#import "AccountAdressViewController.h"
 #import "AboutBoxViewController.h"
 #import "LanguageSwitchViewController.h"
+#import "ModifyServerAddressViewController.h"
  
 
 
@@ -38,10 +38,9 @@
     NSDictionary *dict = @{
                            @"data":@[
                                    @{@"titleName":@"语言切换"},
-                                   @{@"titleName":@"账户地址"},
+                                   @{@"titleName":@"服务器地址"},
                                    @{@"titleName":@"关于BOX"}
                                    ]
-                           
                            };
     
     
@@ -49,7 +48,6 @@
         LeftMenuModel *model = [[LeftMenuModel alloc] initWithDict:dataDic];
         [_sourceArray addObject:model];
     }
-    
     [self createView];
     [self.tableView reloadData];
     
@@ -69,7 +67,7 @@
     }];
     
     _nameLab = [[UILabel alloc] init];
-    _nameLab.text = @"黄大大";
+    _nameLab.text = [BoxDataManager sharedManager].applyer_account;
     _nameLab.textAlignment = NSTextAlignmentLeft;
     _nameLab.font = Font(18);
     _nameLab.textColor = [UIColor colorWithHexString:@"#ffffff"];
@@ -123,19 +121,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0){
-
         LanguageSwitchViewController *languageSwitchVC = [[LanguageSwitchViewController alloc] init];
         [self.navigationController pushViewController:languageSwitchVC animated:YES];
         [self addNSNotificationCenter:languageSwitchVC];
     }
     else if(indexPath.row == 1) {
-        //text
-        AccountAdressViewController *accountAdressVC = [[AccountAdressViewController alloc] init];
-        [self.navigationController pushViewController:accountAdressVC animated:YES];
+        ModifyServerAddressViewController *modifyServerAdressVC = [[ModifyServerAddressViewController alloc] init];
+        [self.navigationController pushViewController:modifyServerAdressVC animated:YES];
         [self.sidePanelController toggleRightPanel:nil];
-        [self addNSNotificationCenter:accountAdressVC];
-        
-        
+        [self addNSNotificationCenter:modifyServerAdressVC];
     }else if(indexPath.row == 2){
         AboutBoxViewController *aboutBoxVC = [[AboutBoxViewController alloc] init];
         [self.navigationController pushViewController:aboutBoxVC animated:YES];

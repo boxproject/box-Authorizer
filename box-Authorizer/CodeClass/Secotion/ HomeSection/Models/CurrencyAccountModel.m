@@ -17,13 +17,18 @@
 {
     if (self = [super init])
     {
-        if(![dict[@"currency"] isKindOfClass:[NSNull class]]){
-            self.currency = [dict objectForKey:@"currency"];
+        if(![dict[@"TokenName"] isKindOfClass:[NSNull class]]){
+            self.TokenName = [dict objectForKey:@"TokenName"];
         }
         if(![dict[@"isType"] isKindOfClass:[NSNull class]]){
             self.isType = [[dict objectForKey:@"isType"] integerValue];
         }
-         
+        if(![dict[@"Decimals"] isKindOfClass:[NSNull class]]){
+            self.Decimals = [[dict objectForKey:@"Decimals"] integerValue];
+        }
+        if(![dict[@"ContractAddr"] isKindOfClass:[NSNull class]]){
+            self.ContractAddr = [dict objectForKey:@"ContractAddr"];
+        }
     }
     return self;
 }

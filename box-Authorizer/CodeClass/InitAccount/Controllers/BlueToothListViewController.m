@@ -11,9 +11,9 @@
 #import "SVProgressHUD.h"
 #import "BlueToothListModel.h"
 #import "BlueToothListTableViewCell.h"
-//#import "BlueDetailViewController.h"
 #import "PrintAlertView.h"
 #import "GenerateContractViewController.h"
+#import "HLPrinter.h"
 
 static NSString *identifier = @"blueToothList";
 
@@ -29,6 +29,8 @@ static NSString *identifier = @"blueToothList";
 /**< 可写入数据的特性 */
 @property (strong, nonatomic)CBCharacteristic *chatacter;
 
+@property (assign, nonatomic)NSInteger printAlertIn;
+
 @end
 
 @implementation BlueToothListViewController
@@ -36,6 +38,7 @@ static NSString *identifier = @"blueToothList";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"1"];
     self.title = @"蓝牙";
     self.view.backgroundColor = kWhiteColor;
     self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -60,15 +63,7 @@ static NSString *identifier = @"blueToothList";
         switch (central.state) {
             case CBCentralManagerStatePoweredOn:
                 info = @"蓝牙已打开，并且可用";
-                //三种种方式
-                // 方式1
                 [weakManager scanForPeripheralsWithServiceUUIDs:nil options:nil];
-                //                // 方式2
-                //                [central scanForPeripheralsWithServices:nil options:nil];
-                //                // 方式3
-                //                [weakManager scanForPeripheralsWithServiceUUIDs:nil options:nil didDiscoverPeripheral:^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
-                //
-                //                }];
                 break;
             case CBCentralManagerStatePoweredOff:
                 info = @"蓝牙可用，未打开";
@@ -89,6 +84,7 @@ static NSString *identifier = @"blueToothList";
         
         [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
         [SVProgressHUD showInfoWithStatus:info ];
+        [SVProgressHUD dismissWithDelay:1.2];
     };
     
     for (NSDictionary *dic in self.deviArray) {
@@ -99,7 +95,6 @@ static NSString *identifier = @"blueToothList";
         if (peripheral.name.length <= 0) {
             return ;
         }
-        
         if (self.deviceArray.count == 0) {
             NSDictionary *dict = @{@"peripheral":peripheral, @"RSSI":RSSI};
             [self.deviceArray addObject:dict];
@@ -114,7 +109,6 @@ static NSString *identifier = @"blueToothList";
                     [_deviceArray replaceObjectAtIndex:i withObject:dict];
                 }
             }
-            
             if (!isExist) {
                 NSDictionary *dict = @{@"peripheral":peripheral, @"RSSI":RSSI};
                 [self.deviceArray addObject:dict];
@@ -125,9 +119,6 @@ static NSString *identifier = @"blueToothList";
         [self.tableView reloadData];
         
     };
-    
-    
-    
 }
 
 #pragma mark - createBarItem
@@ -143,7 +134,6 @@ static NSString *identifier = @"blueToothList";
     //[self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
     self.arrayListBlock(self.deviceArray);
-    
 }
 
 
@@ -175,7 +165,6 @@ static NSString *identifier = @"blueToothList";
     NSDictionary *dict = [self.deviceArray objectAtIndex:indexPath.row];
     CBPeripheral *peripheral = dict[@"peripheral"];
     [self connectBlueTooth:peripheral];
-
 }
 
 #pragma mark ----- 查找蓝牙服务 -----
@@ -198,7 +187,6 @@ static NSString *identifier = @"blueToothList";
                                  //[SVProgressHUD showSuccessWithStatus:@"连接成功"];
                                 //正在连接打印机
                                 [self showAlertView];
-                                 
                              }
                              break;
                          }
@@ -211,8 +199,6 @@ static NSString *identifier = @"blueToothList";
                                  [_infoss addObjectsFromArray:peripheral.services];
                                  [self createChatacter];
                                  [_printAlertView changePrintState:BTConnectSuccess];
-                                 
-                                 
                              }
                              break;
                          }
@@ -262,31 +248,62 @@ static NSString *identifier = @"blueToothList";
 #pragma mark ----- show PrintAlertView -----
 -(void)showAlertView
 {
+    if (_printAlertIn == 1) {
+        return;
+    }
+    _printAlertIn = 1;
     _printAlertView = [[PrintAlertView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _printAlertView.delegate = self;
     [[UIApplication sharedApplication].keyWindow addSubview:_printAlertView];
     
 }
 
-
-
-
 #pragma mark ----- PrintAlertViewDelegate 立即打印 -----
 - (void)printRightNow
 {
     [_printAlertView changePrintState:BTPrinting];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_printAlertView changePrintState:BTPrintSuccess];
-    });
+    [self goToPrinting];
 }
 
 #pragma mark ----- PrintAlertViewDelegate 重新打印 -----
 - (void)printNew
 {
     [_printAlertView changePrintState:BTPrinting];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [self goToPrinting];
+}
+
+-(void)goToPrinting
+{
+    HLPrinter *printer = [[HLPrinter alloc] init];
+    UIImage *image = [CIQRCodeManager createImageWithString:[BoxDataManager sharedManager].codePassWord];
+    [printer appendImage:image alignment:HLTextAlignmentCenter maxWidth:300];
+    NSInteger timestampIn = [[NSDate date]timeIntervalSince1970] * 1000;
+    NSString *printTime = [self getElapseTimeToString:timestampIn];
+    [printer appendFooter:printTime];
+    [printer appendFooter:nil];
+    NSData *mainData = [printer getFinalData];
+    HLBLEManager *bleManager = [HLBLEManager sharedInstance];
+    if (_infoss.count & CBCharacteristicPropertyWrite) {
+        [bleManager writeValue:mainData forCharacteristic:self.chatacter type:CBCharacteristicWriteWithResponse completionBlock:^(CBCharacteristic *characteristic, NSError *error) {
+            if (!error) {
+                NSLog(@"写入成功");
+                [_printAlertView changePrintState:BTPrintSuccess];
+ 
+            }
+        }];
+    } else if (_infoss.count & CBCharacteristicPropertyWriteWithoutResponse) {
+        [bleManager writeValue:mainData forCharacteristic:self.chatacter type:CBCharacteristicWriteWithoutResponse];
         [_printAlertView changePrintState:BTPrintSuccess];
-    });
+    }
+}
+
+- (NSString *)getElapseTimeToString:(NSInteger)second{
+    NSDateFormatter  *dateformatter1 = [[NSDateFormatter alloc] init];
+    [dateformatter1 setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSTimeInterval timeInterval1 = second/1000;
+    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:timeInterval1];
+    NSString *dateStr1=[dateformatter1 stringFromDate:date1];
+    return dateStr1;
 }
 
 #pragma mark ----- PrintAlertViewDelegate 生成合约 -----
@@ -296,6 +313,8 @@ static NSString *identifier = @"blueToothList";
     GenerateContractViewController *generateContractVC = [[GenerateContractViewController alloc] init];
     UINavigationController *generateContractNV = [[UINavigationController alloc] initWithRootViewController:generateContractVC];
     [self presentViewController:generateContractNV animated:YES completion:nil];
+    [[BoxDataManager sharedManager] removeDataWithCoding:@"codePassWord"];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"2"];
     
 }
 

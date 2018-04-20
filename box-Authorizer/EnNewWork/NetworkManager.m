@@ -55,7 +55,7 @@ static AFHTTPSessionManager *_manager;
 
 - (void)requestWithMethod:(HTTPMethod)method withUrl:(NSString *)url params:(NSDictionary *)params success:(requestSuccessBlock)successBlock fail:(requestFailureBlock)failBlock
 {
-    url = [NSString stringWithFormat:@"%@%@",BOX_IP, url];
+    url = [NSString stringWithFormat:@"%@%@",[BoxDataManager sharedManager].box_IP, url];
     NSLog(@"URL:---\n%@",url);
     url = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     __weak AFHTTPSessionManager *manager = [self sharedHTTPSession];

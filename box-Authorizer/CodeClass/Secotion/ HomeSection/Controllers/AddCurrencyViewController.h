@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol AddCurrencyDelegate <NSObject>
+
+@optional
+- (void)addCurrencyDelegateReflesh;
+@end
+
 @interface AddCurrencyViewController : UIViewController
+
+@property (nonatomic,weak) id <AddCurrencyDelegate> delegate;
 
 @end

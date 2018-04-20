@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, ShowAgentStatus) {
+    AgentStatusError,     //异常
+    AgentStatusNoStable,  //不稳定
+    AgentStatusStable     //稳定
+};
+
 @interface HomepageViewController : UIViewController
+
+@property(nonatomic, assign)ShowAgentStatus showAgentStatus;
 
 @end

@@ -18,11 +18,17 @@
 {
     if (self = [super init])
     {
-        if(![dict[@"approvalTitle"] isKindOfClass:[NSNull class]]){
-            self.approvalTitle = [dict objectForKey:@"approvalTitle"];
+        if(![dict[@"Hash"] isKindOfClass:[NSNull class]]){
+            self.Hash = [dict objectForKey:@"Hash"];
         }
-        if(![dict[@"approvalTitle"] isKindOfClass:[NSNull class]]){
-            self.approvalState = [[dict objectForKey:@"approvalState"] integerValue];
+        if(![dict[@"Name"] isKindOfClass:[NSNull class]]){
+            self.Name = [dict objectForKey:@"Name"];
+        }
+        if(![dict[@"Status"] isKindOfClass:[NSNull class]]){
+            self.Status = [dict objectForKey:@"Status"];
+        }
+        if(![dict[@"AppId"] isKindOfClass:[NSNull class]]){
+            self.AppId = [dict objectForKey:@"AppId"];
         }
     }
     return self;

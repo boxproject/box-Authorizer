@@ -174,7 +174,7 @@
 - (void)setQRCodeSize:(NSInteger)size
 {
     Byte QRSize [] = {0x1D,0x28,0x6B,0x03,0x00,0x31,0x43,size};
-//    Byte QRSize [] = {29,40,107,3,0,49,67,size};
+    //    Byte QRSize [] = {29,40,107,3,0,49,67,size};
     [_printerData appendBytes:QRSize length:sizeof(QRSize)];
 }
 
@@ -186,15 +186,15 @@
 - (void)setQRCodeErrorCorrection:(NSInteger)level
 {
     Byte levelBytes [] = {0x1D,0x28,0x6B,0x03,0x00,0x31,0x45,level};
-//    Byte levelBytes [] = {29,40,107,3,0,49,69,level};
+    //    Byte levelBytes [] = {29,40,107,3,0,49,69,level};
     [_printerData appendBytes:levelBytes length:sizeof(levelBytes)];
 }
 
 /**
  *  将二维码数据存储到符号存储区
- * [范围]:  4≤(pL+pH×256)≤7092 (0≤pL≤255,0≤pH≤27) 
- * cn=49  
- * fn=80  
+ * [范围]:  4≤(pL+pH×256)≤7092 (0≤pL≤255,0≤pH≤27)
+ * cn=49
+ * fn=80
  * m=48
  * k=(pL+pH×256)-3, k就是数据的长度
  *
@@ -207,11 +207,11 @@
     NSInteger pH = kLength / 256;
     
     Byte dataBytes [] = {0x1D,0x28,0x6B,pL,pH,0x31,0x50,48};
-//    Byte dataBytes [] = {29,40,107,pL,pH,49,80,48};
+    //    Byte dataBytes [] = {29,40,107,pL,pH,49,80,48};
     [_printerData appendBytes:dataBytes length:sizeof(dataBytes)];
     NSData *infoData = [info dataUsingEncoding:NSUTF8StringEncoding];
     [_printerData appendData:infoData];
-//    [self setText:info];
+    //    [self setText:info];
 }
 
 /**
@@ -220,7 +220,7 @@
 - (void)printStoredQRData
 {
     Byte printBytes [] = {0x1D,0x28,0x6B,0x03,0x00,0x31,0x51,48};
-//    Byte printBytes [] = {29,40,107,3,0,49,81,48};
+    //    Byte printBytes [] = {29,40,107,3,0,49,81,48};
     [_printerData appendBytes:printBytes length:sizeof(printBytes)];
 }
 
@@ -266,7 +266,7 @@
     if (fontSize != HLFontSizeTitleSmalle) {
         [self appendNewLine];
     }
-
+    
 }
 
 - (void)appendTitle:(NSString *)title value:(NSString *)value valueOffset:(NSInteger)offset
@@ -331,17 +331,17 @@
     
     // 2.设置图片
     UIImage *newImage = [image imageWithscaleMaxWidth:maxWidth];
-//    newImage = [newImage blackAndWhiteImage];
+    //    newImage = [newImage blackAndWhiteImage];
     
     NSData *imageData = [newImage bitmapData];
     [_printerData appendData:imageData];
     
     // 3.换行
-    [self appendNewLine];
+    //[self appendNewLine];
     
     // 4.打印图片后，恢复文字的行间距
-    Byte lineSpace[] = {0x1B,0x32};
-    [_printerData appendBytes:lineSpace length:sizeof(lineSpace)];
+    //    Byte lineSpace[] = {0x1B,0x32};
+    //    [_printerData appendBytes:lineSpace length:sizeof(lineSpace)];
     
 }
 
@@ -365,7 +365,7 @@
 {
     [self setAlignment:alignment];
     [self setQRCodeSize:size];
-    [self setQRCodeErrorCorrection:48];
+    [self setQRCodeErrorCorrection:51];
     [self setQRCodeInfo:info];
     [self printStoredQRData];
     [self appendNewLine];
@@ -373,7 +373,7 @@
 
 - (void)appendQRCodeWithInfo:(NSString *)info
 {
-    [self appendQRCodeWithInfo:info centerImage:nil alignment:HLTextAlignmentCenter maxWidth:200];
+    [self appendQRCodeWithInfo:info centerImage:nil alignment:HLTextAlignmentCenter maxWidth:250];
 }
 
 - (void)appendQRCodeWithInfo:(NSString *)info centerImage:(UIImage *)centerImage alignment:(HLTextAlignment)alignment maxWidth:(CGFloat )maxWidth
@@ -400,9 +400,9 @@
 
 - (void)appendFooter:(NSString *)footerInfo
 {
-    [self appendSeperatorLine];
+     [self appendSeperatorLine];
     if (!footerInfo) {
-        footerInfo = @"谢谢惠顾，欢迎下次光临！";
+        footerInfo = @"";
     }
     [self appendText:footerInfo alignment:HLTextAlignmentCenter];
 }

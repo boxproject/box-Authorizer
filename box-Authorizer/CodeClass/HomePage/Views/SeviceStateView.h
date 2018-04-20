@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSInteger, seviceState) {
-    seviceStateStop,   //启动
-    seviceStateStart  //关停
-};
-
+ 
 @protocol SeviceStateViewDelegate <NSObject>
 
 @optional

@@ -23,7 +23,6 @@
 @property(nonatomic, strong) UIView *scanView;
 /** 存放扫描结果的label */
 @property(nonatomic, strong) UILabel *scanResult;
-
 /** 扫描的线 */
 @property (nonatomic,strong) UIImageView *scanImageView;
 
@@ -106,8 +105,6 @@
     }
     [_session stopRunning];
 }
-
-
 
 -(void)createscanxView
 {
@@ -456,13 +453,18 @@
                 // 隐藏遮盖
                 [SVProgressHUD dismiss];
                 
-                // 将扫描后的结果显示在label上
-                self.scanResult.text = stringValue;
-                
-                PerfectInformationViewController *perferInVC = [[PerfectInformationViewController alloc] init];
-                UINavigationController *perferInNC = [[UINavigationController alloc]initWithRootViewController:perferInVC];
-                [self presentViewController:perferInNC animated:YES completion:nil];
-                
+                if (_fromFunction == fromInitAccount) {
+                    // 将扫描后的结果显示在label上
+                    //self.scanResult.text = stringValue;
+                    PerfectInformationViewController *perferInVC = [[PerfectInformationViewController alloc] init];
+                    perferInVC.scanResult = result;
+                    UINavigationController *perferInNC = [[UINavigationController alloc]initWithRootViewController:perferInVC];
+                    [self presentViewController:perferInNC animated:YES completion:nil];
+                }else if (_fromFunction == fromHomeBox){
+                    self.codeBlock(result);
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+
             });
             
         }else{
@@ -472,8 +474,6 @@
         //返回主线程，并将扫描的结果传回主线程
         //[self performSelectorOnMainThread:@selector(reportScanResult:) withObject:result waitUntilDone:NO];
     }
-    
-  
 }
 
 //http://aes.jypc.org/?p=37737

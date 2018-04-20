@@ -8,6 +8,9 @@
 
 #import "PrivatePasswordView.h"
 
+#define PrivatePasswordbackupLab @"私钥密码"
+#define PrivatePasswordComfirm @"确认"
+
 @interface PrivatePasswordView ()<UITextFieldDelegate>
 /** 密码 */
 @property (nonatomic,strong)UITextField *passwordTf;
@@ -54,20 +57,20 @@
     [_footView addGestureRecognizer:tapTwo];
     
     UILabel *backupLab = [[UILabel alloc] init];
-    backupLab.text = @"私钥密码";
+    backupLab.text = PrivatePasswordbackupLab;
     backupLab.textAlignment = NSTextAlignmentCenter;
-    backupLab.font = Font(17);
-    backupLab.textColor = kBlackColor;
+    backupLab.font = Font(16);
+    backupLab.textColor = [UIColor colorWithHexString:@"#666666"];
     backupLab.numberOfLines = 1;
     [_footView addSubview:backupLab];
     [backupLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(15);
+        make.top.offset(10);
         make.centerX.equalTo(self);
         make.height.offset(30);
     }];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [_cancelBtn setImage: [UIImage imageNamed:@"icon_back"] forState:UIControlStateNormal];
     [_cancelBtn setTitleColor:kDarkGrayColor forState:UIControlStateNormal];
     _cancelBtn.titleLabel.font = Font(17);
     
@@ -75,28 +78,29 @@
     [_footView addSubview:_cancelBtn];
     [_cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(backupLab);
-        make.left.offset(18);
+        make.left.offset(2);
         make.width.offset(50);
         make.height.offset(40);
     }];
     
-    UIView *lin = [[UIView alloc] init];
-    lin.backgroundColor = [UIColor colorWithHexString:@"#eaeaea"];
-    [_footView addSubview:lin];
-    [lin mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(backupLab.mas_bottom).offset(15);
-        make.left.offset(30);
-        make.right.offset(-30);
+    UIView *topViewLine = [[UIView alloc] init];
+    topViewLine.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
+    [_footView addSubview:topViewLine];
+    [topViewLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(backupLab.mas_bottom).offset(10);
+        make.left.offset(0);
+        make.right.offset(-0);
         make.height.offset(1);
     }];
-    
+
     _passwordTf = [[UITextField alloc] init];
     _passwordTf.backgroundColor = [UIColor colorWithHexString:@"#f7f8f9"];
     _passwordTf.delegate = self;
+    _passwordTf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSString *backupText = @"请输入备份密码";
     NSMutableAttributedString *backupHolder = [[NSMutableAttributedString alloc] initWithString:backupText];
     [backupHolder addAttribute:NSForegroundColorAttributeName
-                         value:kDarkGrayColor
+                         value:[UIColor colorWithHexString:@"#cccccc"]
                          range:NSMakeRange(0, backupText.length)];
     [backupHolder addAttribute:NSFontAttributeName
                          value:Font(15)
@@ -106,41 +110,38 @@
     _passwordTf.secureTextEntry = YES;
     [_footView addSubview:_passwordTf];
     [_passwordTf mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lin.mas_bottom).offset(0);
-        make.left.offset(30);
-        make.right.offset(-30);
-        make.height.offset(49);
+        make.top.equalTo(topViewLine.mas_bottom).offset(0);
+        make.left.offset(16);
+        make.right.offset(-16);
+        make.height.offset(56);
     }];
     
     UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor colorWithHexString:@"#eaeaea"];
+    line.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_footView addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_passwordTf.mas_bottom).offset(0);
-        make.left.offset(30);
-        make.right.offset(-30);
+        make.left.offset(16);
+        make.right.offset(-16);
         make.height.offset(1);
     }];
     
-    
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_confirmBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [_confirmBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    _confirmBtn.backgroundColor = RGB(76, 122, 253);
-    //_confirmBtn.layer.borderWidth = 1.0f;
-    //_confirmBtn.layer.borderColor = kLightGrayColor.CGColor;
-    _confirmBtn.titleLabel.font = Font(17);
+    [_confirmBtn setTitle:PrivatePasswordComfirm forState:UIControlStateNormal];
+    [_confirmBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    _confirmBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
+    _confirmBtn.layer.cornerRadius = 2.0f;
+    _confirmBtn.layer.masksToBounds = YES;
+    _confirmBtn.titleLabel.font = Font(16);
     [_confirmBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [_footView addSubview:_confirmBtn];
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(line.mas_bottom).offset(50);
-        make.left.offset(30);
-        make.right.offset(-30);
-        make.height.offset(45);
-        
+        make.top.equalTo(line.mas_bottom).offset(25);
+        make.left.offset(16);
+        make.right.offset(-16);
+        make.height.offset(46);
     }];
-    
-    
+ 
 }
 
 
@@ -164,6 +165,10 @@
 #pragma mark ----- 备份密码确认 -----
 -(void)confirmAction:(UIButton *)btn
 {
+    if ([_passwordTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:@"请输入私钥密码"];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(PrivatePasswordViewDelegate:)]) {
         [self.delegate PrivatePasswordViewDelegate:_passwordTf.text];
     }

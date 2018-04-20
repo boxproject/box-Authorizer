@@ -10,11 +10,13 @@
 #import "CurrencyAccountModel.h"
 #import "CurrencyAccountTableViewCell.h"
 #import "AddCurrencyViewController.h"
+#import "EditCurrencyViewController.h"
+#import "CoinlistModel.h"
 
 #define PageSize  12
 #define CellReuseIdentifier  @"currencyAccount"
 
-@interface CurrencyAccountViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface CurrencyAccountViewController ()<UITableViewDelegate, UITableViewDataSource,AddCurrencyDelegate,EditCurrencyDelegate>
 /**< 币种／代币 */
 @property (nonatomic,strong) UISegmentedControl *segmentedView;
 @property (nonatomic,strong) UIView *viewLayer;
@@ -35,26 +37,9 @@
      _sourceArray = [[NSMutableArray alloc] init];
     _selectArray = [[NSMutableArray alloc] init];
     [self createView];
-    NSDictionary *dict = @{
-                           @"data":@[
-                                   @{@"currency":@"EOS", @"isType":@(0)},
-                                   @{@"currency":@"BTS", @"isType":@(0)},
-                                   @{@"currency":@"ETH", @"isType":@(0)},
-                                   @{@"currency":@"ZB", @"isType":@(0)},
-                                   @{@"currency":@"HT", @"isType":@(0)},
-                                   @{@"currency":@"APPC", @"isType":@(0)},
-                                   @{@"currency":@"OKB", @"isType":@(0)}
-                                   ]
-                           
-                           };
-    
-    
-    for (NSDictionary *dataDic in dict[@"data"]) {
-        CurrencyAccountModel *model = [[CurrencyAccountModel alloc] initWithDict:dataDic];
-        [_sourceArray addObject:model];
-    }
-    [self.tableView reloadData];
-    
+    _page = 1;
+    _segmentedView.selectedSegmentIndex = 0;
+    [self requestData];
 }
 
 -(void)createView
@@ -73,7 +58,7 @@
     }];
     [_tableView registerClass:[CurrencyAccountTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self footerReflesh];
+//    [self footerReflesh];
     [self headerReflesh];
 }
 
@@ -83,40 +68,120 @@
         self.page += 1;
         [self requestData];
     }];
-    
-    
 }
 
 -(void)headerReflesh
 {
     _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        self.page = 1;
+        [self requestData];
     }];
 }
 
-#pragma mark ----- requestData -----
--(void)requestData
+#pragma mark ----- AddCurrencyDelegate -----
+- (void)addCurrencyDelegateReflesh
 {
-    
+    [self.tableView.mj_header beginRefreshing];
+}
+
+#pragma mark ----- EditCurrencyDelegate -----
+- (void)editCurrencyDelegateReflesh
+{
+    [self.tableView.mj_header beginRefreshing];
 }
 
 
+#pragma mark ----- 数据请求 -----
+-(void)requestData
+{
+    if (_segmentedView.selectedSegmentIndex == 0) {
+        //币种
+        [self requestCoinlist];
+    }else{
+        //代币
+        [self requestTokenlist];
+    }
+}
 
+-(void)requestCoinlist
+{
+    [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/coinlist" params:nil success:^(id responseObject) {
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] integerValue] == 0) {
+            [_sourceArray removeAllObjects];
+            if([dict[@"CoinStatus"] isKindOfClass:[NSNull class]]){
+                return ;
+            }
+            NSArray *listArray = dict[@"CoinStatus"];
+            for (NSDictionary *listDic in listArray) {
+                CoinlistModel *model = [[CoinlistModel alloc] initWithDict:listDic];
+                [_sourceArray addObject:model];
+            }
+            
+        }else{
+            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+        }
+        [self reloadAction];
+    } fail:^(NSError *error) {
+        //[WSProgressHUD dismiss];
+        NSLog(@"%@", error.description);
+        [self reloadAction];
+    }];
+}
+
+-(void)requestTokenlist
+{
+    [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/tokenlist" params:nil success:^(id responseObject) {
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] integerValue] == 0) {
+            [_sourceArray removeAllObjects];
+            if([dict[@"TokenInfos"] isKindOfClass:[NSNull class]]){
+                CurrencyAccountModel *model = [[CurrencyAccountModel alloc] init];
+                model.isType = 1;
+                [_sourceArray addObject:model];
+                [self reloadAction];
+                return ;
+            }
+            NSArray *listArray = dict[@"TokenInfos"];
+            for (NSDictionary *listDic in listArray) {
+                CurrencyAccountModel *model = [[CurrencyAccountModel alloc] initWithDict:listDic];
+                [_sourceArray addObject:model];
+            }
+            CurrencyAccountModel *model = [[CurrencyAccountModel alloc] init];
+            model.isType = 1;
+            [_sourceArray addObject:model];
+            
+        }else{
+            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+        }
+        [self reloadAction];
+    } fail:^(NSError *error) {
+        //[WSProgressHUD dismiss];
+        NSLog(@"%@", error.description);
+        [self reloadAction];
+    }];
+}
+
+-(void)reloadAction
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+//        [self.tableView.mj_footer endRefreshing];
+        
+    });
+}
 
 #pragma mark - createBarItem
 - (void)createBarItem{
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
-    
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 -(void)createSegmentedView
 {
@@ -135,57 +200,94 @@
     return _viewLayer;
 }
 
-
-
-
 -(void)segmentedChangle
 {
-    if (_segmentedView.selectedSegmentIndex == 1) {
-        [_sourceArray removeAllObjects];
-        NSDictionary *dict = @{
-                               @"data":@[
-                                       @{@"currency":@"EOS", @"isType":@(0)},
-                                       @{@"currency":@"BTS", @"isType":@(0)},
-                                       @{@"currency":@"ETH", @"isType":@(0)},
-                                       @{@"currency":@"ZB", @"isType":@(0)},
-                                       @{@"currency":@"HT", @"isType":@(0)},
-                                       @{@"currency":@"APPC", @"isType":@(0)},
-                                       @{@"currency":@"OKB", @"isType":@(0)},
-                                       @{@"currency":@"", @"isType":@(1)}
-                                       ]
-                               
-                               };
+    [self requestData];
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"确定删除？" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            [self deleteCurrentcy:indexPath];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
         
-        
-        for (NSDictionary *dataDic in dict[@"data"]) {
-            CurrencyAccountModel *model = [[CurrencyAccountModel alloc] initWithDict:dataDic];
-            [_sourceArray addObject:model];
-        }
-        [self.tableView reloadData];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+    if (_segmentedView.selectedSegmentIndex == 0) {
+        return @[];
     }else{
-        [_sourceArray removeAllObjects];
-        NSDictionary *dict = @{
-                               @"data":@[
-                                       @{@"currency":@"EOS", @"isType":@(0)},
-                                       @{@"currency":@"BTS", @"isType":@(0)},
-                                       @{@"currency":@"ETH", @"isType":@(0)},
-                                       @{@"currency":@"ZB", @"isType":@(0)},
-                                       @{@"currency":@"HT", @"isType":@(0)},
-                                       @{@"currency":@"APPC", @"isType":@(0)},
-                                       @{@"currency":@"OKB", @"isType":@(0)}
-                                       ]
-                               
-                               };
-        
-        
-        for (NSDictionary *dataDic in dict[@"data"]) {
-            CurrencyAccountModel *model = [[CurrencyAccountModel alloc] initWithDict:dataDic];
-            [_sourceArray addObject:model];
+        CurrencyAccountModel *model = _sourceArray[indexPath.row];
+        if (model.isType == AddCurrency) {
+            return @[];
+        }else{
+            return @[action1];
         }
-        [self.tableView reloadData];
     }
-    //[_selectArray removeAllObjects];
-    //[_tableView reloadData];
+}
+
+#pragma mark ----- 删除代币 -----
+-(void)deleteCurrentcy:(NSIndexPath *)indexPath
+{
+    CurrencyAccountModel *model = self.sourceArray[indexPath.row];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
+    [paramsDic setObject:model.ContractAddr forKey:@"contractaddr"];
+    [ProgressHUD showProgressHUD];
+    [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/tokendel" params:paramsDic success:^(id responseObject) {
+        [WSProgressHUD dismiss];
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] integerValue] == 0) {
+            [self.sourceArray removeObjectAtIndex:indexPath.row];
+            [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+        }else{
+            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+        }
+    } fail:^(NSError *error) {
+        [WSProgressHUD dismiss];
+        NSLog(@"%@", error.description);
+    }];
+}
+
+#pragma mark ----- 是否使用，0-禁用 1-使用 -----
+-(void)coinUsed:(NSIndexPath *)indexPath
+{
+    CoinlistModel *model = self.sourceArray[indexPath.row];
+    NSString *usedString;
+    if (model.used) {
+        usedString = @"0";
+    }else{
+        usedString = @"1";
+    }
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
+    [paramsDic setObject:@(model.category) forKey:@"category"];
+    [paramsDic setObject:usedString forKey:@"used"];
+    [ProgressHUD showProgressHUD];
+    [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/coin" params:paramsDic success:^(id responseObject) {
+        [WSProgressHUD dismiss];
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] integerValue] == 0) {
+            if (!model.used) {
+                [_selectArray removeAllObjects];
+                for (int i = 0; i < _sourceArray.count; i++) {
+                    CoinlistModel *model = _sourceArray[i];
+                    if (model.used) {
+                        [_selectArray addObject:model];
+                    }
+                }
+            }
+            model.used = !model.used;
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            
+        }else{
+            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+        }
+    } fail:^(NSError *error) {
+        [WSProgressHUD dismiss];
+        NSLog(@"%@", error.description);
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -198,38 +300,38 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     CurrencyAccountTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier forIndexPath:indexPath];
-    CurrencyAccountModel *model = self.sourceArray[indexPath.row];
-    cell.model = model;
-    [cell setDataWithModel:model];
+    if (_segmentedView.selectedSegmentIndex == 0) {
+        CoinlistModel *model = self.sourceArray[indexPath.row];
+        cell.coinlistModel = model;
+        [cell setDataWithCoinlistModel:model];
+    }else{
+       CurrencyAccountModel *model = self.sourceArray[indexPath.row];
+        cell.model = model;
+       [cell setDataWithModel:model];
+    }
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CurrencyAccountModel *model = _sourceArray[indexPath.row];
-    if (model.isType == AddCurrency) {
-        AddCurrencyViewController *addCurrencyVC = [[AddCurrencyViewController alloc] init];
-        [self.navigationController pushViewController:addCurrencyVC animated:YES];
-        return;
-    }
-    if (!model.isSelect) {
-        [_selectArray removeAllObjects];
-        for (int i = 0; i < _sourceArray.count; i++) {
-            CurrencyAccountModel *model = _sourceArray[i];
-            if (model.isSelect) {
-                [_selectArray addObject:model];
-            }
+    
+    if (_segmentedView.selectedSegmentIndex == 0) {
+        [self coinUsed:indexPath];
+    }else{
+        CurrencyAccountModel *model = _sourceArray[indexPath.row];
+        if (model.isType == AddCurrency) {
+            AddCurrencyViewController *addCurrencyVC = [[AddCurrencyViewController alloc] init];
+            addCurrencyVC.delegate = self;
+            [self.navigationController pushViewController:addCurrencyVC animated:YES];
+            
+        }else{
+            EditCurrencyViewController *editCurrencyVC = [[EditCurrencyViewController alloc] init];
+            editCurrencyVC.delegate = self;
+            editCurrencyVC.model = model;
+            [self.navigationController pushViewController:editCurrencyVC animated:YES];
         }
-//        if (_selectArray.count >=3) {
-//            return;
-//        }
     }
-    model.isSelect = !model.isSelect;
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 

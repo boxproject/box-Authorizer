@@ -1,11 +1,18 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface DDRSAWrapper : NSObject
 
-#pragma mark - SecKeyRef
+#pragma mark ----- 生成密钥对 -----
+-(void)generateSecKeyPairWithKey;
+#pragma mark ------ SecKeyRef -----
 - (BOOL)generateSecKeyPairWithKeySize:(NSUInteger)keySize publicKeyRef:(SecKeyRef *)publicKeyRef privateKeyRef:(SecKeyRef *)privateKeyRef;
+#pragma mark ------ 签名 -----
+-(NSString *)PKCSSignBytesSHA256withRSA:(NSString *)plainText privateStr:(NSString *)privateStr;
+#pragma mark ------ 验证 -----
+-(BOOL)PKCSVerifyBytesSHA256withRSA:(NSString *)plaintext signature:(NSString *)sign publicStr:(NSString *)publicStr;
+#pragma mark ------ 获取本地密钥对 BOOL：YES-私钥 NO-公钥 -----
+- (SecKeyRef)getKeyRef:(BOOL)isPrivate;
 
 - (NSData *)publicKeyBitsFromSecKey:(SecKeyRef)givenKey;
 - (SecKeyRef)publicSecKeyFromKeyBits:(NSData *)givenData;
@@ -38,4 +45,5 @@
  */
 
 - (SecKeyRef)publicKeyDataWithMod:(NSData *)modBits exp:(NSData *)expBits;
+
 @end

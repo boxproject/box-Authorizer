@@ -39,10 +39,9 @@
         make.top.offset(0);
         make.bottom.offset(0);
         make.left.offset(16);
-        make.right.offset(-80);
-        
+        make.right.offset(-16);
     }];
-    
+
     _checkImage = [[UIImageView alloc] init];
     _checkImage.image = [UIImage imageNamed:@"icon_check"];
     [self.contentView addSubview:_checkImage];
@@ -51,7 +50,6 @@
         make.right.offset(-18);
         make.height.offset(16);
         make.width.offset(20);
-        
     }];
     _checkImage.hidden = YES;
     
@@ -64,13 +62,13 @@
         make.right.offset(-15);
         make.height.offset(1);
     }];
-    
 }
 
 - (void)setDataWithModel:(CurrencyAccountModel *)model
 {
+    _checkImage.hidden = YES;
     if (model.isType == NoAddCurrency) {
-         _currencyLab.text = model.currency;
+         _currencyLab.text = model.TokenName;
     }else{
         //创建富文本
         NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", CurrencyAccountTableViewCellAddCurrency]];
@@ -89,11 +87,16 @@
         
         _currencyLab.attributedText = attri;
     }
-       if (model.isSelect) {
-        _checkImage.hidden = NO;
+}
+
+- (void)setDataWithCoinlistModel:(CoinlistModel *)model
+{
+    if (model.used) {
+       _checkImage.hidden = NO;
     }else{
         _checkImage.hidden = YES;
     }
+    _currencyLab.text = model.Name;
 }
 
 

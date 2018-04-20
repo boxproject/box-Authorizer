@@ -2,8 +2,8 @@
 //  UIARSAHandler.h
 //  UIADemo
 //
-//  Created by zhangchao on 16/12/13.
-//  Copyright © 2016年 王龙. All rights reserved.
+//  Created by Rony on 16/12/13.
+//  Copyright © 2016.Rony All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -37,6 +37,11 @@ typedef enum {
 - (NSString *)signRSAString:(NSString *)string privateKeyBase64:(NSString *)privateKeyBase64;
 // ----- RSA sha256验证签名 -----
 - (BOOL)verifyRSAString:(NSString *)string withSign:(NSString *)signString publicKeyBase64:(NSString *)publicKeyBase64;
+// ----- HmacSHA256 -----
++ (NSString *)hmac:(NSString *)plaintext withKey:(NSString *)key;
+
+
+
 
 
 - (BOOL)importKeyWithType:(KeyType)type andPath:(NSString*)path;

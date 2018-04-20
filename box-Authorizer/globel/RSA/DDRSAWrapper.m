@@ -3,14 +3,82 @@
 #import "DDRSAWrapper.h"
 #import <CommonCrypto/CommonCrypto.h>
 
+@interface DDRSAWrapper (){
+    SecKeyRef publicKeyRef;
+    SecKeyRef privateKeyRef;
+    NSString *publicKeyStr;
+    NSString *privateKeyStr;
+    NSString *publicKeyTag;
+    NSString *privateKeyTag;
+}
+@end
+
 @implementation DDRSAWrapper
 
-#pragma mark ---生成密钥对
+#pragma mark ----- 生成密钥对 -----
+-(void)generateSecKeyPairWithKey
+{
+    if ([self generateSecKeyPairWithKeySize:2048 publicKeyRef:&publicKeyRef privateKeyRef:&privateKeyRef]) {
+        NSData *publicKeyData = [self publicKeyBitsFromSecKey:publicKeyRef];
+        publicKeyStr = [[NSString alloc] initWithData:[publicKeyData base64EncodedDataWithOptions:0] encoding:NSUTF8StringEncoding];
+        NSData *privateKeyData = [self privateKeyBitsFromSecKey:privateKeyRef];
+         privateKeyStr = [[NSString alloc] initWithData:[privateKeyData base64EncodedDataWithOptions:0] encoding:NSUTF8StringEncoding];
+        NSString *logText = [NSString stringWithFormat:@"SecKey 生成密钥成功!\npublicKeyData:\n%@\nprivateKeyData:\n%@\n",publicKeyData,privateKeyData];
+        NSLog(@"%@", logText);
+        [[BoxDataManager sharedManager] saveDataWithCoding:@"publicKeyBase64" codeValue:publicKeyStr];
+        [[BoxDataManager sharedManager] saveDataWithCoding:@"privateKeyBase64" codeValue:privateKeyStr];
+        NSLog(@"%@",publicKeyStr);
+        NSLog(@"%@",privateKeyStr);
+    }
+}
+
+#pragma mark ------ 获取本地密钥对 BOOL：YES-私钥 NO-公钥 -----
+- (SecKeyRef)getKeyRef:(BOOL)isPrivate {
+    SecKeyRef privateKeyRef;
+    SecKeyRef publicKeyRef;
+    OSStatus sanityCheck = noErr;
+    NSData *tag;
+    id keyClass;
+    NSData *publicTag = [publicKeyTag dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *privateTag = [privateKeyTag dataUsingEncoding:NSUTF8StringEncoding];
+    if (isPrivate) {
+        tag = privateTag;
+        keyClass = (__bridge id) kSecAttrKeyClassPrivate;
+    }
+    else {
+        tag = publicTag;
+        keyClass = (__bridge id) kSecAttrKeyClassPublic;
+    }
+    NSDictionary *queryDict = @{
+                                (__bridge id) kSecClass : (__bridge id) kSecClassKey,
+                                (__bridge id) kSecAttrKeyType : (__bridge id) kSecAttrKeyTypeRSA,
+                                (__bridge id) kSecAttrApplicationTag : tag,
+                                (__bridge id) kSecAttrKeyClass : keyClass,
+                                (__bridge id) kSecReturnRef : (__bridge id) kCFBooleanTrue
+                                };
+    
+    SecKeyRef keyReference = NULL;
+    sanityCheck = SecItemCopyMatching((__bridge CFDictionaryRef) queryDict, (CFTypeRef *) &keyReference);
+    if (sanityCheck != errSecSuccess) {
+        NSLog(@"Error trying to retrieve key from server. isPrivate: %d. sanityCheck: %i", isPrivate, (int)sanityCheck);
+    }
+    if (isPrivate) {
+        privateKeyRef = keyReference;
+    }
+    else {
+        publicKeyRef = keyReference;
+    }
+    return keyReference;
+}
+
+#pragma mark ------ SecKeyRef -----
 - (BOOL)generateSecKeyPairWithKeySize:(NSUInteger)keySize publicKeyRef:(SecKeyRef *)publicKeyRef privateKeyRef:(SecKeyRef *)privateKeyRef{
 	OSStatus sanityCheck = noErr;
 	if (keySize == 512 || keySize == 1024 || keySize == 2048) {
-		NSData *publicTag = [@"com.your.company.publickey" dataUsingEncoding:NSUTF8StringEncoding];
-		NSData *privateTag = [@"com.your.company.privateTag" dataUsingEncoding:NSUTF8StringEncoding];
+        publicKeyTag = [JsonObject getRandomStringWithNum:10];
+        privateKeyTag = [JsonObject getRandomStringWithNum:10];
+		NSData *publicTag = [publicKeyTag dataUsingEncoding:NSUTF8StringEncoding];
+		NSData *privateTag = [privateKeyTag dataUsingEncoding:NSUTF8StringEncoding];
 		
 		NSMutableDictionary * privateKeyAttr = [[NSMutableDictionary alloc] init];
 		NSMutableDictionary * publicKeyAttr = [[NSMutableDictionary alloc] init];
@@ -41,6 +109,68 @@
 		}
 	}
 	return NO;
+}
+
+#pragma mark ------ 签名 -----
+-(NSString *)PKCSSignBytesSHA256withRSA:(NSString *)plainText privateStr:(NSString *)privateStr
+{
+    NSData *privateData = [[NSData alloc] initWithBase64EncodedString:privateStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    SecKeyRef privateKey = [self privateSecKeyFromKeyBits:privateData];
+    NSData *plainData = [plainText dataUsingEncoding:NSUTF8StringEncoding];
+    size_t signedHashBytesSize = SecKeyGetBlockSize(privateKey);
+    uint8_t* signedHashBytes = malloc(signedHashBytesSize);
+    memset(signedHashBytes, 0x0, signedHashBytesSize);
+    
+    size_t hashBytesSize = CC_SHA256_DIGEST_LENGTH;
+    uint8_t* hashBytes = malloc(hashBytesSize);
+    if (!CC_SHA256([plainData bytes], (CC_LONG)[plainData length], hashBytes)) {
+        return nil;
+    }
+    
+    SecKeyRawSign(privateKey,
+                  kSecPaddingPKCS1SHA256,
+                  hashBytes,
+                  hashBytesSize,
+                  signedHashBytes,
+                  &signedHashBytesSize);
+    
+    NSData* signedHash = [NSData dataWithBytes:signedHashBytes
+                                        length:(NSUInteger)signedHashBytesSize];
+    
+    if (hashBytes)
+        free(hashBytes);
+    if (signedHashBytes)
+        free(signedHashBytes);
+
+    NSString * string = [signedHash base64EncodedStringWithOptions:0];
+    return string;
+}
+
+#pragma mark ------ 验证 -----
+-(BOOL)PKCSVerifyBytesSHA256withRSA:(NSString *)plaintext signature:(NSString *)sign publicStr:(NSString *)publicStr
+{
+    NSData *publicData = [[NSData alloc] initWithBase64EncodedString:publicStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    SecKeyRef publicKey = [self publicSecKeyFromKeyBits:publicData];
+    NSData *signature = [[NSData alloc] initWithBase64EncodedString:sign options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSData *plainData = [plaintext dataUsingEncoding:NSUTF8StringEncoding];
+    size_t signedHashBytesSize = SecKeyGetBlockSize(publicKey);
+    const void* signedHashBytes = [signature bytes];
+    
+    size_t hashBytesSize = CC_SHA256_DIGEST_LENGTH;
+    uint8_t* hashBytes = malloc(hashBytesSize);
+    if (!CC_SHA256([plainData bytes], (CC_LONG)[plainData length], hashBytes)) {
+        return nil;
+    }
+    
+    OSStatus status = SecKeyRawVerify(publicKey,
+                                      kSecPaddingPKCS1SHA256,
+                                      hashBytes,
+                                      hashBytesSize,
+                                      signedHashBytes,
+                                      signedHashBytesSize);
+    
+    return status == errSecSuccess;
+    
 }
 
 #pragma mark ---密钥类型转换
@@ -79,8 +209,6 @@ static NSString * const kTransfromIdenIdentifierPrivate = @"kTransfromIdenIdenti
 - (SecKeyRef)publicSecKeyFromKeyBits:(NSData *)givenData {
 	
 	NSData *peerTag = [kTransfromIdenIdentifierPublic dataUsingEncoding:NSUTF8StringEncoding];
-	
-    
 	OSStatus sanityCheck = noErr;
 	SecKeyRef secKey = nil;
 	

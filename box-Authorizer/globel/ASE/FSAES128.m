@@ -9,8 +9,9 @@
 #import "FSAES128.h"
 #import "NSData+AES128.h"
 
-#define IV  @"01234567890654321"
-#define  KEY  @"16BytesLengthKey"
+//#define IV  @"1234567890654321"
+//#define  KEY  @"16BytesLengthKey"
+#define count  16
 
 @implementation FSAES128
 
@@ -22,9 +23,16 @@
  *  @return 加密后的字符串
  */
 + (NSString *)AES128EncryptStrig:(NSString *)string keyStr:(NSString *)keyStr{
+    NSString *iv = [JsonObject getRandomStringWithNum:count];
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *aesData = [data AES128EncryptWithKey:keyStr iv:IV];
-    return [FSAES128 convertDataToHexStr:aesData];
+    NSData *aesData = [data AES128EncryptWithKey:keyStr iv:iv];
+    NSData *ivData = [iv dataUsingEncoding:NSUTF8StringEncoding];
+    Byte *ivByte = (Byte *)[ivData bytes];
+    Byte *aesByte = (Byte *)[aesData bytes];
+    NSMutableData * contentData = [[NSMutableData alloc]init];
+    [contentData appendBytes:ivByte length:[ivData length]];
+    [contentData appendBytes:aesByte length:[aesData length]];
+    return [FSAES128 convertDataToHexStr:contentData];
 }
 
 /**
@@ -36,7 +44,12 @@
  */
 + (NSString *)AES128DecryptString:(NSString *)string keyStr:(NSString *)keyStr{
     NSData *data  = [FSAES128 convertHexStrToData:string];
-    NSData *aesData = [data AES128DecryptWithKey:keyStr iv:IV];
+    NSRange range = NSMakeRange(0, count);
+    NSRange aesRange = NSMakeRange(count, [data length] - count);
+    NSData *ivData = [data subdataWithRange:range];
+    NSData *aEsData = [data subdataWithRange:aesRange];
+    NSString *iv = [[NSString alloc] initWithData:ivData encoding:NSUTF8StringEncoding];
+    NSData *aesData = [aEsData AES128DecryptWithKey:keyStr iv:iv];
     return [[NSString alloc] initWithData:aesData encoding:NSUTF8StringEncoding];
 }
 
@@ -90,8 +103,6 @@
     
     return string;
 }
-
-
 
 
 @end

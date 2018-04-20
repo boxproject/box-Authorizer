@@ -29,7 +29,7 @@
     
     // 6.因为生成的二维码模糊，所以通过createNonInterpolatedUIImageFormCIImage:outputImage来获得高清的二维码图片
     
-    UIImage *image = [self getErWeiMaImageFormCIImage:outputImage withSize:200];
+    UIImage *image = [self getErWeiMaImageFormCIImage:outputImage withSize:250];
     
     return image;
 }

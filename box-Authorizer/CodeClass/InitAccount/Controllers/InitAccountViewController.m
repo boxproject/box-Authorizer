@@ -9,20 +9,15 @@
 #import "InitAccountViewController.h"
 #import "ScanCodeViewController.h"
 #import "UIARSAHandler.h"
-
 //text
 #import "PerfectInformationViewController.h"
 #import "HomepageViewController.h"
 #import "LeftMenuViewController.h"
 
-
-
 #define InitAccountVCTitle  @"扫一扫"
 #define PerfectInformationVCLaber  @"扫一扫完成初始化"
 #define PerfectInformationVCSubLaber  @"扫一扫MAC端的签名机完成初始化"
  
-
-
 @interface InitAccountViewController ()
 /** 开始扫描 */
 @property(nonatomic, strong)UIButton *scanButton;
@@ -98,87 +93,18 @@
         make.centerX.equalTo(self.view);
         make.height.offset(80/2);
         make.width.offset(318/2);
-        
-        
     }];
-    
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    //[_scanButton setTitle:@"开始扫描" forState:UIControlStateNormal];
-//    [btn setImage:[UIImage imageNamed:@"startScanImg"] forState:UIControlStateNormal];
-//    btn.titleLabel.font = Font(17);
-//    [btn setTitleColor:kBlueColor forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:btn];
-//    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(subLaber.mas_bottom).offset(140);
-//        make.centerX.equalTo(self.view);
-//        make.height.offset(60);
-//        make.width.offset(180);
-//
-//
-//    }];
-    
-}
-
--(void)btnAction
-{
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSString *publicKeyBase64 = [defaults valueForKey:@"publicKeyBase64"];
-//    NSString *privateKeyBase64 = [defaults valueForKey:@"privateKeyBase64"];
-//
-//    NSString *signSHA256 = [_aRSAHandler signRSAString:@"hhqq888" privateKeyBase64:privateKeyBase64];
-//    BOOL verySign = [_aRSAHandler verifyRSAString:@"hhqq888" withSign:signSHA256 publicKeyBase64: publicKeyBase64];
-
 
 }
-
 
 #pragma mark ----- 开始扫描 -----
 -(void)scanAction
 {
-    //[_aRSAHandler opensslGenerateKey];
-//    ScanCodeViewController *scanVC = [[ScanCodeViewController alloc]init];
-//    [self.navigationController pushViewController:scanVC animated:YES];
-//    NSString *str = [JsonObject getRandomStringWithNum:8];
-//    NSLog(@"%@", str);
-    
-    
-    //text
-//    PerfectInformationViewController *perferInVC = [[PerfectInformationViewController alloc] init];
-//    UINavigationController *perferInNC = [[UINavigationController alloc]initWithRootViewController:perferInVC];
-//    [self presentViewController:perferInNC animated:YES completion:nil];
-    
-    [self intoLeft];
-    
+    ScanCodeViewController *scanVC = [[ScanCodeViewController alloc]init];
+    [self.navigationController pushViewController:scanVC animated:YES];
+    //NSString *str = [JsonObject getRandomStringWithNum:8];
 }
-
--(void)intoLeft
-{
-    HomepageViewController *homepageVC = [[HomepageViewController alloc] init];
-    LeftMenuViewController *leftMenuVC = [[LeftMenuViewController alloc] init];
-    //侧滑栏
-    JASidePanelController *panelVC = [[JASidePanelController alloc] init];
-    UINavigationController *homepageNC = [[UINavigationController alloc]initWithRootViewController:homepageVC];
-    UINavigationController *leftMenuNC = [[UINavigationController alloc]initWithRootViewController:leftMenuVC];
-    leftMenuNC.navigationBar.hidden = YES;
-    panelVC.leftPanel = leftMenuNC;
-    
-    
-    panelVC.centerPanel = homepageNC;
-    panelVC.recognizesPanGesture = YES;
-    panelVC.leftGapPercentage = .71;
-    [self presentViewController:panelVC animated:YES completion:nil];
-    
-    
-    
-}
-
-
-
-
-
-
-
+ 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

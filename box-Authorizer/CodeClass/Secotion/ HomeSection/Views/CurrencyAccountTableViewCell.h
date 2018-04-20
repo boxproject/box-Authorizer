@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "CurrencyAccountModel.h"
+#import "CoinlistModel.h"
 
 @interface CurrencyAccountTableViewCell : UITableViewCell
 
 @property (nonatomic,strong) CurrencyAccountModel *model;
 
 - (void)setDataWithModel:(CurrencyAccountModel *)model;
+
+@property (nonatomic,strong) CoinlistModel *coinlistModel;
+
+- (void)setDataWithCoinlistModel:(CoinlistModel *)model;
 
 @end

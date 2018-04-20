@@ -100,34 +100,28 @@
     
 }
 
+/*
+ HASH_STATUS_0 = "0" //待申请
+ HASH_STATUS_1 = "1" //私钥已申请提交
+ HASH_STATUS_2 = "2" //私钥已拒绝提交 私钥A拒绝
+ HASH_STATUS_3 = "3" //私链已申请确认
+ HASH_STATUS_4 = "4" //私链已同意确认 私钥B、私钥C均同意
+ HASH_STATUS_5 = "5" //私链已拒绝确认 私钥B、私钥C有不同意
+ HASH_STATUS_6 = "6" //公链已同意
+ */
+
 - (void)setDataWithModel:(ApprovalBusinessModel *)model
 {
-    _approvalTitleLab.text = model.approvalTitle;
-    switch (model.approvalState) {
-        case ApprovalAwait:
-        {
-            _approvalStateLab.text = ApprovalAwaitBusiness;
-            break;
-        }
-        case Approvaling:
-        {
-            _approvalStateLab.text = ApprovalingBusiness;
-            break;
-        }
-        case ApprovalSucceed:
-        {
-            _approvalStateLab.text = ApprovalSucceedBusiness;
-            break;
-        }
-        case ApprovalFail:
-        {
-            _approvalStateLab.text = ApprovalFailBusiness;
-            break;
-        }
-        default:
-            break;
+    _approvalTitleLab.text = model.Name;
+    if ([model.Status isEqualToString:@"0"] || [model.Status isEqualToString:@"3"]) {
+        _approvalStateLab.text = ApprovalAwaitBusiness;
+    }else if([model.Status isEqualToString:@"5"] || [model.Status isEqualToString:@"2"]){
+        _approvalStateLab.text = ApprovalFailBusiness;
+    }else if([model.Status isEqualToString:@"7"]){
+        _approvalStateLab.text = ApprovalSucceedBusiness;
+    }else {
+        _approvalStateLab.text = ApprovalingBusiness;
     }
-     
 }
 
 

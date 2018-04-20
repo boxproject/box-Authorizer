@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef NS_ENUM(NSInteger, FromFunction) {
+    fromInitAccount,
+    fromHomeBox
+};
+
+typedef void(^Block)(NSString *codeText);
 
 @interface ScanCodeViewController : UIViewController
+
+@property(nonatomic, assign)FromFunction fromFunction;
+
+@property (nonatomic, copy) Block codeBlock;
 
 @end

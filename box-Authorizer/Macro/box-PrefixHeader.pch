@@ -32,6 +32,23 @@
 #import "BoxNavigationController.h"
 #import "NetworkManager.h"
 #import "FSAES128.h"
+#import "MenberInfoManager.h"
+#import "MenberInfoModel.h"
+#import "DBHelp.h"
+#import "DeviceManager.h"
+#import "WSProgressHUD.h"
+#import "BoxDataManager.h"
+#import "UIARSAHandler.h"
+#import "ProgressHUD.h"
+#import "NewsInfoModel.h"
+#import "DDRSAWrapper.h"
+
+typedef NS_ENUM(NSInteger, ApprovalState) {
+    ApprovalAwait,   //待审批
+    Approvaling,     //审批中
+    ApprovalFail,    //审批被驳回
+    ApprovalSucceed  //审批成功
+};
 
 #endif
 

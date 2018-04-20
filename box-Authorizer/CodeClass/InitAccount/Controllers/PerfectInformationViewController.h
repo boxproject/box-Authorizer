@@ -10,4 +10,6 @@
 
 @interface PerfectInformationViewController : BaseViewController
 
+@property(nonatomic, strong) NSString *scanResult;
+
 @end

@@ -91,7 +91,9 @@
     _printBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_printBtn setTitle:@"立即打印" forState:UIControlStateNormal];
     [_printBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    _printBtn.backgroundColor = RGB(76, 122, 253);
+    _printBtn.layer.cornerRadius = 2.f;
+    _printBtn.layer.masksToBounds = YES;
+    _printBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _printBtn.titleLabel.font = Font(15);
     [_printBtn addTarget:self action:@selector(printAction:) forControlEvents:UIControlEventTouchUpInside];
     [_mainView addSubview:_printBtn];
@@ -103,7 +105,6 @@
         
     }];
     _printBtn.hidden = YES;
-    
 }
 
 
@@ -116,19 +117,19 @@
     [self addSubview:_mainPrintView];
     
     _imgThree = [[UIImageView alloc] init];
-    _imgThree.image = [UIImage imageNamed:@"printSuccessImg"];
+    _imgThree.image = [UIImage imageNamed:@"icon_success"];
     [_mainPrintView addSubview:_imgThree];
     [_imgThree mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(35);
         make.centerX.equalTo(_mainPrintView);
-        make.width.offset(100);
+        make.width.offset(130);
         make.height.offset(100);
     }];
     
     _printAgainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_printAgainBtn setTitle:@"重新打印" forState:UIControlStateNormal];
-    [_printAgainBtn setTitleColor:kDarkGrayColor forState:UIControlStateNormal];
-    _printAgainBtn.titleLabel.font = Font(14);
+    [_printAgainBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
+    _printAgainBtn.titleLabel.font = Font(13);
     [_printAgainBtn addTarget:self action:@selector(printAgainAction:) forControlEvents:UIControlEventTouchUpInside];
     [_mainPrintView addSubview:_printAgainBtn];
     [_printAgainBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -141,8 +142,8 @@
     UILabel *printedLab = [[UILabel alloc]init];
     printedLab.text = @"打印已成功";
     printedLab.textAlignment = NSTextAlignmentCenter;
-    printedLab.font = Font(15);
-    printedLab.textColor = kBlackColor;
+    printedLab.font = Font(16);
+    printedLab.textColor = [UIColor colorWithHexString:@"#444444"];
     [_mainPrintView addSubview:printedLab];
     [printedLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(160);
@@ -167,8 +168,7 @@
     
     
     UIImageView *imgAlert = [[UIImageView alloc] init];
-    imgAlert.image = [UIImage imageNamed: @""];
-    imgAlert.backgroundColor = kRedColor;
+    imgAlert.image = [UIImage imageNamed: @"icon_warning"];
     [alertBackground addSubview:imgAlert];
     [imgAlert mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(10);
@@ -181,7 +181,7 @@
     aleartLab.text = @"为保证安全请将二维码1-3放入一个信封；将二维码4-6放入另一个信封分别将两个信封保存至两个银行的保险柜中。";
     aleartLab.textAlignment = NSTextAlignmentLeft;
     aleartLab.font = Font(12);
-    aleartLab.textColor = RGB(220, 83, 55);
+    aleartLab.textColor = [UIColor colorWithHexString:@"#d94122"];
     aleartLab.numberOfLines = 0;
     [alertBackground addSubview:aleartLab];
     [aleartLab mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -195,9 +195,11 @@
     
     _contractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_contractBtn setTitle:@"生成合约" forState:UIControlStateNormal];
-    [_contractBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    _contractBtn.backgroundColor = RGB(76, 122, 253);
+    [_contractBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    _contractBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _contractBtn.titleLabel.font = Font(15);
+    _contractBtn.layer.cornerRadius = 2.f;
+    _contractBtn.layer.masksToBounds = YES;
     [_contractBtn addTarget:self action:@selector(contracAction:) forControlEvents:UIControlEventTouchUpInside];
     [_mainPrintView addSubview:_contractBtn];
     [_contractBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -205,9 +207,7 @@
         make.left.offset(15);
         make.right.offset(-15);
         make.height.offset(35);
-        
     }];
-    
 }
 
 
@@ -280,8 +280,6 @@
         default:
             break;
     }
-    
-    
 }
 
 

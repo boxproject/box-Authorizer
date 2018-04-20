@@ -26,6 +26,8 @@
 
 @property (nonatomic,strong)UIButton *confirmBtn;
 
+@property (nonatomic,assign)NSInteger state;
+
 @end
 
 @implementation SeviceStateView
@@ -33,13 +35,14 @@
 -(id)initWithFrame:(CGRect)frame state:(NSInteger)state{
     self = [super initWithFrame:frame];
     if (self) {
-        [self createView];
+        [self createView:state];
+        _state = state;
     }
     return self;
 }
 
 
--(void)createView
+-(void)createView:(NSInteger)state
 {
     _bigView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,  [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _bigView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.6];
@@ -65,7 +68,6 @@
     }];
     
     _titilelab = [[UILabel alloc] init];
-    _titilelab.text = HomepageSeverStartLaber;
     _titilelab.textAlignment = NSTextAlignmentCenter;
     _titilelab.font = Font(16);
     _titilelab.textColor = [UIColor colorWithHexString:@"#444444"];
@@ -78,9 +80,7 @@
         make.height.offset(46/2);
     }];
     
-    
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_confirmBtn setTitle:HomepageSeverStartButton forState:UIControlStateNormal];
     [_confirmBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
     _confirmBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _confirmBtn.layer.cornerRadius = 2.f;
@@ -93,12 +93,16 @@
         make.left.offset(34/2);
         make.right.offset(-34/2);
         make.height.offset(74/2);
-        
     }];
     
+    if (state == StopServiceOperate) {
+        _titilelab.text = HomepageSeverStartLaber;
+        [_confirmBtn setTitle:HomepageSeverStartButton forState:UIControlStateNormal];
+    }else if(state == StartServiceOperate){
+        _titilelab.text = HomepageSeverStopLaber;
+        [_confirmBtn setTitle:HomepageSeverStopButton forState:UIControlStateNormal];
+    }
 }
-
-
 
 #pragma mark ----- cancel -----
 -(void)cancelAction:(UIButton *)btn
@@ -110,10 +114,9 @@
 -(void)confirmAction:(UIButton *)btn
 {
     if ([self.delegate respondsToSelector:@selector(SeviceState:)]) {
-        [self.delegate SeviceState:seviceStateStart];
+        [self.delegate SeviceState:_state];
     }
 }
-
 
 /*
 // Only override drawRect: if you perform custom drawing.

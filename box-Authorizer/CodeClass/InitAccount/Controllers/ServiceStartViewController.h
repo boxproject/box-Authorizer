@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface ServiceStartViewController : UIViewController
+
+@property(nonatomic, assign)NSInteger serviceState;
 
 @end

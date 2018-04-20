@@ -2,12 +2,13 @@
 //  DDRSAWrapper+openssl.m
 //  RSADemo
 //
-//  Created by 张桂杨 on 2017/10/27.
-//  Copyright © 2017年 Ive. All rights reserved.
+//  Created by Rony on 2017/10/27.
+//  Copyright © 2017年 Rony. All rights reserved.
 //
 
 #import "DDRSAWrapper+openssl.h"
 #import <openssl/pem.h>
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation DDRSAWrapper (openssl)
 #pragma mark ---生成密钥对
@@ -25,6 +26,7 @@
     
     return NO;
 }
+
 #pragma mark ---密钥格式转换
 + (RSA *)openssl_publicKeyFromPEM:(NSString *)publicKeyPEM {
     const char *buffer = [publicKeyPEM UTF8String];

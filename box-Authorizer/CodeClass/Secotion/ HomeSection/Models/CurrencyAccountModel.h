@@ -15,7 +15,11 @@ typedef NS_ENUM(NSInteger, IsType) {
 
 @interface CurrencyAccountModel : NSObject
 /** 币种／代币名称 */
-@property (nonatomic,strong) NSString *currency;
+@property (nonatomic,strong) NSString *TokenName;
+/** 精度 */
+@property (nonatomic,assign) NSInteger Decimals;
+/** 地址 */
+@property (nonatomic,strong) NSString *ContractAddr;
 @property(nonatomic, assign) BOOL isSelect;
 @property (nonatomic, assign)IsType isType;
 

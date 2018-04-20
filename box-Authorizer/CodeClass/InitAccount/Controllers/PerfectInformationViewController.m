@@ -15,6 +15,10 @@
 #define PerfectInformationVCVerifiyText  @"请再次输入私钥密码"
 #define PerfectInformationVCAleartLab  @"私钥密码切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
 #define PerfectInformationVCCormfirmBtn  @"提交"
+#define PerfectInformationVCAleartOne  @"请完善信息"
+#define PerfectInformationVCAleartTwo  @"请输入密码"
+#define PerfectInformationVCAleartThree  @"密码不一致"
+#define PerfectInformationVCSucceed  @"提交完成"
 
 @interface PerfectInformationViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 
@@ -27,6 +31,7 @@
 @property (nonatomic,strong)UITextField *verifyPwFf;
 /** 提交完善的信息 */
 @property (nonatomic, strong) UIButton *cormfirmButton;
+@property (nonatomic, strong) DDRSAWrapper *aWrapper;
 
 @end
 
@@ -39,8 +44,7 @@
     //self.view.backgroundColor = [UIColor colorWithHexString:@"#f7f8f9"];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createView];
-    
-    
+    _aWrapper = [[DDRSAWrapper alloc] init];
 }
 
 -(void)createView
@@ -57,6 +61,7 @@
     _nameTf = [[UITextField alloc] init];
     _nameTf.backgroundColor = [UIColor whiteColor];
     _nameTf.delegate = self;
+    _nameTf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSString *nameText = PerfectInformationVCNameText;
     NSMutableAttributedString *nameholder = [[NSMutableAttributedString alloc] initWithString:nameText];
     [nameholder addAttribute:NSForegroundColorAttributeName
@@ -74,7 +79,6 @@
         make.height.offset(55);
     }];
     
-    
     UIView *lineOne = [[UIView alloc] init];
     lineOne.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_contentView addSubview:lineOne];
@@ -88,6 +92,7 @@
     _passwordTf = [[UITextField alloc] init];
     _passwordTf.backgroundColor = [UIColor whiteColor];
     _passwordTf.delegate = self;
+    _passwordTf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSString *passwordText = PerfectInformationVCPasswordText;
     NSMutableAttributedString *passwordholder = [[NSMutableAttributedString alloc] initWithString:passwordText];
     [passwordholder addAttribute:NSForegroundColorAttributeName
@@ -120,6 +125,7 @@
     _verifyPwFf = [[UITextField alloc] init];
     _verifyPwFf.backgroundColor = [UIColor whiteColor];
     _verifyPwFf.delegate = self;
+    _verifyPwFf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSString *verifiyText = PerfectInformationVCVerifiyText;
     NSMutableAttributedString *verifiyHolder = [[NSMutableAttributedString alloc] initWithString:verifiyText];
     [verifiyHolder addAttribute:NSForegroundColorAttributeName
@@ -204,23 +210,64 @@
         make.top.equalTo(alertBackground.mas_bottom).offset(94/2);
         make.height.offset(91/2);
     }];
-    
-    
-    
-    
-    
-    
-    
 }
 
 -(void)cormfirmAction:(UIButton *)btn
 {
-    BackupViewController *backupVC = [[BackupViewController alloc] init];
-    [self presentViewController:backupVC animated:YES completion:nil];
+    if ( [_nameTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartOne];
+        return;
+    }
+    if ([_passwordTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartTwo];
+        return;
+    }
+    if (![_passwordTf.text isEqualToString:_verifyPwFf.text]) {
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartThree];
+        return;
+    }
+    NSArray *codeArray = [JsonObject dictionaryWithJsonStringArr:_scanResult];
+    NSString *box_IP = codeArray[0];
+    NSString *boxIpStr = [NSString stringWithFormat:@"https://%@", box_IP];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"box_IP" codeValue:boxIpStr];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"box_IpPort" codeValue:box_IP];
+    NSString *randomStr = codeArray[1];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"randomValue" codeValue:randomStr];
+    [_aWrapper generateSecKeyPairWithKey];
+    NSString *publicKeyBase64 = [BoxDataManager sharedManager].publicKeyBase64;
+    NSString *aesStr = [FSAES128 AES128EncryptStrig:publicKeyBase64 keyStr:randomStr];
+    //NSString *aesdeStr = [FSAES128 AES128DecryptString:aesStr keyStr:randomStr];
+    NSLog(@"%@", aesStr);
+    NSInteger applyer_idIn = [[NSDate date]timeIntervalSince1970] * 1000;
+    NSString *applyer_id = [NSString stringWithFormat:@"%ld", applyer_idIn];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"applyer_account" codeValue:_nameTf.text];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"applyer_id" codeValue:applyer_id];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"passWord" codeValue:_passwordTf.text];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
+    [paramsDic setObject:aesStr forKey:@"publickey"];
+    [paramsDic setObject:applyer_id forKey:@"applyerid"];
+    [paramsDic setObject:_nameTf.text forKey:@"applyername"];
     
+    [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/keystore" params:paramsDic success:^(id responseObject) {
+        NSDictionary *dict = responseObject;
+        NSInteger RspNo = [dict[@"RspNo"] integerValue];
+        if ([dict[@"RspNo"] isEqualToString:@"0"]) {
+            [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"0"];
+            [WSProgressHUD showSuccessWithStatus:PerfectInformationVCSucceed];
+            BackupViewController *backupVC = [[BackupViewController alloc] init];
+            [self presentViewController:backupVC animated:YES completion:nil];
+        }
+        else{
+            [ProgressHUD showStatus:RspNo];
+        }
+    } fail:^(NSError *error) {
+        NSLog(@"%@", error.description);
+    }];
+     
 }
 
 
+//[SVProgressHUD dismiss];
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

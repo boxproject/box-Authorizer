@@ -8,6 +8,7 @@
 
 #import "AddCurrencyViewController.h"
 #import "ScanAdressViewController.h"
+#import "ScanCodeViewController.h"
 
 #define AddCurrencyVCTitle  @"新增代币"
 #define AddCurrencyVCCurrencyNameTf  @"请输入代币名称"
@@ -41,6 +42,17 @@
     [self createView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIImage *shadowImage = self.navigationController.navigationBar.shadowImage;
+    self.navigationController.navigationBar.shadowImage = shadowImage;
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationController.navigationBar.tintColor = nil;
+    self.navigationController.navigationBar.barTintColor = nil;
+    self.navigationController.navigationBar.alpha = 1.0;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:kBlackColor}];
+}
+
 -(void)createView
 {
     _contentView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kTopHeight - 64, SCREEN_WIDTH, SCREEN_HEIGHT - (kTopHeight - 64))];
@@ -55,6 +67,7 @@
     _currencyNameTf = [[UITextField alloc]init];
     _currencyNameTf.backgroundColor = [UIColor whiteColor];
     _currencyNameTf.delegate = self;
+    _currencyNameTf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSString *nameText = AddCurrencyVCCurrencyNameTf;
     NSMutableAttributedString *nameholder = [[NSMutableAttributedString alloc] initWithString:nameText];
     [nameholder addAttribute:NSForegroundColorAttributeName
@@ -137,6 +150,8 @@
     _accuracyTf.backgroundColor = [UIColor whiteColor];
     _accuracyTf.delegate = self;
     NSString *accuracyStr = AddCurrencyVCaccuracyTf;
+    _accuracyTf.keyboardType = UIKeyboardTypeASCIICapableNumberPad;
+    _accuracyTf.clearButtonMode=UITextFieldViewModeWhileEditing;
     NSMutableAttributedString *accuracyHolder = [[NSMutableAttributedString alloc] initWithString:accuracyStr];
     [accuracyHolder addAttribute:NSForegroundColorAttributeName
                          value:[UIColor colorWithHexString:@"#cccccc"]
@@ -181,11 +196,6 @@
         make.top.equalTo(lineThree.mas_bottom).offset(50);
         make.height.offset(45);
     }];
-    
-    
-    
-    
-    
 }
 
 
@@ -193,14 +203,54 @@
 #pragma mark ------ 二维码扫描 -----
 -(void)scanAction:(UIButton *)btn
 {
-    ScanAdressViewController *scanAdressVC = [[ScanAdressViewController alloc] init];
-    [self.navigationController pushViewController:scanAdressVC animated:YES];
+    ScanCodeViewController *scanCodeVC = [[ScanCodeViewController alloc] init];
+    scanCodeVC.fromFunction = fromHomeBox;
+    scanCodeVC.codeBlock = ^(NSString *codeText){
+        _currencyAdressTf.text = codeText;
+    };
+    [self.navigationController pushViewController:scanCodeVC animated:YES];
 }
 
 #pragma mark ------ 确认增加 -----
 -(void)cormfirmAction:(UIButton *)btn
 {
-    
+    if ( [_currencyNameTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:AddCurrencyVCCurrencyNameTf];
+        return;
+    }
+    if ([_currencyAdressTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:AddCurrencyVCCurrencyAdressTf];
+        return;
+    }
+    if ([_accuracyTf.text isEqualToString:@""]) {
+        [WSProgressHUD showErrorWithStatus:AddCurrencyVCaccuracyTf];
+        return;
+    }
+  
+    NSInteger accuracy = [_accuracyTf.text integerValue];
+    NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
+    [paramsDic setObject: _currencyNameTf.text forKey:@"tokenname"];
+    [paramsDic setObject:_currencyAdressTf.text forKey:@"contractaddr"];
+    [paramsDic setObject:@(accuracy) forKey:@"decimals"];
+    [ProgressHUD showProgressHUD];
+    [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/tokenedit" params:paramsDic success:^(id responseObject) {
+        [WSProgressHUD dismiss];
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] integerValue] == 0) {
+            [WSProgressHUD showSuccessWithStatus:@"新增成功"];
+            [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", @"开户",_currencyNameTf.text]];
+            if ([self.delegate respondsToSelector:@selector(addCurrencyDelegateReflesh)]) {
+                [self.navigationController popViewControllerAnimated:YES];
+                [self.delegate addCurrencyDelegateReflesh];
+            }
+            
+        }else{
+            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+        }
+    } fail:^(NSError *error) {
+        [WSProgressHUD dismiss];
+        NSLog(@"%@", error.description);
+    }];
 }
 
 #pragma mark - createBarItem
