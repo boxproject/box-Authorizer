@@ -11,8 +11,6 @@
 #import "ApprovalBusinessTableViewCell.h"
 #import "ApprovalBusinessDetailViewController.h"
 
-
-
 #define PageSize  12
 #define CellReuseIdentifier  @"ApprovalBusiness"
 #define ApprovalBusinessVCTitle  @"审批流"
@@ -34,7 +32,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
-    //self.title = ApprovalBusinessVCTitle;
     _sourceArray = [[NSMutableArray alloc] init];
     _page = 1;
     [self createSegmentedView];
@@ -75,11 +72,7 @@
     }else{
         [paramsDic setObject: @(1) forKey:@"type"];
     }
-//    [paramsDic setObject: @(_page) forKey:@"page"];
-//     [paramsDic setObject:@(PageSize) forKey:@"limit"];
-    //[ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/approvallist" params:paramsDic success:^(id responseObject) {
-        //[WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             if (_page == 1) {
@@ -99,7 +92,6 @@
         }
         [self reloadAction];
     } fail:^(NSError *error) {
-        //[WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
         [self reloadAction];
     }];
@@ -111,17 +103,14 @@
     [self.tableView.mj_header beginRefreshing];
 }
 
-
 -(void)reloadAction
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
-        
     });
 }
-
 
 -(void)createView
 {
@@ -138,7 +127,6 @@
     }];
     [_tableView registerClass:[ApprovalBusinessTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //[self footerReflesh];
     [self headerReflesh];
 }
 
@@ -153,14 +141,6 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     //[self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)footerReflesh
-{
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        self.page += 1;
-        [self requestData];
-    }];
 }
 
 -(void)headerReflesh
@@ -179,7 +159,6 @@
     return 60;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ApprovalBusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier forIndexPath:indexPath];
@@ -187,7 +166,6 @@
     cell.model = model;
     [cell setDataWithModel:model];
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -200,8 +178,6 @@
         [self presentViewController:approvalBusinessDetailNc animated:NO completion:nil];
     });
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

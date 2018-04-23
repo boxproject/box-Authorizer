@@ -26,7 +26,6 @@
     return self;
 }
 
-
 -(void)createView:(NSDictionary *)dic
 {
     UIView *topView = [[UIView alloc] init];

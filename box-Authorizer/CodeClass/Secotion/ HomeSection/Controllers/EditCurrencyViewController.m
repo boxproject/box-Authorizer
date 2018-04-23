@@ -16,7 +16,6 @@
 
 @interface EditCurrencyViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 
-
 @property(nonatomic, strong)UIScrollView *contentView;
 /** 代币名称 */
 @property (nonatomic,strong)UITextField *currencyNameTf;
@@ -28,7 +27,6 @@
 @property (nonatomic, strong) UIButton *cormfirmButton;
 /** 二维码扫描 */
 @property (nonatomic, strong) UIButton *scanButton;
-
 
 @end
 
@@ -86,7 +84,6 @@
         make.width.offset(SCREEN_WIDTH - 32);
         make.height.offset(56);
     }];
-    
     
     UIView *lineOne = [[UIView alloc] init];
     lineOne.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
@@ -172,7 +169,6 @@
         make.height.offset(56);
     }];
     
-    
     UIView *lineThree = [[UIView alloc] init];
     lineThree.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_contentView addSubview:lineThree];
@@ -186,8 +182,6 @@
     _cormfirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cormfirmButton setTitle:@"确认增加" forState:UIControlStateNormal];
     [_cormfirmButton setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    //[_cormfirmButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
-    //@"#50b4ff"
     _cormfirmButton.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _cormfirmButton.titleLabel.font = Font(16);
     _cormfirmButton.layer.masksToBounds = YES;

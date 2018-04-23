@@ -25,7 +25,6 @@
     self.title = AboutBoxVCTitle;
     [self createBarItem];
     [self createView];
-    
 }
 
 -(void)createView
@@ -62,7 +61,6 @@
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
-    
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem
@@ -71,7 +69,6 @@
     [self.sidePanelController setCenterPanelHidden:NO];
     //[self.sidePanelController showCenterPanelAnimated:NO];
     self.navigationController.navigationBar.hidden = YES;
-    
 }
 
 - (void)didReceiveMemoryWarning {

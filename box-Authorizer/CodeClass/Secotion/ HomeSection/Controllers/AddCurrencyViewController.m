@@ -85,7 +85,6 @@
         make.height.offset(56);
     }];
     
-    
     UIView *lineOne = [[UIView alloc] init];
     lineOne.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_contentView addSubview:lineOne];
@@ -168,7 +167,6 @@
         make.height.offset(56);
     }];
     
-    
     UIView *lineThree = [[UIView alloc] init];
     lineThree.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_contentView addSubview:lineThree];
@@ -182,8 +180,6 @@
     _cormfirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_cormfirmButton setTitle:@"确认增加" forState:UIControlStateNormal];
     [_cormfirmButton setTitleColor:kWhiteColor forState:UIControlStateNormal];
-    //[_cormfirmButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
-    //@"#50b4ff"
     _cormfirmButton.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _cormfirmButton.titleLabel.font = Font(16);
     _cormfirmButton.layer.masksToBounds = YES;
@@ -197,8 +193,6 @@
         make.height.offset(45);
     }];
 }
-
-
 
 #pragma mark ------ 二维码扫描 -----
 -(void)scanAction:(UIButton *)btn
@@ -243,7 +237,6 @@
                 [self.navigationController popViewControllerAnimated:YES];
                 [self.delegate addCurrencyDelegateReflesh];
             }
-            
         }else{
             [ProgressHUD showStatus:[dict[@"code"] integerValue]];
         }
@@ -258,7 +251,6 @@
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
-    
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem

@@ -93,7 +93,6 @@
     }else if ([coding isEqualToString:@"codePassWord"]){
         self.codePassWord = codeValue;
     }
-    
     [defaults setObject:codeValue forKey: coding];
     [defaults synchronize];
 }

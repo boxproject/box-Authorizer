@@ -99,9 +99,6 @@
     _currencyLab.text = model.Name;
 }
 
-
-
-
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

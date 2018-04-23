@@ -21,7 +21,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    //self.titleLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 - (void)layoutSubviews
@@ -30,9 +29,7 @@
     CGRect frame = self.imageView.frame;
     frame.origin.x = 0;
     frame.origin.y = (self.frame.size.height - frame.size.height)/2;
-    //frame.size.height = self.frame.size.height;
     self.imageView.frame = frame;
-    
     
     CGRect lableFrame = self.titleLabel.frame;
     lableFrame.origin.x = frame.size.width + 5;

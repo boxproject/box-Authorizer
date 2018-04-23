@@ -9,8 +9,6 @@
 #import "FSAES128.h"
 #import "NSData+AES128.h"
 
-//#define IV  @"1234567890654321"
-//#define  KEY  @"16BytesLengthKey"
 #define count  16
 
 @implementation FSAES128

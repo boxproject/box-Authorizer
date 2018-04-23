@@ -35,8 +35,6 @@
     return self;
 }
 
-
-
 - (void)createView{
     
     UIImageView *leftImg = [[UIImageView alloc] init];
@@ -47,7 +45,6 @@
         make.centerY.equalTo(self.contentView);
         make.width.offset(20);
         make.height.offset(20);
-        
     }];
     
     _approvalTitleLab = [[UILabel alloc]init];
@@ -59,7 +56,6 @@
         make.bottom.offset(0);
         make.left.equalTo(leftImg.mas_right).offset(9);
         make.right.offset(-130);
-        
     }];
     
     _rightIcon = [[UIImageView alloc] init];
@@ -70,7 +66,6 @@
         make.centerY.equalTo(self.contentView);
         make.width.offset(20);
         make.height.offset(22);
-        
     }];
     
     _approvalStateLab = [[UILabel alloc]init];
@@ -83,7 +78,6 @@
         make.bottom.offset(0);
         make.left.equalTo(_approvalTitleLab.mas_right).offset(10);
         make.right.equalTo(_rightIcon.mas_left).offset(-2);
-        
     }];
     
     _lineView = [[UIView alloc]init];
@@ -95,9 +89,6 @@
         make.right.offset(-15);
         make.height.offset(1);
     }];
-    
-    
-    
 }
 
 /*
@@ -123,8 +114,6 @@
         _approvalStateLab.text = ApprovalingBusiness;
     }
 }
-
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -31,7 +31,6 @@
     return self;
 }
 
-
 - (NSMutableArray *)loadMenberInfo:(NSString *)menberId
 {
     _menberInfoArray = [[NSMutableArray alloc] init];

@@ -41,7 +41,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = PerfectInformationVCTitle;
-    //self.view.backgroundColor = [UIColor colorWithHexString:@"#f7f8f9"];
     self.view.backgroundColor = [UIColor whiteColor];
     [self createView];
     _aWrapper = [[DDRSAWrapper alloc] init];
@@ -263,7 +262,6 @@
     } fail:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
-     
 }
 
 

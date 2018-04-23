@@ -37,8 +37,6 @@
                                    @{@"titleName":@"英文"}
                                    ]
                                    };
-    
-    
     for (NSDictionary *dataDic in dict[@"data"]) {
         LanguageSwitchModel *model = [[LanguageSwitchModel alloc] initWithDict:dataDic];
         [_sourceArray addObject:model];
@@ -61,10 +59,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     // 去掉底部多余的表格线
     [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-
-     
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.sourceArray.count;
@@ -74,10 +69,7 @@
     return 50;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
     static NSString *identifier = @"languageSwitch";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil) {
@@ -86,9 +78,7 @@
     cell.accessoryType = UITableViewCellAccessoryNone;
     LanguageSwitchModel *model = self.sourceArray[indexPath.row];
     cell.textLabel.text = model.titleName;
-
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,19 +87,13 @@
     [self.sidePanelController setCenterPanelHidden:NO];
     //[self.sidePanelController showCenterPanelAnimated:NO];
     self.navigationController.navigationBar.hidden = YES;
-    
 }
-                                
-                                   
-                                   
-
 
 #pragma mark - createBarItem
 - (void)createBarItem{
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
-    
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem
@@ -118,7 +102,6 @@
     [self.sidePanelController setCenterPanelHidden:NO];
     //[self.sidePanelController showCenterPanelAnimated:NO];
     self.navigationController.navigationBar.hidden = YES;
-    
 }
 
 - (void)didReceiveMemoryWarning {

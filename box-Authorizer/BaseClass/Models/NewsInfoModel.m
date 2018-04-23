@@ -13,8 +13,6 @@
 
 @end
 
-
-
 @implementation NewsInfoModel
 
 +(instancetype)sharedManager{
@@ -32,7 +30,6 @@
     }
     return self;
 }
-
 
 - (NSMutableArray *)loadNewsInfo
 {

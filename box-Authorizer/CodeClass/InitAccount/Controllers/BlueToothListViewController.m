@@ -86,11 +86,9 @@ static NSString *identifier = @"blueToothList";
         [SVProgressHUD showInfoWithStatus:info ];
         [SVProgressHUD dismissWithDelay:1.2];
     };
-    
     for (NSDictionary *dic in self.deviArray) {
         [self.deviceArray addObject:dic];
     }
-    
     manager.discoverPeripheralBlcok = ^(CBCentralManager *central, CBPeripheral *peripheral, NSDictionary *advertisementData, NSNumber *RSSI) {
         if (peripheral.name.length <= 0) {
             return ;
@@ -130,13 +128,10 @@ static NSString *identifier = @"blueToothList";
 
 //返回按钮
 - (void)backButtonAction:(UIBarButtonItem *)buttonItem{
-
     //[self dismissViewControllerAnimated:YES completion:nil];
     [self.navigationController popViewControllerAnimated:YES];
     self.arrayListBlock(self.deviceArray);
 }
-
-
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

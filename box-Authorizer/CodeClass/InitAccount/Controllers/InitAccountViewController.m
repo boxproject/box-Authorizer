@@ -8,11 +8,6 @@
 
 #import "InitAccountViewController.h"
 #import "ScanCodeViewController.h"
-#import "UIARSAHandler.h"
-//text
-#import "PerfectInformationViewController.h"
-#import "HomepageViewController.h"
-#import "LeftMenuViewController.h"
 
 #define InitAccountVCTitle  @"扫一扫"
 #define PerfectInformationVCLaber  @"扫一扫完成初始化"
@@ -21,8 +16,6 @@
 @interface InitAccountViewController ()
 /** 开始扫描 */
 @property(nonatomic, strong)UIButton *scanButton;
-
-@property(nonatomic, strong)UIARSAHandler *aRSAHandler;
 
 @end
 
@@ -34,7 +27,6 @@
     self.title = InitAccountVCTitle;
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     [self createView];
-    _aRSAHandler = [[UIARSAHandler alloc] init]; 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -82,7 +74,6 @@
     }];
     
     _scanButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //[_scanButton setTitle:@"开始扫描" forState:UIControlStateNormal];
     [_scanButton setImage:[UIImage imageNamed:@"startScanImg"] forState:UIControlStateNormal];
     _scanButton.titleLabel.font = Font(17);
     [_scanButton setTitleColor:kBlueColor forState:UIControlStateNormal];
@@ -102,7 +93,6 @@
 {
     ScanCodeViewController *scanVC = [[ScanCodeViewController alloc]init];
     [self.navigationController pushViewController:scanVC animated:YES];
-    //NSString *str = [JsonObject getRandomStringWithNum:8];
 }
  
 - (void)didReceiveMemoryWarning {

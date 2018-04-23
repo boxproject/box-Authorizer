@@ -36,7 +36,6 @@
         make.left.offset(15);
         make.left.equalTo(_leftLab.mas_right).offset(9);
         make.right.offset(-115);
-        
     }];
     
     _rightLab = [[UILabel alloc]init];
@@ -49,7 +48,6 @@
         make.bottom.offset(0);
         make.width.offset(100);
         make.right.offset(-15);
-        
     }];
     
 }
@@ -58,9 +56,7 @@
 {
     _leftLab.text = model.content;
     _rightLab.text = [TimeManeger getElapseTimeToStringHelp:[model.newsId integerValue] ];
-    
 }
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

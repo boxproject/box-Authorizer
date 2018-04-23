@@ -61,7 +61,6 @@
 @property (nonatomic,assign) NSInteger currentTime;
 @property(nonatomic, strong)DDRSAWrapper *aWrapper;
 
-
 @end
 
 @implementation ServiceStartViewController
@@ -114,12 +113,10 @@
     [_launchState setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _launchState.titleLabel.font = Font(14);
     [_launchState setImage:[UIImage imageNamed:@"icon_plan"] forState:UIControlStateNormal];
-    //[launchState addTarget:self action:@selector(launchStateAction:) forControlEvents:UIControlEventTouchUpInside];
     [_topImageView addSubview:_launchState];
     [_launchState mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.offset(10);
         make.left.offset(16);
-        //make.width.offset(70);
         make.height.offset(25);
     }];
     
@@ -347,8 +344,7 @@
             _importView.hidden = YES;
             _startStateView.hidden = NO;
             _currentTime = -1;
-            dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
-            
+            dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];            
         }else{
             [ProgressHUD showStatus:RspNo];
         }
@@ -369,7 +365,7 @@
             NSArray *NodesAuthorizedArr = dict[@"Status"][@"NodesAuthorized"];
             //输入私钥密码状态
             if (ServerStatus == 3 && Status == 0) {
-                if (_currentTime == -1) {
+                if (_currentTime != 0) {
                     return ;
                 }
                 [_launchState setTitle:ServiceStartLaunchUnstart forState:UIControlStateNormal];
@@ -387,13 +383,13 @@
                 for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                     if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
-                        if (_currentTime == -1) {
+                        if (_currentTime != 0) {
                         }else{
                             _currentTime = -1;
                         }
                     }
                 }
-                if (_currentTime != -1) {
+                if (_currentTime == 0) {
                     
                     for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                         ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];

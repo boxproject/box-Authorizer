@@ -192,7 +192,6 @@
         
     }];
     
-    
     _contractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_contractBtn setTitle:@"生成合约" forState:UIControlStateNormal];
     [_contractBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];

@@ -16,7 +16,6 @@
 
 #define CellReuseIdentifier  @"ApprovalBusinessDetail"
 #define headerReusableViewIdentifier  @"ApprovalBusinessDetail"
-
 #define ApprovalBusinessDetailVCAgreeApprovalBtn  @"同意审批"
 #define ApprovalBusinessDetailVCRefuseApprovalBtn  @"拒绝审批"
 #define ApprovalBusinessDetailApprovaling  @"审批中"
@@ -130,7 +129,6 @@
     [_approvalStateBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _approvalStateBtn.backgroundColor = [UIColor colorWithHexString:@"#c9c9c9"];
     _approvalStateBtn.titleLabel.font = Font(15);
-    //[_approvalStateBtn addTarget:self action:@selector(refuseApprovalAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_approvalStateBtn];
     [_approvalStateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(0);
@@ -140,7 +138,6 @@
     }];
     _approvalStateBtn.hidden = YES;
 }
-
 
 #pragma mark -----  同意审批/拒绝审批 -----
 -(void)approvalAction:(UIButton *)btn
@@ -164,9 +161,7 @@
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"captainid"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
     [paramsDic setObject:@(btn.tag) forKey:@"opinion"];
-    //[ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/allow" params:paramsDic success:^(id responseObject) {
-        //[WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             _agreeApprovalBtn.hidden = YES;
@@ -186,7 +181,6 @@
             [self.collectionView reloadData];
         });
     } fail:^(NSError *error) {
-        //[WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
 }
@@ -211,7 +205,6 @@
     cell.model = model;
     [cell setDataWithModel:model];
     return cell;
-    
 }
 
 // 设置section头视图的参考大小，与tableheaderview类似
@@ -235,20 +228,13 @@
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:_model.Hash forKey:@"hash"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"captainid"];
-    //[ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/approvaldetail" params:paramsDic success:^(id responseObject) {
-        //[WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             _responseDic = dict;
             NSString *Status = dict[@"ApprovalInfo"][@"Status"];
             [self showBtnApprovalState:Status];
-            //NSString *AppId = dict[@"ApprovalInfo"][@"AppId"];
             NSString *Flow = dict[@"ApprovalInfo"][@"Flow"];
-            //NSString *Sign = dict[@"ApprovalInfo"][@"Sign"];
-            //NSArray *menberArr = [[MenberInfoManager sharedManager] loadMenberInfo:AppId];
-            //MenberInfoModel *menberInfoModel = menberArr[0];
-            //BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:Flow signature:Sign publicStr:menberInfoModel.publicKey];
             NSDictionary *flowDic = [JsonObject dictionaryWithJsonString:Flow];
             NSString *flow_name = flowDic[@"flow_name"];
             NSString *single_limit = flowDic[@"single_limit"];
@@ -278,7 +264,6 @@
             [self.collectionView reloadData];
         });
     } fail:^(NSError *error) {
-        //[WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
 }
@@ -289,10 +274,12 @@
      HASH_STATUS_0 = "0" //待申请
      HASH_STATUS_1 = "1" //私钥已申请提交
      HASH_STATUS_2 = "2" //私钥已拒绝提交 私钥A拒绝
-     HASH_STATUS_3 = "3" //私链已申请确认
+     HASH_STATUS_3 = "3" //私链已申请确认(日志)
      HASH_STATUS_4 = "4" //私链已同意确认 私钥B、私钥C均同意
      HASH_STATUS_5 = "5" //私链已拒绝确认 私钥B、私钥C有不同意
-     HASH_STATUS_6 = "6" //公链已同意
+     HASH_STATUS_6 = "6" //私链已同意(日志)
+     HASH_STATUS_7 = "7" //公链已同意
+     HASH_STATUS_8 = "8" //公链已拒绝
      */
     if ([state isEqualToString:@"0"] || [state isEqualToString:@"3"]) {
         _agreeApprovalBtn.hidden = NO;
@@ -336,7 +323,6 @@
     }
 }
 
-
 - (UIImage *) imageWithFrame:(CGRect)frame alphe:(CGFloat)alphe {
     frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     UIColor *redColor = [UIColor colorWithHexString:@"#292e40"];;
@@ -362,8 +348,6 @@
     //[self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

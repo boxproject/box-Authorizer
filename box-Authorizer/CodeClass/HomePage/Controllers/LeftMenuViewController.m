@@ -12,8 +12,6 @@
 #import "AboutBoxViewController.h"
 #import "LanguageSwitchViewController.h"
 #import "ModifyServerAddressViewController.h"
- 
-
 
 #define CellReuseIdentifier  @"LeftMenu"
 #define TableViewCellHeight  55
@@ -37,13 +35,10 @@
     _sourceArray = [[NSMutableArray alloc] init];
     NSDictionary *dict = @{
                            @"data":@[
-                                   @{@"titleName":@"语言切换"},
                                    @{@"titleName":@"服务器地址"},
                                    @{@"titleName":@"关于BOX"}
                                    ]
                            };
-    
-    
     for (NSDictionary *dataDic in dict[@"data"]) {
         LeftMenuModel *model = [[LeftMenuModel alloc] initWithDict:dataDic];
         [_sourceArray addObject:model];
@@ -93,11 +88,7 @@
     }];
     [_tableView registerClass:[LeftMenuTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    
-    
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.sourceArray.count;
@@ -107,7 +98,6 @@
     return TableViewCellHeight;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     LeftMenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier forIndexPath:indexPath];
@@ -115,22 +105,16 @@
     cell.model = model;
     [cell setDataWithModel:model];
     return cell;
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0){
-        LanguageSwitchViewController *languageSwitchVC = [[LanguageSwitchViewController alloc] init];
-        [self.navigationController pushViewController:languageSwitchVC animated:YES];
-        [self addNSNotificationCenter:languageSwitchVC];
-    }
-    else if(indexPath.row == 1) {
+    if(indexPath.row == 0) {
         ModifyServerAddressViewController *modifyServerAdressVC = [[ModifyServerAddressViewController alloc] init];
         [self.navigationController pushViewController:modifyServerAdressVC animated:YES];
         [self.sidePanelController toggleRightPanel:nil];
         [self addNSNotificationCenter:modifyServerAdressVC];
-    }else if(indexPath.row == 2){
+    }else if(indexPath.row == 1){
         AboutBoxViewController *aboutBoxVC = [[AboutBoxViewController alloc] init];
         [self.navigationController pushViewController:aboutBoxVC animated:YES];
         [self addNSNotificationCenter:aboutBoxVC];

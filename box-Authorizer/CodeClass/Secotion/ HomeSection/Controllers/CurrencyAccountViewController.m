@@ -58,16 +58,7 @@
     }];
     [_tableView registerClass:[CurrencyAccountTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self footerReflesh];
     [self headerReflesh];
-}
-
--(void)footerReflesh
-{
-    _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        self.page += 1;
-        [self requestData];
-    }];
 }
 
 -(void)headerReflesh
@@ -88,7 +79,6 @@
 {
     [self.tableView.mj_header beginRefreshing];
 }
-
 
 #pragma mark ----- 数据请求 -----
 -(void)requestData
@@ -166,8 +156,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         [self.tableView.mj_header endRefreshing];
-//        [self.tableView.mj_footer endRefreshing];
-        
     });
 }
 

@@ -123,8 +123,6 @@
     [WSProgressHUD showSuccessWithStatus:ModifyServerAddressVCVerifyBtn];
 }
 
-
-
 #pragma mark - createBarItem
 - (void)createBarItem{
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
@@ -132,14 +130,12 @@
     self.navigationItem.leftBarButtonItem = buttonLeft;
 }
 
-
 -(void)backAction:(UIBarButtonItem *)barButtonItem
 {
     [self.navigationController popViewControllerAnimated:YES];
     [self.sidePanelController setCenterPanelHidden:NO];
     //[self.sidePanelController showCenterPanelAnimated:NO];
     self.navigationController.navigationBar.hidden = YES;
-    
 }
 
 - (void)didReceiveMemoryWarning {

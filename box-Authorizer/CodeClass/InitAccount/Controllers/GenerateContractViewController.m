@@ -48,7 +48,6 @@
 @property(nonatomic, strong)PrivatePasswordView *privatePasswordView;
 /** 启动服务 */
 @property(nonatomic, strong)UIButton *serviceStartBtn;
-
 @property(nonatomic, strong)MBProgressHUD *progressHUD;
 @property(nonatomic, strong)DDRSAWrapper *aWrapper;
 
@@ -59,7 +58,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
     self.navigationController.navigationBar.shadowImage = [UIImage new];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#292e40"];
     self.title = GenerateContractVCTitle;
@@ -241,7 +239,6 @@
     }];
     
     _contractQRCodeImg = [[UIImageView alloc] init];
-    //_contractQRCodeImg.image = [CIQRCodeManager createImageWithString:@"hahahah"];
     _contractQRCodeImg.image = [UIImage imageNamed:@"icon_ercode"];
     [twoView addSubview:_contractQRCodeImg];
     [_contractQRCodeImg mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -254,7 +251,6 @@
     _contractCopyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_contractCopyBtn setTitle:GenerateContractVCAccountCopyBtn forState:UIControlStateNormal];
     [_contractCopyBtn setTitleColor:[UIColor colorWithHexString:@"#4c7afd"] forState:UIControlStateNormal];
-    //_contractCopyBtn.backgroundColor = RGB(76, 122, 253);
     _contractCopyBtn.titleLabel.font = Font(13);
     [_contractCopyBtn addTarget:self action:@selector(contractCopyAction:) forControlEvents:UIControlEventTouchUpInside];
     [twoView addSubview:_contractCopyBtn];
@@ -324,9 +320,7 @@
         make.height.offset(50);
     }];
     _serviceStartBtn.hidden = YES;
-
 }
-
 
 -(void)showProgressHUD
 {
@@ -339,16 +333,12 @@
     [self.progressHUD hideAnimated:YES afterDelay:0.5];
 }
 
-
-
-
 #pragma mark ----- 复制地址／账户二维码 -----
 -(void)accountCopyAction:(UIButton *)btn
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = _accountQRLab.text;
     [self showProgressHUD];
-    
 }
 
 #pragma mark ----- 保存二维码／账户二维码 -----
@@ -366,7 +356,6 @@
     UIImage * newImage = UIGraphicsGetImageFromCurrentImageContext();
     //保存到本地相机
     UIImageWriteToSavedPhotosAlbum(newImage,self,@selector(image:didFinishSavingWithError:contextInfo:),nil);
-    
 }
 
 //保存相片的回调方法

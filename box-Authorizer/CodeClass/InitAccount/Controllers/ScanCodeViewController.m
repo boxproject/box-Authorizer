@@ -39,7 +39,6 @@
 @property ( strong , nonatomic ) TBButton * torchBtn;
 
 @property (nonatomic, copy) void (^brightBlock)(int bright);
-
 /** 非扫描区域的蒙版 */
 @property (nonatomic,strong) CALayer *maskLayer;
 
@@ -58,7 +57,6 @@
     self.title = ScanCodeVCTitle;
     self.view.backgroundColor = kWhiteColor;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:kWhiteColor}];
-    //[self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = kBlackColor;
     self.navigationController.navigationBar.alpha = 0.5;
     
@@ -76,7 +74,6 @@
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStyleDone target:self action:@selector(backButtonAction:)];
     self.navigationItem.leftBarButtonItem = button;
-    
 }
 
 - (void)backButtonAction:(UIBarButtonItem *)buttonItem{
@@ -90,7 +87,6 @@
     [self startAnimate];
     //开启二维码扫描
     [_session startRunning];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -178,9 +174,7 @@
         make.height.offset(22);
         make.centerX.equalTo(self.view);
     }];
-    
 }
-
 
 -(void)initTotch
 {
@@ -213,12 +207,9 @@
             return;
         }
         [_session addOutput:_videoOutput];
-        
-        
         self.brightBlock = brightBlock;
     }
 }
-
 
 - (int)getBrightWith:(CMSampleBufferRef)sampleBuffer
 {
@@ -265,7 +256,6 @@
         self.brightBlock(bright);
     });
 }
-
 
 //手电筒按钮
 - (void)torchBtnClick {
@@ -427,11 +417,8 @@
 
 #pragma mark - <AVCaptureMetadataOutputObjectsDelegate - 扫描二维码的回调方法>
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    NSString *stringValue;
-    
     //判断扫描是否有数据
     if (metadataObjects != nil && [metadataObjects count] > 0) {
-        
         AVMetadataMachineReadableCodeObject *metadataObject = [metadataObjects objectAtIndex:0];
         NSString *result;
         //判断的扫描的结果是否是二维码
@@ -439,23 +426,16 @@
             // 显示遮盖
             [SVProgressHUD showWithStatus:@"正在处理"];
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-            
-            
             // 当扫描到数据时，停止扫描
             [ _session stopRunning];
             // 将扫描的线从父控件中移除
             [_scanImageView removeFromSuperview];
-            
             result = metadataObject.stringValue;
-            
             // 当前延迟1.0秒
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 // 隐藏遮盖
                 [SVProgressHUD dismiss];
-                
                 if (_fromFunction == fromInitAccount) {
-                    // 将扫描后的结果显示在label上
-                    //self.scanResult.text = stringValue;
                     PerfectInformationViewController *perferInVC = [[PerfectInformationViewController alloc] init];
                     perferInVC.scanResult = result;
                     UINavigationController *perferInNC = [[UINavigationController alloc]initWithRootViewController:perferInVC];
@@ -464,30 +444,12 @@
                     self.codeBlock(result);
                     [self.navigationController popViewControllerAnimated:YES];
                 }
-
             });
             
         }else{
             NSLog(@"不是二维码");
         }
-        
-        //返回主线程，并将扫描的结果传回主线程
-        //[self performSelectorOnMainThread:@selector(reportScanResult:) withObject:result waitUntilDone:NO];
     }
-}
-
-//http://aes.jypc.org/?p=37737
--(void)reportScanResult:(NSString *)result{
-    
-    //扫描完毕，停止扫描
-    //[self stopScanning];
-    
-    //创建对话框，将扫描结果以对话框的形式呈现
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:result preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    [alert addAction:action];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - <CALayerDelegate - 图层的代理方法>
@@ -503,8 +465,6 @@
         CGContextClearRect(ctx, scanFrame);
     }
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

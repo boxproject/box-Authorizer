@@ -118,14 +118,13 @@
 
 -(void)backupAction:(UIButton *)btn
 {
-//    if (_backupArray.count < 3) {
-//        [WSProgressHUD showErrorWithStatus:BackupVCWSProgressTwo];
-//        return;
-//    }
+    if (_backupArray.count < 3) {
+        [WSProgressHUD showErrorWithStatus:BackupVCWSProgressTwo];
+        return;
+    }
     _backupView = [[BackupView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _backupView.delegate = self;
     [[UIApplication sharedApplication].keyWindow addSubview:_backupView];
-    
 }
 
 #pragma mark ----- BackupViewDelegate 备份密码确认 -----
@@ -160,7 +159,6 @@
         NSLog(@"%@", error.description);
     }];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

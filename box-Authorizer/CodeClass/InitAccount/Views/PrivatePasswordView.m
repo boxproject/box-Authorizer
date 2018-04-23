@@ -141,7 +141,6 @@
         make.right.offset(-16);
         make.height.offset(46);
     }];
- 
 }
 
 
@@ -159,7 +158,6 @@
 -(void)cancelAction:(UIButton *)btn
 {
     [self removeFromSuperview];
-    
 }
 
 #pragma mark ----- 备份密码确认 -----
@@ -172,7 +170,6 @@
     if ([self.delegate respondsToSelector:@selector(PrivatePasswordViewDelegate:)]) {
         [self.delegate PrivatePasswordViewDelegate:_passwordTf.text];
     }
-    
 }
 
 #pragma mark ----- KeyboardWillShow -----
@@ -197,9 +194,7 @@
     NSTimeInterval duration = [(notification.userInfo)[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     UIViewAnimationCurve curve = [(notification.userInfo)[UIKeyboardAnimationCurveUserInfoKey] integerValue];
     [UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationCurveToAnimationOptions(curve) animations:^{
-        
         self.footView.frame = CGRectMake(0, SCREEN_HEIGHT - 300,  SCREEN_WIDTH, 300);
-        
     } completion:nil];
     
 }

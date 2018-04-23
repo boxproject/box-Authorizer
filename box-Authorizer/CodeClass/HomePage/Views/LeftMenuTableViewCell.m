@@ -27,8 +27,6 @@
     return self;
 }
 
-
-
 - (void)createView{
     
     _titleLab = [[UILabel alloc]init];
@@ -47,23 +45,17 @@
     _lineView.backgroundColor = [UIColor colorWithHexString:@"#222239"];
     [self.contentView addSubview:_lineView];
     [_lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.contentView.mas_bottom).offset(-1);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(0);
         make.left.offset(0);
         make.right.offset(0);
         make.height.offset(1);
     }];
-    
-    
-    
 }
 
 - (void)setDataWithModel:(LeftMenuModel *)model
 {
     _titleLab.text = model.titleName;
-    
-    
 }
-
 
 - (void)awakeFromNib {
     [super awakeFromNib];

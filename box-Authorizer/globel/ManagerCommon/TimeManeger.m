@@ -25,7 +25,6 @@
     }
 }
 
-
 //根据时间戳计算已过时间
 + (NSString *)getElapseTimeToStringHelp:(NSInteger)second{
     if (second <= 0) {

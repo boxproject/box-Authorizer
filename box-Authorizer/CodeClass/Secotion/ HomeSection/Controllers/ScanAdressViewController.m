@@ -28,7 +28,6 @@
 @property(nonatomic, strong)MBProgressHUD *progressHUD;
 @property(nonatomic, strong)UIView *aleartView;
 @property(nonatomic, strong)NSString *randomStr;
-@property(nonatomic, strong)UIARSAHandler *ARSAHandler;
 @property(nonatomic, strong)NSString *ipPort;
 
 @end
@@ -46,7 +45,6 @@
     UIImage *bgImage = [self imageWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, kTopHeight) alphe:1.0];
     [bar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#292e40"];
-    _ARSAHandler = [[UIARSAHandler alloc] init];
     [self createBarItem];
     [self createView];
     [self initProgressHUD];
@@ -67,7 +65,6 @@
         NSLog(@"%@", error.description);
     }];
 }
-
 
 #pragma mark ----- 绑定二维码30秒变化一次 -----
 -(void)codeChange:(NSTimer *)timer
@@ -136,10 +133,8 @@
         return;
     }else{
         NSArray *randomArray = [JsonObject dictionaryWithJsonStringArr:randomString];
-        
         NSString *applyer_pub_key = randomArray[1];
         NSString *menber_random = randomArray[0];
-        
         NSDictionary *menberDic = @{@"menber_id":applyer_id,
                                     @"menber_account":applyer_Account,
                                     @"publicKey":applyer_pub_key,
@@ -150,7 +145,6 @@
         if (applyer_pub_key !=  nil) {
             //该账号对申请者公钥生成的信息摘要
             NSString *hmacSHA256 = [UIARSAHandler hmac:applyer_pub_key withKey:menber_random];
-            
             NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
             [paramsDic setObject:reg_id forKey:@"regid"];
             [paramsDic setObject:applyer_pub_key forKey:@"pubkey"];
@@ -255,8 +249,7 @@
         make.height.offset(370/2);
         make.width.offset(370/2);
     }];
-    
-    
+
     _detailLab = [[UILabel alloc] init];
     _detailLab.text = ScanAdressVCDetailLab;
     _detailLab.textAlignment = NSTextAlignmentCenter;
@@ -269,9 +262,7 @@
         make.top.equalTo(_accountQRCodeImg.mas_bottom).offset(41.0/2.0);
         make.height.offset(31.0/2.0);
     }];
-    
     [self createAleartView];
-    
 }
 
 
@@ -345,7 +336,6 @@
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back_white"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
-    
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem

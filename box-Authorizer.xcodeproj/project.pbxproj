@@ -1479,7 +1479,7 @@
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizerr";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1515,7 +1515,7 @@
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizerr";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
