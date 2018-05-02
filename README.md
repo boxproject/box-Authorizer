@@ -12,3 +12,11 @@ BOX是一套解决企业通证安全管理的方案，可应用于企业通证�
 
 ## 使用
 初始状态时，需要扫描voucher产生的二维码，绑定私钥APP和签名机之间的关系。一个签名机可以绑定至少3个私钥APP。每个私钥APP将提供一段口令，多个私钥APP的口令合成私钥。
+
+![3](https://s3-ap-southeast-1.amazonaws.com/s3.box.images01/%E7%A7%81%E9%92%A5App-%E9%A6%96%E9%A1%B5.png)
+
+![5](https://s3-ap-southeast-1.amazonaws.com/s3.box.images01/%E7%A7%81%E9%92%A5App-%E9%A6%96%E9%A1%B5%E4%B8%8A%E7%A7%BB%E6%95%88%E6%9E%9C.png)
+
+## 特别说明
+
+[私钥APP和员工APP安装使用](https://github.com/boxproject/box-Authorizer/wiki/%E5%AE%89%E8%A3%85%E7%A7%81%E9%92%A5APP%E5%92%8C%E5%91%98%E5%B7%A5APP)
