@@ -98,6 +98,7 @@
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
+            NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
             NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
             if (ServerStatus == NotConnectedStatus) {
                 [_agentStatusArray addObject:@(AgentStatusError)];
@@ -110,9 +111,20 @@
                         [self seviceType:StartedServiceStatus];
                     }
                 }else if(ServerStatus == StoppedServiceStatus) {
-                    if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
-                        [BoxDataManager sharedManager].serverStatus = ServerStatus;
-                        [self seviceType:StoppedServiceStatus];
+                    if (Status == 1) {
+                        if ([_middleOneLab.text isEqualToString:@"等待校验"]) {
+                            _middleOneView.userInteractionEnabled = NO;
+                        }else{
+                            if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
+                                [BoxDataManager sharedManager].serverStatus = ServerStatus;
+                                [self seviceType:StoppedServiceStatus];
+                            }
+                        }
+                    }else if(Status == 0) {
+                        if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
+                            [BoxDataManager sharedManager].serverStatus = ServerStatus;
+                            [self seviceType:StoppedServiceStatus];
+                        }
                     }
                 }
             }
@@ -753,7 +765,9 @@
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             if (state == StartServiceOperate) {
-                [self seviceType:StartedServiceStatus];
+                _middleOneView.userInteractionEnabled = NO;
+                _middleOneLab.text = @"等待校验";
+                
             }else{
                 [self seviceType:StoppedServiceStatus];
             }

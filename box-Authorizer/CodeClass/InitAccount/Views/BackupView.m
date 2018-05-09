@@ -9,7 +9,7 @@
 #import "BackupView.h"
 
 #define BackupViewBackupLab  @"备份密码"
-#define BackupViewBackupText  @"请输入备份密码"
+#define BackupViewBackupText  @"请输入备份密码(6-20位数字和字母组成)"
 #define BackupViewAleartLab  @"此备份密码需要所有私钥App持有者私下协商决定"
 #define BackupViewConfirmBtn  @"确认"
 
@@ -195,6 +195,7 @@
         return;
     }
     if ([self.delegate respondsToSelector:@selector(backupViewDelegate:)]) {
+        _confirmBtn.userInteractionEnabled = NO;
         [self.delegate backupViewDelegate:_passwordTf.text];
     }
 }

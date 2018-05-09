@@ -69,6 +69,7 @@ static AFHTTPSessionManager *_manager;
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
+                 [ProgressHUD showStatus:10000];
                 failBlock(error);
             }];
             break;
@@ -84,6 +85,7 @@ static AFHTTPSessionManager *_manager;
                 }
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 NSLog(@"Error: %@", error);
+                [ProgressHUD showStatus:10000];
                 failBlock(error);
             }];
             

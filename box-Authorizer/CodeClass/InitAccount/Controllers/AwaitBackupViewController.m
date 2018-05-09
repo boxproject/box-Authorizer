@@ -101,7 +101,7 @@
     }];
    
     _contentLab = [[UILabel alloc] init];
-    _contentLab.text = @"等待第二个私钥App持有者输入正确的备份密码";
+    _contentLab.text = @"等待下一个私钥App持有者输入正确的备份密码";
     _contentLab.textAlignment = NSTextAlignmentCenter;
     _contentLab.font = Font(17);
     _contentLab.textColor = [UIColor colorWithHexString:@"#444444"];

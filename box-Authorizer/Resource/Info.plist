@@ -23,7 +23,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>App需要访问您的相机，以方便您体验拍摄、扫码、刷脸等</string>
+	<string>私钥App需要访问您的相机，以方便您体验拍摄、扫码、刷脸等</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>添加图片到相册</string>
 	<key>UIMainStoryboardFile</key>

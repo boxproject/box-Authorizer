@@ -42,6 +42,7 @@
 #import "ProgressHUD.h"
 #import "NewsInfoModel.h"
 #import "DDRSAWrapper.h"
+#import "PassWordManager.h"
 
 typedef NS_ENUM(NSInteger, ApprovalState) {
     ApprovalAwait,   //待审批

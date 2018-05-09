@@ -18,6 +18,7 @@
 		170D7889205F6B9E00916F25 /* CurrencyAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D787D205F6B9E00916F25 /* CurrencyAccountModel.m */; };
 		170D788B205F6B9E00916F25 /* CurrencyAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */; };
 		170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7899205F92AC00916F25 /* AboutBoxViewController.m */; };
+		171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EC0E020A2A58500CA7F20 /* PassWordManager.m */; };
 		171EEA4F2050DBE4002DABD3 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EEA4D2050DBE4002DABD3 /* NetworkManager.m */; };
 		171EEA582050DC35002DABD3 /* FSAES128.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EEA522050DC35002DABD3 /* FSAES128.m */; };
 		171EEA592050DC35002DABD3 /* NSData+AES128.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EEA542050DC35002DABD3 /* NSData+AES128.m */; };
@@ -131,6 +132,8 @@
 		170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyAccountTableViewCell.m; sourceTree = "<group>"; };
 		170D7898205F92AC00916F25 /* AboutBoxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutBoxViewController.h; sourceTree = "<group>"; };
 		170D7899205F92AC00916F25 /* AboutBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutBoxViewController.m; sourceTree = "<group>"; };
+		171EC0DF20A2A58500CA7F20 /* PassWordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassWordManager.h; sourceTree = "<group>"; };
+		171EC0E020A2A58500CA7F20 /* PassWordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassWordManager.m; sourceTree = "<group>"; };
 		171EEA4D2050DBE4002DABD3 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
 		171EEA4E2050DBE4002DABD3 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
 		171EEA512050DC35002DABD3 /* FSAES128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSAES128.h; sourceTree = "<group>"; };
@@ -789,6 +792,8 @@
 				17640297207B5B7900E125B2 /* DeviceManager.m */,
 				1764029D207B712E00E125B2 /* ProgressHUD.h */,
 				1764029E207B712E00E125B2 /* ProgressHUD.m */,
+				171EC0DF20A2A58500CA7F20 /* PassWordManager.h */,
+				171EC0E020A2A58500CA7F20 /* PassWordManager.m */,
 			);
 			path = ManagerCommon;
 			sourceTree = "<group>";
@@ -1274,6 +1279,7 @@
 				178357362057788900CD6FA8 /* DDRSAWrapper+openssl.m in Sources */,
 				1783574C2059395B00CD6FA8 /* PrivatePasswordView.m in Sources */,
 				170A8C192062069D00E23542 /* LeftMenuModel.m in Sources */,
+				171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */,
 				170A8C102061023400E23542 /* LeftMenuViewController.m in Sources */,
 				176402BA207F293000E125B2 /* ApprovalBusinessTableViewCell.m in Sources */,
 				1764029C207B64FB00E125B2 /* UIARSAHandler.m in Sources */,
@@ -1455,6 +1461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JAE7YA2A7W;
 				ENABLE_BITCODE = NO;
@@ -1472,15 +1479,16 @@
 					"box-Authorizer/globel/OpenSSL/include",
 				);
 				INFOPLIST_FILE = "box-Authorizer/Resource/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1491,6 +1499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JAE7YA2A7W;
 				ENABLE_BITCODE = NO;
@@ -1508,15 +1517,16 @@
 					"box-Authorizer/globel/OpenSSL/include",
 				);
 				INFOPLIST_FILE = "box-Authorizer/Resource/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.2se.box-Authorizer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

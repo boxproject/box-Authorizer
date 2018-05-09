@@ -8,7 +8,7 @@
 
 #import "PrivatePasswordView.h"
 
-#define PrivatePasswordbackupLab @"私钥密码"
+#define PrivatePasswordbackupLab @"备份密码"
 #define PrivatePasswordComfirm @"确认"
 
 @interface PrivatePasswordView ()<UITextFieldDelegate>
@@ -168,6 +168,7 @@
         return;
     }
     if ([self.delegate respondsToSelector:@selector(PrivatePasswordViewDelegate:)]) {
+        _confirmBtn.userInteractionEnabled = NO;
         [self.delegate PrivatePasswordViewDelegate:_passwordTf.text];
     }
 }

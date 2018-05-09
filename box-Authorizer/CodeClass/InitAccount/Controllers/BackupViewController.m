@@ -17,10 +17,12 @@
 #define BackupVCbackupButton  @"立即备份"
 #define BackupVCSVProgressOne  @"密码备份成功"
 #define BackupVCWSProgressTwo  @"请等待下一位私钥App持有者连接..."
+#define BackupVCCheckPwd  @"密码必须为6-20位数字和字母组成"
 
 @interface BackupViewController ()<BackupViewDelegate>
 {
     NSTimer *timer;
+    NSInteger totalIn;
 }
 
 @property(nonatomic, strong)UILabel *contentlab;
@@ -58,6 +60,7 @@
                     return ;
                 }
                 NSArray *array = dict[@"Status"][@"KeyStoreStatus"];
+                totalIn = [dict[@"Status"][@"Total"] integerValue];
                 _backupArray = array;
                 for (NSDictionary *dic in array) {
                     AuthorizerInfoModel *model = [[AuthorizerInfoModel alloc] initWithDict:dic];
@@ -118,7 +121,7 @@
 
 -(void)backupAction:(UIButton *)btn
 {
-    if (_backupArray.count < 3) {
+    if (_backupArray.count < totalIn || totalIn == 0) {
         [WSProgressHUD showErrorWithStatus:BackupVCWSProgressTwo];
         return;
     }
@@ -130,6 +133,11 @@
 #pragma mark ----- BackupViewDelegate 备份密码确认 -----
 - (void)backupViewDelegate:(NSString *)passwordStr
 {
+    BOOL checkBool = [PassWordManager checkPassWord:passwordStr];
+    if (!checkBool) {
+        [WSProgressHUD showErrorWithStatus:BackupVCCheckPwd];
+        return;
+    }
     [timer invalidate];
     timer = nil;
     [_backupView removeFromSuperview];

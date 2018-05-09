@@ -11,14 +11,15 @@
 
 #define PerfectInformationVCTitle  @"完善信息"
 #define PerfectInformationVCNameText  @"请输入姓名"
-#define PerfectInformationVCPasswordText  @"请输入私钥密码 (只支持数字、字母区分大小写)"
-#define PerfectInformationVCVerifiyText  @"请再次输入私钥密码"
+#define PerfectInformationVCPasswordText  @"请输入账户密码 (只支持6-20位数字、字母区分大小写)"
+#define PerfectInformationVCVerifiyText  @"请再次输入账户密码"
 #define PerfectInformationVCAleartLab  @"私钥密码切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
 #define PerfectInformationVCCormfirmBtn  @"提交"
 #define PerfectInformationVCAleartOne  @"请完善信息"
 #define PerfectInformationVCAleartTwo  @"请输入密码"
 #define PerfectInformationVCAleartThree  @"密码不一致"
 #define PerfectInformationVCSucceed  @"提交完成"
+#define PerfectInformationVCCheckPwd  @"密码必须为6-20位数字和字母组成"
 
 @interface PerfectInformationViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 
@@ -221,6 +222,11 @@
         [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartTwo];
         return;
     }
+    BOOL checkBool = [PassWordManager checkPassWord:_passwordTf.text];
+    if (!checkBool) {
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCCheckPwd];
+        return;
+    }
     if (![_passwordTf.text isEqualToString:_verifyPwFf.text]) {
         [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartThree];
         return;
@@ -246,8 +252,9 @@
     [paramsDic setObject:aesStr forKey:@"publickey"];
     [paramsDic setObject:applyer_id forKey:@"applyerid"];
     [paramsDic setObject:_nameTf.text forKey:@"applyername"];
-    
+    [ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/keystore" params:paramsDic success:^(id responseObject) {
+        [WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {

@@ -16,6 +16,7 @@
 #define PerfectInformationVCTorchlight  @"轻触关闭"
 #define PerfectInformationVCTorchheight  @"轻触照亮"
 #define PerfectInformationVCScanResult  @"将二维码放入框内，即可自动扫描"
+#define PerfectInformationVCErrorCode  @"二维码无效"
 
 @interface ScanCodeViewController () <AVCaptureMetadataOutputObjectsDelegate,CALayerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
@@ -436,6 +437,12 @@
                 // 隐藏遮盖
                 [SVProgressHUD dismiss];
                 if (_fromFunction == fromInitAccount) {
+                    NSArray *codeArray = [JsonObject dictionaryWithJsonStringArr:result];
+                    if (codeArray == nil) {
+                        [WSProgressHUD showErrorWithStatus:PerfectInformationVCErrorCode];
+                        [self.navigationController popViewControllerAnimated:YES];
+                        return ;
+                    }
                     PerfectInformationViewController *perferInVC = [[PerfectInformationViewController alloc] init];
                     perferInVC.scanResult = result;
                     UINavigationController *perferInNC = [[UINavigationController alloc]initWithRootViewController:perferInVC];

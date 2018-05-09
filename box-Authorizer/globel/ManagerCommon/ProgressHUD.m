@@ -12,6 +12,7 @@
 #define NetWorkCode11  @"JSON处理失败"
 #define NetWorkCode12  @"leveldb处理失败"
 #define NetWorkCode103  @"非法金额"
+#define NetWorkCode10000  @"请求失败"
 
 @implementation ProgressHUD
 
@@ -31,6 +32,8 @@
         [WSProgressHUD showErrorWithStatus:NetWorkCode12];
     }else if (code == 103){
         [WSProgressHUD showErrorWithStatus:NetWorkCode103];
+    }else if (code == 10000){
+        [WSProgressHUD showErrorWithStatus:NetWorkCode10000];
     }
 }
 
