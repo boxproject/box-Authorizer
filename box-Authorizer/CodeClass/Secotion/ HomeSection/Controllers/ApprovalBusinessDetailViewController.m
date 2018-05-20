@@ -147,8 +147,8 @@
     NSString *Flow = _responseDic[@"ApprovalInfo"][@"Flow"];
     NSString *Sign = _responseDic[@"ApprovalInfo"][@"Sign"];
     if ([Status isEqualToString:@"0"]) {
-        NSArray *menberArr = [[MenberInfoManager sharedManager] loadMenberInfo:AppId];
-        MenberInfoModel *menberInfoModel = menberArr[0];
+        NSArray *menberArr = [[MemberInfoManager sharedManager] loadMenberInfo:AppId];
+        MemberInfoModel *menberInfoModel = menberArr[0];
         BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:Flow signature:Sign publicStr:menberInfoModel.publicKey];
         if (!veryOK) {
             [WSProgressHUD showErrorWithStatus:@"非法审批流"];

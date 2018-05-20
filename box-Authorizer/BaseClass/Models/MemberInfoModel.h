@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MenberInfoModel : NSObject
+@interface MemberInfoModel : NSObject
 /** 员工Id */
 @property (nonatomic,strong) NSString *menber_id;
 /** 员工账号 */

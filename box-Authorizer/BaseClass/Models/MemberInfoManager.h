@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MenberInfoModel.h"
+#import "MemberInfoModel.h"
 
-@interface MenberInfoManager : NSObject
+@interface MemberInfoManager : NSObject
 
 +(instancetype)sharedManager;
 - (NSMutableArray *)loadMenberInfo:(NSString *)menberId;
 - (BOOL)createMenberInfoTable;
-- (BOOL)deleteMenberInfoModel:(MenberInfoModel *)model;
-- (BOOL)updateMenberInfoModel:(MenberInfoModel *)model;
-- (BOOL)insertMenberInfoModel:(MenberInfoModel *)model;
+- (BOOL)deleteMenberInfoModel:(MemberInfoModel *)model;
+- (BOOL)updateMenberInfoModel:(MemberInfoModel *)model;
+- (BOOL)insertMenberInfoModel:(MemberInfoModel *)model;
 
 @end

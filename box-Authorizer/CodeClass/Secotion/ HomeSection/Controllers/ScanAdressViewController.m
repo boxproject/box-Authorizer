@@ -141,7 +141,7 @@
                                     @"menber_random":menber_random,
                                     @"directIdentify":@(1)
                                     };
-        MenberInfoModel *model = [[MenberInfoModel alloc] initWithDict:menberDic];
+        MemberInfoModel *model = [[MemberInfoModel alloc] initWithDict:menberDic];
         if (applyer_pub_key !=  nil) {
             //该账号对申请者公钥生成的信息摘要
             NSString *hmacSHA256 = [UIARSAHandler hmac:applyer_pub_key withKey:menber_random];
@@ -154,7 +154,7 @@
                 NSDictionary *dict = responseObject;
                 if ([dict[@"code"] integerValue] == 0) {
                     NSLog(@"------------------%@", dict[@"message"]);
-                    [[MenberInfoManager sharedManager] insertMenberInfoModel:model];
+                    [[MemberInfoManager sharedManager] insertMenberInfoModel:model];
                     [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"授权码被%@扫描", applyer_Account]];
                 }
             } fail:^(NSError *error) {

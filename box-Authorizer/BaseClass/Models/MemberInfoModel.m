@@ -6,9 +6,9 @@
 //  Copyright © 2018年 2se. All rights reserved.
 //
 
-#import "MenberInfoModel.h"
+#import "MemberInfoModel.h"
 
-@implementation MenberInfoModel
+@implementation MemberInfoModel
 
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key{
     
