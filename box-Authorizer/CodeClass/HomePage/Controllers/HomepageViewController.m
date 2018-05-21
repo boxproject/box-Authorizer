@@ -229,7 +229,7 @@
             NSString *dbPath = [path stringByAppendingPathComponent:@"message.db"];
             [DBHelp openDataBase:dbPath];
             //创建表结构
-            [[MenberInfoManager sharedManager] createMenberInfoTable];
+            [[MemberInfoManager sharedManager] createMenberInfoTable];
             [[NewsInfoModel sharedManager] createNewsInfoTable];
         }
     }else{

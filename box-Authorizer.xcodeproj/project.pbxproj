@@ -37,8 +37,8 @@
 		1739E28420623B6100297249 /* LanguageSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1739E28320623B6100297249 /* LanguageSwitchViewController.m */; };
 		1739E28720623C2D00297249 /* LanguageSwitchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1739E28620623C2D00297249 /* LanguageSwitchModel.m */; };
 		1764028D207B51C600E125B2 /* BoxDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764028C207B51C500E125B2 /* BoxDataManager.m */; };
-		17640290207B594800E125B2 /* MenberInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764028E207B594800E125B2 /* MenberInfoModel.m */; };
-		17640293207B599800E125B2 /* MenberInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17640292207B599800E125B2 /* MenberInfoManager.m */; };
+		17640290207B594800E125B2 /* MemberInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764028E207B594800E125B2 /* MemberInfoModel.m */; };
+		17640293207B599800E125B2 /* MemberInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17640292207B599800E125B2 /* MemberInfoManager.m */; };
 		17640296207B5B4D00E125B2 /* DBHelp.m in Sources */ = {isa = PBXBuildFile; fileRef = 17640295207B5B4D00E125B2 /* DBHelp.m */; };
 		17640299207B5B7A00E125B2 /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 17640297207B5B7900E125B2 /* DeviceManager.m */; };
 		1764029C207B64FB00E125B2 /* UIARSAHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1764029A207B64FB00E125B2 /* UIARSAHandler.m */; };
@@ -175,10 +175,10 @@
 		1739E28620623C2D00297249 /* LanguageSwitchModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LanguageSwitchModel.m; sourceTree = "<group>"; };
 		1764028B207B51C500E125B2 /* BoxDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxDataManager.h; sourceTree = "<group>"; };
 		1764028C207B51C500E125B2 /* BoxDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxDataManager.m; sourceTree = "<group>"; };
-		1764028E207B594800E125B2 /* MenberInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenberInfoModel.m; sourceTree = "<group>"; };
-		1764028F207B594800E125B2 /* MenberInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenberInfoModel.h; sourceTree = "<group>"; };
-		17640291207B599800E125B2 /* MenberInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenberInfoManager.h; sourceTree = "<group>"; };
-		17640292207B599800E125B2 /* MenberInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenberInfoManager.m; sourceTree = "<group>"; };
+		1764028E207B594800E125B2 /* MemberInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberInfoModel.m; sourceTree = "<group>"; };
+		1764028F207B594800E125B2 /* MemberInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberInfoModel.h; sourceTree = "<group>"; };
+		17640291207B599800E125B2 /* MemberInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberInfoManager.h; sourceTree = "<group>"; };
+		17640292207B599800E125B2 /* MemberInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberInfoManager.m; sourceTree = "<group>"; };
 		17640294207B5B4D00E125B2 /* DBHelp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHelp.h; sourceTree = "<group>"; };
 		17640295207B5B4D00E125B2 /* DBHelp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHelp.m; sourceTree = "<group>"; };
 		17640297207B5B7900E125B2 /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
@@ -594,10 +594,10 @@
 			children = (
 				1764028B207B51C500E125B2 /* BoxDataManager.h */,
 				1764028C207B51C500E125B2 /* BoxDataManager.m */,
-				1764028F207B594800E125B2 /* MenberInfoModel.h */,
-				1764028E207B594800E125B2 /* MenberInfoModel.m */,
-				17640291207B599800E125B2 /* MenberInfoManager.h */,
-				17640292207B599800E125B2 /* MenberInfoManager.m */,
+				1764028F207B594800E125B2 /* MemberInfoModel.h */,
+				1764028E207B594800E125B2 /* MemberInfoModel.m */,
+				17640291207B599800E125B2 /* MemberInfoManager.h */,
+				17640292207B599800E125B2 /* MemberInfoManager.m */,
 				176402CD207F644B00E125B2 /* NewsModel.h */,
 				176402CE207F644B00E125B2 /* NewsModel.m */,
 				176402D0207F65DA00E125B2 /* NewsInfoModel.h */,
@@ -1265,7 +1265,7 @@
 				1783574920592B1300CD6FA8 /* CIQRCodeManager.m in Sources */,
 				1707DA8520689C3F00AE81BE /* BoxNavigationController.m in Sources */,
 				17835761205A700C00CD6FA8 /* HomepageViewController.m in Sources */,
-				17640290207B594800E125B2 /* MenberInfoModel.m in Sources */,
+				17640290207B594800E125B2 /* MemberInfoModel.m in Sources */,
 				176402CF207F644B00E125B2 /* NewsModel.m in Sources */,
 				171EEA9620527C36002DABD3 /* UIImage+Bitmap.m in Sources */,
 				171EEA8C2052668F002DABD3 /* AwaitBackupViewController.m in Sources */,
@@ -1290,7 +1290,7 @@
 				171EEA9720527C36002DABD3 /* UIWebView+UIImage.m in Sources */,
 				176402EA20858F1700E125B2 /* ModifyServerAddressViewController.m in Sources */,
 				176402CC207F2C0300E125B2 /* CoinlistModel.m in Sources */,
-				17640293207B599800E125B2 /* MenberInfoManager.m in Sources */,
+				17640293207B599800E125B2 /* MemberInfoManager.m in Sources */,
 				1783575A205A679000CD6FA8 /* TimeManeger.m in Sources */,
 				170A8C1520610D7300E23542 /* JASidePanelController.m in Sources */,
 				170D7883205F6B9E00916F25 /* AddCurrencyViewController.m in Sources */,

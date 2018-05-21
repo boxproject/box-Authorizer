@@ -6,20 +6,20 @@
 //  Copyright © 2018年 2se. All rights reserved.
 //
 
-#import "MenberInfoManager.h"
-@interface MenberInfoManager()
+#import "MemberInfoManager.h"
+@interface MemberInfoManager()
 
 @property (nonatomic,strong) NSMutableArray *menberInfoArray;
 
 @end
 
-@implementation MenberInfoManager
+@implementation MemberInfoManager
 
 +(instancetype)sharedManager{
     static dispatch_once_t onceToken;
-    static MenberInfoManager *instance;
+    static MemberInfoManager *instance;
     dispatch_once(&onceToken, ^{
-        instance = [[MenberInfoManager alloc] init];
+        instance = [[MemberInfoManager alloc] init];
     });
     return instance;
 }
@@ -36,7 +36,7 @@
     _menberInfoArray = [[NSMutableArray alloc] init];
     FMResultSet *rs = [[DBHelp dataBase]executeQuery:@"select * from menberInfoTable where menber_id = ?;" withArgumentsInArray:@[menberId]];
     while ([rs next]) {
-        MenberInfoModel *model = [[MenberInfoModel alloc]init];
+        MemberInfoModel *model = [[MemberInfoModel alloc]init];
         model.menber_id = [rs stringForColumn:@"menber_id"];
         model.menber_account = [rs stringForColumn:@"menber_account"];
         model.publicKey = [rs stringForColumn:@"publicKey"];
@@ -50,7 +50,7 @@
 /*
  * 根据menber_id从数据库中删除一条数据
  */
-- (BOOL)deleteMenberInfoModel:(MenberInfoModel *)model
+- (BOOL)deleteMenberInfoModel:(MemberInfoModel *)model
 {
     BOOL isOk = [[DBHelp dataBase]executeUpdate:@"delete from menberInfoTable where menber_id = ?;" withArgumentsInArray:@[model.menber_id]];
     return isOk;
@@ -59,7 +59,7 @@
 /*
  * 根据menber_id修改数据库中的字段
  */
-- (BOOL)updateMenberInfoModel:(MenberInfoModel *)model;
+- (BOOL)updateMenberInfoModel:(MemberInfoModel *)model;
 {
     BOOL isOK = [[DBHelp dataBase]executeUpdate:@"update menberInfoTable set menber_account = ?,publicKey = ?,menber_random = ?,directIdentify = ? where menber_id = ?"
                            withArgumentsInArray:@[model.menber_account,model.publicKey,model.menber_random,@(model.directIdentify),model.menber_id]];
@@ -69,7 +69,7 @@
 /*
  * 往数据库中插入一条数据
  */
-- (BOOL)insertMenberInfoModel:(MenberInfoModel *)model
+- (BOOL)insertMenberInfoModel:(MemberInfoModel *)model
 {
     BOOL isOK = [[DBHelp dataBase]executeUpdate:@"insert into menberInfoTable (menber_account,publicKey,menber_random,directIdentify,menber_id) values(?,?,?,?,?);"
                            withArgumentsInArray:@[model.menber_account,model.publicKey,model.menber_random,@(model.directIdentify),model.menber_id]];
