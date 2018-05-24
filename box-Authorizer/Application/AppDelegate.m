@@ -11,7 +11,6 @@
 #import "GenerateContractViewController.h"
 #import "ServiceStartViewController.h"
 #import "AwaitBackupViewController.h"
-#import "ServiceStartViewController.h"
 #import "BlueToothListViewController.h"
 #import "HomepageViewController.h"
 #import "LeftMenuViewController.h"
@@ -49,7 +48,7 @@
             //蓝牙打印二维码
             [self enterBlueToothListPrint];
         }
-        else{
+        else {
             //启动根据签名机状态
             [self requestAgentStatus];
         }
@@ -85,8 +84,12 @@
             [self enterInitAccountView];
             break;
         case CreatedContractStatus:
-            //已创建,发布合约
-            [self enterCreatedContract];
+            if ([BoxDataManager sharedManager].codePassWord != nil) {
+                [self enterAwaitBackup];
+            }else{
+                //已创建,发布合约
+                [self enterCreatedContract];
+            }
             break;
         case PublishContractStatus:
             //首次启动服务
@@ -147,6 +150,18 @@
     self.window.frame = [UIScreen mainScreen].bounds;
     self.window.backgroundColor = kWhiteColor;
     [self.window makeKeyAndVisible];
+    GenerateContractViewController *generateContractVC = [[GenerateContractViewController alloc] init];
+    UINavigationController *generateContractNC = [[UINavigationController alloc] initWithRootViewController:generateContractVC];
+    self.window.rootViewController = generateContractNC;
+}
+
+//进入备份状态
+-(void)enterAwaitBackup
+{
+    self.window = [[UIWindow alloc] init];
+    self.window.frame = [UIScreen mainScreen].bounds;
+    self.window.backgroundColor = kWhiteColor;
+    [self.window makeKeyAndVisible];
     AwaitBackupViewController *awaitBackupVC = [[AwaitBackupViewController alloc] init];
     self.window.rootViewController = awaitBackupVC;
 }
@@ -199,6 +214,15 @@
                 break;
         }
     }];
+}
+
+#pragma mark ----- 禁止横屏 -----
+- (UIInterfaceOrientationMask )application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    //关闭横屏
+    return UIInterfaceOrientationMaskPortrait;
+    //允许横屏
+    //return UIInterfaceOrientationMaskAll;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

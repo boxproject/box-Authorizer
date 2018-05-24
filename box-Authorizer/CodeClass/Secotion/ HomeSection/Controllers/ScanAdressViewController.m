@@ -101,7 +101,7 @@
     }];
 }
 
-#pragma mark ----- 私钥APP提注册审批意见 -----
+#pragma mark ----- 私钥APP提交注册审批意见 -----
 -(void)handleRegistrationsPending:(NSDictionary *)dic
 {
     //Status 0 -创建 1-拒绝 2 -同意
@@ -124,7 +124,7 @@
         [paramsDic setObject:@(1) forKey:@"status"];
         [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/registaproval" params:paramsDic success:^(id responseObject) {
             NSDictionary *dict = responseObject;
-            if ([dict[@"code"] integerValue] == 0) {
+            if ([dict[@"RspNo"] integerValue] == 0) {
                 NSLog(@"------------------%@", dict[@"message"]);
             }
         } fail:^(NSError *error) {
@@ -152,7 +152,7 @@
             [paramsDic setObject:@(2) forKey:@"status"];
             [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/registaproval" params:paramsDic success:^(id responseObject) {
                 NSDictionary *dict = responseObject;
-                if ([dict[@"code"] integerValue] == 0) {
+                if ([dict[@"RspNo"] integerValue] == 0) {
                     NSLog(@"------------------%@", dict[@"message"]);
                     [[MemberInfoManager sharedManager] insertMenberInfoModel:model];
                     [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"授权码被%@扫描", applyer_Account]];

@@ -17,7 +17,7 @@
 #define BackupVCbackupButton  @"立即备份"
 #define BackupVCSVProgressOne  @"密码备份成功"
 #define BackupVCWSProgressTwo  @"请等待下一位私钥App持有者连接..."
-#define BackupVCCheckPwd  @"密码必须为6-20位数字和字母组成"
+#define BackupVCCheckPwd  @"密码必须为6-12位数字和字母组成"
 
 @interface BackupViewController ()<BackupViewDelegate>
 {
@@ -133,22 +133,19 @@
 #pragma mark ----- BackupViewDelegate 备份密码确认 -----
 - (void)backupViewDelegate:(NSString *)passwordStr
 {
-    BOOL checkBool = [PassWordManager checkPassWord:passwordStr];
-    if (!checkBool) {
-        [WSProgressHUD showErrorWithStatus:BackupVCCheckPwd];
-        return;
-    }
     [timer invalidate];
     timer = nil;
     [_backupView removeFromSuperview];
-    NSString *aesStr = [FSAES128 AES128EncryptStrig:passwordStr keyStr:[BoxDataManager sharedManager].randomValue];
+    NSString *aesStr = [FSAES128 AES128EncryptStrig:[BoxDataManager sharedManager].passWord keyStr:[BoxDataManager sharedManager].randomValue];
     NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:aesStr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
     //BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:aesStr signature:signSHA256 publicStr:[BoxDataManager sharedManager].publicKeyBase64];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
+    
     [paramsDic setObject:aesStr forKey:@"password"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
     [paramsDic setObject:@"1" forKey:@"type"];
+    [paramsDic setObject:passwordStr forKey:@"code"];
     
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/operate" params:paramsDic success:^(id responseObject) {
         NSDictionary *dict = responseObject;

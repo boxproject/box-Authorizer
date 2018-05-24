@@ -17,8 +17,8 @@
  */
 +(BOOL)checkPassWord:(NSString *)pwd
 {
-    //这里设置为6-20位数字和字母组成
-    NSString *regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
+    //这里设置为6-12位数字和字母组成
+    NSString *regex = @"^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$";
     NSPredicate *  pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     if ([pred evaluateWithObject:pwd]) {
         return YES ;

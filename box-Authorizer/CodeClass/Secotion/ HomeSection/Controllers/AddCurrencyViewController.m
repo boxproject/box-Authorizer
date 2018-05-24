@@ -29,6 +29,8 @@
 /** 二维码扫描 */
 @property (nonatomic, strong) UIButton *scanButton;
 
+@property (nonatomic, strong) DDRSAWrapper *aWrapper;
+
 @end
 
 @implementation AddCurrencyViewController
@@ -38,6 +40,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
     self.title = AddCurrencyVCTitle;
+    _aWrapper = [[DDRSAWrapper alloc] init];
     [self createBarItem];
     [self createView];
 }
@@ -216,16 +219,24 @@
         [WSProgressHUD showErrorWithStatus:AddCurrencyVCCurrencyAdressTf];
         return;
     }
+    BOOL checkBool = [AddressVerifyManager checkAddressVerify:_currencyAdressTf.text type:@"ETH"];
+    if (!checkBool) {
+        [WSProgressHUD showErrorWithStatus:AddressVerifyETHError];
+        return;
+    }
     if ([_accuracyTf.text isEqualToString:@""]) {
         [WSProgressHUD showErrorWithStatus:AddCurrencyVCaccuracyTf];
         return;
     }
-  
+    
+    NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:_currencyAdressTf.text privateStr:[BoxDataManager sharedManager].privateKeyBase64];
     NSInteger accuracy = [_accuracyTf.text integerValue];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject: _currencyNameTf.text forKey:@"tokenname"];
     [paramsDic setObject:_currencyAdressTf.text forKey:@"contractaddr"];
     [paramsDic setObject:@(accuracy) forKey:@"decimals"];
+    [paramsDic setObject:signSHA256 forKey:@"sign"];
+    [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
     [ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/tokenedit" params:paramsDic success:^(id responseObject) {
         [WSProgressHUD dismiss];
@@ -238,7 +249,7 @@
                 [self.delegate addCurrencyDelegateReflesh];
             }
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
     } fail:^(NSError *error) {
         [WSProgressHUD dismiss];

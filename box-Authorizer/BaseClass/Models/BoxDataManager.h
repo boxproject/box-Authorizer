@@ -58,17 +58,20 @@ typedef NS_ENUM(NSInteger, AgentOperate) {
 @property(nonatomic, strong)NSString *privateKeyBase64;
 /** 启动状态 */
 @property(nonatomic, assign)LaunchState launchState;
-/** 账户密码 */
+/** 口令 */
 @property(nonatomic, strong)NSString *passWord;
 /** 备份密码 */
 @property(nonatomic, strong)NSString *codePassWord;
+/** D - 用于私钥的恢复  */
+@property(nonatomic, strong)NSString *stringD;
 /** KeyStoreStatus */
 @property(nonatomic, strong)NSString *KeyStoreStatus;
 /** 服务状态 */
 @property(nonatomic, assign)ServerStatus serverStatus;
 /** 签名机操作 */
 @property(nonatomic, assign)AgentOperate agentOperate;
-
+/** 等待校验初始时间 */
+@property(nonatomic, strong)NSString *checkTime;
 
 +(instancetype)sharedManager;
 /** 获取本地数据 */

@@ -88,7 +88,7 @@
                 [_sourceArray addObject:model];
             }
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
         [self reloadAction];
     } fail:^(NSError *error) {

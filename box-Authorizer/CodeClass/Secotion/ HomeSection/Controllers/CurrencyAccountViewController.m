@@ -25,6 +25,7 @@
 @property (nonatomic,assign) NSInteger page;
 @property (nonatomic,assign) NSInteger pageSize;
 @property (nonatomic, strong) NSMutableArray *selectArray;
+@property (nonatomic, strong) DDRSAWrapper *aWrapper;
 
 @end
 
@@ -36,6 +37,7 @@
     self.view.backgroundColor = kWhiteColor;
      _sourceArray = [[NSMutableArray alloc] init];
     _selectArray = [[NSMutableArray alloc] init];
+    _aWrapper = [[DDRSAWrapper alloc] init];
     [self createView];
     _page = 1;
     _segmentedView.selectedSegmentIndex = 0;
@@ -108,13 +110,13 @@
             }
             
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
         [self reloadAction];
     } fail:^(NSError *error) {
         //[WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
-        [self reloadAction];
+        [self handleRequestFailed];
     }];
 }
 
@@ -141,14 +143,20 @@
             [_sourceArray addObject:model];
             
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
         [self reloadAction];
     } fail:^(NSError *error) {
         //[WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
-        [self reloadAction];
+        [self handleRequestFailed];
     }];
+}
+
+-(void)handleRequestFailed
+{
+    [_sourceArray removeAllObjects];
+    [self reloadAction];
 }
 
 -(void)reloadAction
@@ -219,9 +227,13 @@
 #pragma mark ----- 删除代币 -----
 -(void)deleteCurrentcy:(NSIndexPath *)indexPath
 {
+    
     CurrencyAccountModel *model = self.sourceArray[indexPath.row];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:model.ContractAddr forKey:@"contractaddr"];
+    [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
+    NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:model.ContractAddr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
+    [paramsDic setObject:signSHA256 forKey:@"sign"];
     [ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/tokendel" params:paramsDic success:^(id responseObject) {
         [WSProgressHUD dismiss];
@@ -231,7 +243,7 @@
             [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
     } fail:^(NSError *error) {
         [WSProgressHUD dismiss];
@@ -270,7 +282,7 @@
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             
         }else{
-            [ProgressHUD showStatus:[dict[@"code"] integerValue]];
+            [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
         }
     } fail:^(NSError *error) {
         [WSProgressHUD dismiss];

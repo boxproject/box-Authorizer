@@ -9,9 +9,10 @@
 #import "BackupView.h"
 
 #define BackupViewBackupLab  @"备份密码"
-#define BackupViewBackupText  @"请输入备份密码(6-20位数字和字母组成)"
+#define BackupViewBackupText  @"请输入备份密码(6-12位数字和字母组成)"
 #define BackupViewAleartLab  @"此备份密码需要所有私钥App持有者私下协商决定"
 #define BackupViewConfirmBtn  @"确认"
+#define BackupViewCheckPwd  @"密码必须为6-12位数字和字母组成"
 
 @interface BackupView ()<UITextFieldDelegate>
 /** 密码 */
@@ -194,6 +195,11 @@
         [WSProgressHUD showErrorWithStatus:BackupViewBackupText];
         return;
     }
+    BOOL checkBool = [PassWordManager checkPassWord:_passwordTf.text];
+    if (!checkBool) {
+        [WSProgressHUD showErrorWithStatus:BackupViewCheckPwd];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(backupViewDelegate:)]) {
         _confirmBtn.userInteractionEnabled = NO;
         [self.delegate backupViewDelegate:_passwordTf.text];
@@ -229,6 +235,16 @@
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string{
+    NSString *allStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if(textField.isSecureTextEntry==YES) {
+        textField.text= allStr;
+        return NO;
+    }
+    return YES;
 }
 
 

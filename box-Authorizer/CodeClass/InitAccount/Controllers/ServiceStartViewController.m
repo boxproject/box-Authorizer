@@ -17,16 +17,16 @@
 #define ServiceStartLaunchUnstart  @"未启动"
 #define ServiceStartLaunchState  @"启动中"
 #define ServiceStartLaunchStateSecceed  @"启动成功"
-#define ServiceStartPassword  @"请输入备份密码"
-#define ServiceStartRepassword  @"请再次输入备份密码"
+#define ServiceStartPassword  @"请输入口令"
+#define ServiceStartRepassword  @"请再次口令"
 #define ServiceStartCommitStart  @"同意启动"
 #define ServiceStartCommitStartUse  @"开始使用"
 #define ServiceStartAwaitBtn  @"已等待时间"
 #define ServiceStartUse  @"开始使用"
 #define ServiceStateTitle  @"启动成功"
 #define ServiceStateDetail  @"继续等待下一位私钥App持有者启动服务"
-#define ServiceStartAleartOne  @"请输入私钥密码"
-#define ServiceStartAleartTwo  @"密码不一致"
+#define ServiceStartAleartOne  @"请输入口令"
+#define ServiceStartAleartTwo  @"口令不一致"
 
 #define CellReuseIdentifier  @"ServiceStart"
 
@@ -34,6 +34,7 @@
 {
     NSTimer *timeTimer;
     NSTimer *dataTimer;
+    NSInteger totalIn;
 }
 //布局对象
 @property (nonatomic, strong) UICollectionViewFlowLayout *collectionFlowlayout;
@@ -362,6 +363,7 @@
             NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
             NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
             NSInteger Total = [dict[@"Status"][@"Total"] integerValue];
+            totalIn = Total;
             NSArray *NodesAuthorizedArr = dict[@"Status"][@"NodesAuthorized"];
             //输入私钥密码状态
             if (ServerStatus == 3 && Status == 0) {
@@ -375,8 +377,8 @@
                     NSDictionary *dic = @{@"ApplyerId":@"", @"ApplyerName":@"",@"Authorized":@(NO)};
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:dic];
                     [_sourceArray addObject:model];
-                    [_collectionView reloadData];
                 }
+                [self handleReloadData];
             }
             //等待下一位输入：1-自己还未输入 2-自己已经输入
             else if (ServerStatus == 3 && Status == 1 && NodesAuthorizedArr.count < Total){
@@ -394,8 +396,8 @@
                     for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                         ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                         [_sourceArray addObject:model];
-                        [_collectionView reloadData];
                     }
+                    [self handleReloadData];
                     //进入输入私钥密码状态
                     _importView.hidden = NO;
                     _startStateView.hidden = YES;
@@ -411,9 +413,8 @@
                     for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                         ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                         [_sourceArray addObject:model];
-                        [_collectionView reloadData];
-                        
                     }
+                    [self handleReloadData];
                 }
             }
             //重新输入私钥密码状态
@@ -429,8 +430,8 @@
                     NSDictionary *dic = @{@"ApplyerId":@"", @"ApplyerName":@"",@"Authorized":@(NO)};
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:dic];
                     [_sourceArray addObject:model];
-                    [_collectionView reloadData];
                 }
+                [self handleReloadData];
             }else if(ServerStatus == 4 && Status == 0 && NodesAuthorizedArr.count == Total){
                 [_launchState setTitle:ServiceStartLaunchStateSecceed forState:UIControlStateNormal];
                 [dataTimer invalidate];
@@ -446,8 +447,8 @@
                 for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                     [_sourceArray addObject:model];
-                    [_collectionView reloadData];
                 }
+                [self handleReloadData];
             }
             else if(Status == 2){
                 [WSProgressHUD showErrorWithStatus:@"服务异常"];
@@ -456,6 +457,18 @@
     } fail:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
+}
+
+-(void)handleReloadData
+{
+    if (_sourceArray.count < totalIn) {
+        for (int i = (int)(_sourceArray.count); i < totalIn; i ++) {
+            NSDictionary *dic = @{@"ApplyerId":@"", @"ApplyerName":@"",@"Authorized":@(NO)};
+            ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:dic];
+            [_sourceArray addObject:model];
+        }
+    }
+   [_collectionView reloadData];
 }
 
 #pragma mark ----- getAgentStatus -----
@@ -506,6 +519,16 @@
     cell.model = model;
     [cell setDataWithModel:model];
     return cell;
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string{
+    NSString *allStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if(textField.isSecureTextEntry==YES) {
+        textField.text= allStr;
+        return NO;
+    }
+    return YES;
 }
 
 

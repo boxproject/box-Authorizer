@@ -18,6 +18,8 @@
 		170D7889205F6B9E00916F25 /* CurrencyAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D787D205F6B9E00916F25 /* CurrencyAccountModel.m */; };
 		170D788B205F6B9E00916F25 /* CurrencyAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */; };
 		170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7899205F92AC00916F25 /* AboutBoxViewController.m */; };
+		171EA98E20B27E84006F53F1 /* AddressVerifyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */; };
+		171EA99120B2EB3D006F53F1 /* AgentStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */; };
 		171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EC0E020A2A58500CA7F20 /* PassWordManager.m */; };
 		171EEA4F2050DBE4002DABD3 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EEA4D2050DBE4002DABD3 /* NetworkManager.m */; };
 		171EEA582050DC35002DABD3 /* FSAES128.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EEA522050DC35002DABD3 /* FSAES128.m */; };
@@ -132,6 +134,10 @@
 		170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyAccountTableViewCell.m; sourceTree = "<group>"; };
 		170D7898205F92AC00916F25 /* AboutBoxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutBoxViewController.h; sourceTree = "<group>"; };
 		170D7899205F92AC00916F25 /* AboutBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutBoxViewController.m; sourceTree = "<group>"; };
+		171EA98C20B27E84006F53F1 /* AddressVerifyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVerifyManager.h; sourceTree = "<group>"; };
+		171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVerifyManager.m; sourceTree = "<group>"; };
+		171EA98F20B2EB3D006F53F1 /* AgentStatusManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentStatusManager.h; sourceTree = "<group>"; };
+		171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AgentStatusManager.m; sourceTree = "<group>"; };
 		171EC0DF20A2A58500CA7F20 /* PassWordManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassWordManager.h; sourceTree = "<group>"; };
 		171EC0E020A2A58500CA7F20 /* PassWordManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassWordManager.m; sourceTree = "<group>"; };
 		171EEA4D2050DBE4002DABD3 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
@@ -794,6 +800,10 @@
 				1764029E207B712E00E125B2 /* ProgressHUD.m */,
 				171EC0DF20A2A58500CA7F20 /* PassWordManager.h */,
 				171EC0E020A2A58500CA7F20 /* PassWordManager.m */,
+				171EA98C20B27E84006F53F1 /* AddressVerifyManager.h */,
+				171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */,
+				171EA98F20B2EB3D006F53F1 /* AgentStatusManager.h */,
+				171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */,
 			);
 			path = ManagerCommon;
 			sourceTree = "<group>";
@@ -1285,8 +1295,10 @@
 				1764029C207B64FB00E125B2 /* UIARSAHandler.m in Sources */,
 				170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */,
 				171EEA592050DC35002DABD3 /* NSData+AES128.m in Sources */,
+				171EA98E20B27E84006F53F1 /* AddressVerifyManager.m in Sources */,
 				171EEA5A2050DC35002DABD3 /* JsonObject.m in Sources */,
 				568445972043B10D004891D8 /* AppDelegate.m in Sources */,
+				171EA99120B2EB3D006F53F1 /* AgentStatusManager.m in Sources */,
 				171EEA9720527C36002DABD3 /* UIWebView+UIImage.m in Sources */,
 				176402EA20858F1700E125B2 /* ModifyServerAddressViewController.m in Sources */,
 				176402CC207F2C0300E125B2 /* CoinlistModel.m in Sources */,
@@ -1479,7 +1491,7 @@
 					"box-Authorizer/globel/OpenSSL/include",
 				);
 				INFOPLIST_FILE = "box-Authorizer/Resource/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1489,7 +1501,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1517,7 +1529,7 @@
 					"box-Authorizer/globel/OpenSSL/include",
 				);
 				INFOPLIST_FILE = "box-Authorizer/Resource/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1527,7 +1539,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

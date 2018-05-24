@@ -16,7 +16,7 @@
 #define GenerateContractVCAccountCopyBtn  @"复制地址"
 #define GenerateContractVCAccountSaveBtn  @"保存二维码"
 #define GenerateContractVCscanTwoLab  @"合约二维码"
-#define GenerateContractVCprivateBtn  @"输入私钥密码"
+#define GenerateContractVCprivateBtn  @"输入口令"
 #define GenerateContractVserviceStartBtn  @"启动服务"
 
 @interface GenerateContractViewController ()<UIScrollViewDelegate, UITextFieldDelegate,PrivatePasswordViewDelegate,MBProgressHUDDelegate>
@@ -426,10 +426,18 @@
                         }
                     }
                 }else if(Status == 1){
-                    [WSProgressHUD showErrorWithStatus:@"校验密码输入错误，请重新输入私钥密码"];
-                    [_privateBtn setTitle:GenerateContractVCprivateBtn forState:UIControlStateNormal];
-                    _privateBtnState = 0;
-                    
+                    if ([BoxDataManager sharedManager].checkTime != nil) {
+                        NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
+                        NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
+                        NSInteger elapseTime = (currentTime - checkTime)/1000;
+                        if (elapseTime < 10) {
+                            [WSProgressHUD showSuccessWithStatus:@"密码已提交，等待校验"];
+                        }else{
+                            [self handleReInputPassword];
+                        }
+                    }else{
+                        [self handleReInputPassword];
+                    }
                 }else if(Status == 2){
                     [WSProgressHUD showErrorWithStatus:@"服务异常"];
                 }
@@ -437,6 +445,16 @@
         } fail:^(NSError *error) {
             NSLog(@"%@", error.description);
         }];
+    }
+}
+
+-(void)handleReInputPassword
+{
+    [WSProgressHUD showErrorWithStatus:@"校验密码输入错误，请重新输入私钥密码"];
+    [_privateBtn setTitle:GenerateContractVCprivateBtn forState:UIControlStateNormal];
+    _privateBtnState = 0;
+    if ([BoxDataManager sharedManager].checkTime != nil) {
+        [[BoxDataManager sharedManager] removeDataWithCoding:@"checkTime"];
     }
 }
 
@@ -459,7 +477,7 @@
             [_privatePasswordView removeFromSuperview];
             [_privateBtn setTitle:@"刷新" forState:UIControlStateNormal];
             _privateBtnState = 1;
-
+            [self handleCheckTime];
         }else{
             [ProgressHUD showStatus:RspNo];
         }
@@ -468,10 +486,21 @@
     }];
 }
 
+#pragma ----- 设置校验初始时间 -----
+-(void)handleCheckTime
+{
+    NSInteger checkTime = [[NSDate date]timeIntervalSince1970] * 1000;
+    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", checkTime];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"checkTime" codeValue:checkTimeStr];
+}
+
 
 #pragma mark ----- 启动服务 -----
 -(void)serviceStartAction:(UIButton *)btn
 {
+    if ([BoxDataManager sharedManager].checkTime != nil) {
+        [[BoxDataManager sharedManager] removeDataWithCoding:@"checkTime"];
+    }
     ServiceStartViewController *serviceStartVC = [[ServiceStartViewController alloc] init];
     UINavigationController *serviceStartNV = [[UINavigationController alloc] initWithRootViewController:serviceStartVC];
     [self presentViewController:serviceStartNV animated:YES completion:nil];

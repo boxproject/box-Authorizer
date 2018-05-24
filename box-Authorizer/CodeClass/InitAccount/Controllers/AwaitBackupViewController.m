@@ -17,15 +17,15 @@
 {
     NSTimer *timer;
     NSTimer *timerNet;
+    NSInteger statusIn;
 }
 
 @property(nonatomic, strong)UILabel *timeLab;
-
 @property(nonatomic, strong)UILabel *contentLab;
 /** 计时 */
 @property (nonatomic,assign) NSInteger currentTime;
-
 @property (nonatomic, strong) UIButton *nextButton;
+
 
 @end
 
@@ -47,8 +47,15 @@
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
+            NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
+            //NSInteger Total = [dict[@"Status"][@"Total"] integerValue];
+            NSString *stringD = dict[@"Status"][@"D"];
             if (ServerStatus == 1){
                 if([dict[@"Status"][@"NodesAuthorized"] isKindOfClass:[NSNull class]]){
+                    return;
+                }
+                if (Status == 2) {
+                    [self handleStatus:Status];
                     return;
                 }
                 NSArray *array = dict[@"Status"][@"NodesAuthorized"];
@@ -65,6 +72,7 @@
                 timerNet = nil;
                 NSString *Address = dict[@"Status"][@"Address"];
                 [[BoxDataManager sharedManager] saveDataWithCoding:@"Address" codeValue:Address];
+                [[BoxDataManager sharedManager] saveDataWithCoding:@"stringD" codeValue:stringD];
                 _nextButton.hidden = NO;
                 _contentLab.text = @"所有私钥App持有者都已正确输入备份密码";
             }
@@ -72,6 +80,14 @@
     } fail:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
+}
+
+-(void)handleStatus:(NSInteger)status
+{
+    _contentLab.text = @"备份密码不一致";
+    _nextButton.hidden = NO;
+    [_nextButton setTitle:@"返回重新备份" forState:UIControlStateNormal];
+    statusIn = status;
 }
 
 -(void)createView
@@ -135,6 +151,14 @@
 
 -(void)nextAction:(UIButton *)btn
 {
+    if (statusIn == 2) {
+        [timer invalidate];
+        timer = nil;
+        [timerNet invalidate];
+        timerNet = nil;
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
     BlueToothListViewController *blueToothListVC = [[BlueToothListViewController alloc] init];
     UINavigationController *blueToothListNV = [[UINavigationController alloc] initWithRootViewController:blueToothListVC];
     [self presentViewController:blueToothListNV animated:YES completion:nil];

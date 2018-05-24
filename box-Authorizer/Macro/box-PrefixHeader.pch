@@ -43,6 +43,7 @@
 #import "NewsInfoModel.h"
 #import "DDRSAWrapper.h"
 #import "PassWordManager.h"
+#import "AddressVerifyManager.h"
 
 typedef NS_ENUM(NSInteger, ApprovalState) {
     ApprovalAwait,   //待审批

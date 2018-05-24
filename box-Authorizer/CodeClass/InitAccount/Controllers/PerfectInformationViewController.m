@@ -11,15 +11,15 @@
 
 #define PerfectInformationVCTitle  @"完善信息"
 #define PerfectInformationVCNameText  @"请输入姓名"
-#define PerfectInformationVCPasswordText  @"请输入账户密码 (只支持6-20位数字、字母区分大小写)"
-#define PerfectInformationVCVerifiyText  @"请再次输入账户密码"
-#define PerfectInformationVCAleartLab  @"私钥密码切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
+#define PerfectInformationVCPasswordText  @"请输入口令(只支持6-12位数字、字母区分大小写)"
+#define PerfectInformationVCVerifiyText  @"请再次输入口令"
+#define PerfectInformationVCAleartLab  @"口令切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
 #define PerfectInformationVCCormfirmBtn  @"提交"
 #define PerfectInformationVCAleartOne  @"请完善信息"
-#define PerfectInformationVCAleartTwo  @"请输入密码"
-#define PerfectInformationVCAleartThree  @"密码不一致"
+#define PerfectInformationVCAleartTwo  @"请输入口令"
+#define PerfectInformationVCAleartThree  @"口令不一致"
 #define PerfectInformationVCSucceed  @"提交完成"
-#define PerfectInformationVCCheckPwd  @"密码必须为6-20位数字和字母组成"
+#define PerfectInformationVCCheckPwd  @"口令必须为6-12位数字和字母组成"
 
 @interface PerfectInformationViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 
@@ -269,6 +269,16 @@
     } fail:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string{
+    NSString *allStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if(textField.isSecureTextEntry==YES) {
+        textField.text= allStr;
+        return NO;
+    }
+    return YES;
 }
 
 

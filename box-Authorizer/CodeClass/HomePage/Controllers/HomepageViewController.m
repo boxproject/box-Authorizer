@@ -90,21 +90,27 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadNews];
+    [self approvallist];
 }
 
 #pragma mark ------ 签名机状态查询 -----
 -(void)agentStatusTimer:(NSTimer *)timer
 {
+    [self approvallist];
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
             NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
+            NSInteger Total = [dict[@"Status"][@"Total"] integerValue];
+            NSArray *NodesAuthorizedArr = dict[@"Status"][@"NodesAuthorized"];
             if (ServerStatus == NotConnectedStatus) {
                 [_agentStatusArray addObject:@(AgentStatusError)];
+                [self handleAgentStatusArray];
                 [self seviceType:NotConnectedStatus];
             }else{
                 [_agentStatusArray addObject:@(AgentStatusStable)];
+                [self handleAgentStatusArray];
                 if (ServerStatus == StartedServiceStatus) {
                     if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
                         [BoxDataManager sharedManager].serverStatus = ServerStatus;
@@ -112,8 +118,21 @@
                     }
                 }else if(ServerStatus == StoppedServiceStatus) {
                     if (Status == 1) {
-                        if ([_middleOneLab.text isEqualToString:@"等待校验"]) {
-                            _middleOneView.userInteractionEnabled = NO;
+                        if ([BoxDataManager sharedManager].checkTime != nil) {
+                            NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
+                            NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
+                            NSInteger elapseTime = (currentTime - checkTime)/1000;
+                            if (elapseTime < 10) {
+                                [self checkTimeStatus];
+                            }else{
+                                [[BoxDataManager sharedManager] removeDataWithCoding:@"checkTime"];
+                                if (NodesAuthorizedArr.count == Total){
+                                    [BoxDataManager sharedManager].serverStatus = ServerStatus;
+                                    [self seviceType:StoppedServiceStatus];
+                                }else{
+                                     [self handleCheckTime];
+                                }
+                            }
                         }else{
                             if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
                                 [BoxDataManager sharedManager].serverStatus = ServerStatus;
@@ -122,21 +141,22 @@
                         }
                     }else if(Status == 0) {
                         if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
+                            if ([BoxDataManager sharedManager].checkTime != nil) {
+                                [[BoxDataManager sharedManager] removeDataWithCoding:@"checkTime"];
+                            }
                             [BoxDataManager sharedManager].serverStatus = ServerStatus;
                             [self seviceType:StoppedServiceStatus];
                         }
                     }
                 }
             }
-            if ([BoxDataManager sharedManager].serverStatus != ServerStatus) {
-                if (ServerStatus == NotConnectedStatus) {
-                    [BoxDataManager sharedManager].serverStatus  = ServerStatus;
-                    [self showAgentState:AgentStatusError];
-                }else{
-                    [BoxDataManager sharedManager].serverStatus  = ServerStatus;
-                    _showAgentStatus = [self getAgentStatusProbability];
-                    [self showAgentState:_showAgentStatus];
-                }
+            if (ServerStatus == NotConnectedStatus) {
+                [BoxDataManager sharedManager].serverStatus  = ServerStatus;
+                [self showAgentState:AgentStatusError];
+            }else{
+                [BoxDataManager sharedManager].serverStatus  = ServerStatus;
+                _showAgentStatus = [self getAgentStatusProbability];
+                [self showAgentState:_showAgentStatus];
             }
             if (_firstInit == 1) {
                 if (ServerStatus == NotConnectedStatus) {
@@ -152,11 +172,19 @@
         }
     } fail:^(NSError *error) {
         [_agentStatusArray addObject:@(AgentStatusError)];
+        [self handleAgentStatusArray];
         if (_showAgentStatus != 0) {
             [self showAgentState:_showAgentStatus];
         }
         NSLog(@"%@", error.description);
     }];
+}
+
+-(void)handleAgentStatusArray
+{
+    if (_agentStatusArray.count == 6) {
+        [_agentStatusArray removeObjectAtIndex:0];
+    }
 }
 
 -(void)showAgentState:(NSInteger)state
@@ -181,8 +209,7 @@
 #pragma mark ------ 0：异常 1:不稳定 2:稳定 -----
 -(NSInteger)getAgentStatusProbability
 {
-    if (_agentStatusArray.count == 6) {
-        [_agentStatusArray removeObjectAtIndex:0];
+    if (_agentStatusArray.count == 5) {
         NSInteger stateAll = 0;
         for (int i = 0; i < _agentStatusArray.count; i++) {
             NSInteger stateIn = [_agentStatusArray[i] integerValue];
@@ -765,9 +792,7 @@
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             if (state == StartServiceOperate) {
-                _middleOneView.userInteractionEnabled = NO;
-                _middleOneLab.text = @"等待校验";
-                
+                [self handleCheckTime];
             }else{
                 [self seviceType:StoppedServiceStatus];
             }
@@ -777,6 +802,22 @@
     } fail:^(NSError *error) {
         NSLog(@"%@", error.description);
     }];
+}
+
+#pragma ----- 设置校验初始时间 -----
+-(void)handleCheckTime
+{
+    [self checkTimeStatus];
+    NSInteger checkTime = [[NSDate date]timeIntervalSince1970] * 1000;
+    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", checkTime];
+    [[BoxDataManager sharedManager] saveDataWithCoding:@"checkTime" codeValue:checkTimeStr];
+}
+
+-(void)checkTimeStatus
+{
+    _middleOneView.userInteractionEnabled = NO;
+    _middleOneLab.text = @"等待校验";
+    _middleOneDetailLab.text = HomepageMidOneLabDetailStart;
 }
 
 -(void)seviceType:(NSInteger)state
@@ -789,7 +830,7 @@
         _middleOneLab.text = HomepageMidOneLabStop;
         _middleOneDetailLab.text = HomepageMidOneLabDetailStop;
     }else if(state == StoppedServiceStatus){
-         _middleOneView.userInteractionEnabled = YES;
+        _middleOneView.userInteractionEnabled = YES;
         [[NewsInfoModel sharedManager] insertNewsInfoNews:@"已关停服务"];
         //可启动
         [BoxDataManager sharedManager].agentOperate = StartServiceOperate;

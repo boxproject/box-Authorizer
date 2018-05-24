@@ -8,7 +8,7 @@
 
 #import "PrivatePasswordView.h"
 
-#define PrivatePasswordbackupLab @"备份密码"
+#define PrivatePasswordbackupLab @"口令"
 #define PrivatePasswordComfirm @"确认"
 
 @interface PrivatePasswordView ()<UITextFieldDelegate>
@@ -97,7 +97,7 @@
     _passwordTf.backgroundColor = [UIColor colorWithHexString:@"#f7f8f9"];
     _passwordTf.delegate = self;
     _passwordTf.clearButtonMode=UITextFieldViewModeWhileEditing;
-    NSString *backupText = @"请输入备份密码";
+    NSString *backupText = @"请输入口令";
     NSMutableAttributedString *backupHolder = [[NSMutableAttributedString alloc] initWithString:backupText];
     [backupHolder addAttribute:NSForegroundColorAttributeName
                          value:[UIColor colorWithHexString:@"#cccccc"]
@@ -160,7 +160,7 @@
     [self removeFromSuperview];
 }
 
-#pragma mark ----- 备份密码确认 -----
+#pragma mark ----- 私钥密码确认 -----
 -(void)confirmAction:(UIButton *)btn
 {
     if ([_passwordTf.text isEqualToString:@""]) {
@@ -205,6 +205,15 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+#pragma mark - UITextFieldDelegate
+- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string{
+    NSString *allStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if(textField.isSecureTextEntry==YES) {
+        textField.text= allStr;
+        return NO;
+    }
+    return YES;
+}
 
 
 /*

@@ -16,6 +16,7 @@
 #import "HLPrinter.h"
 
 static NSString *identifier = @"blueToothList";
+#define SubCount  115
 
 @interface BlueToothListViewController ()<UITableViewDataSource,UITableViewDelegate,PrintAlertViewDelegate>
 
@@ -267,11 +268,37 @@ static NSString *identifier = @"blueToothList";
     [self goToPrinting];
 }
 
+-(NSArray *)createQRCode
+{
+    NSArray *codeArray = [NSArray arrayWithObjects:[BoxDataManager sharedManager].stringD, [BoxDataManager sharedManager].passWord, nil];
+    NSString *codeSting = [JsonObject dictionaryToarrJson:codeArray];
+    NSString *aesStr = [FSAES128 AES128EncryptStrig:codeSting keyStr:[BoxDataManager sharedManager].codePassWord];
+    if (aesStr.length >= SubCount) {
+        NSString *str1 = [aesStr substringToIndex:SubCount];
+        NSString *str2 = [aesStr substringFromIndex:SubCount];
+        NSString *str3 = [str2 substringToIndex:SubCount];
+        NSString *str4 = [str2 substringFromIndex:SubCount];
+        NSArray *subArray = [NSArray arrayWithObjects:str1, str3, str4, nil];
+        return subArray;
+    }else{
+        NSArray *subArray = [NSArray arrayWithObjects:aesStr, nil];
+        return subArray;
+    }
+}
+
 -(void)goToPrinting
 {
+    NSArray *printerArr = [self createQRCode];
     HLPrinter *printer = [[HLPrinter alloc] init];
-    UIImage *image = [CIQRCodeManager createImageWithString:[BoxDataManager sharedManager].codePassWord];
-    [printer appendImage:image alignment:HLTextAlignmentCenter maxWidth:300];
+    for (int i = 0; i < printerArr.count; i ++) {
+        //UIImage *image = [CIQRCodeManager createImageWithString:printStr];
+        //[printer appendImage:image alignment:HLTextAlignmentCenter maxWidth:300];
+        NSString *detailStr = [NSString stringWithFormat:@"二维码 %d", i + 1];
+        [printer appendFooter:detailStr];
+        [printer appendFooter:nil];
+        [printer appendQRCodeWithInfo:printerArr[i] size:6];
+        
+    }
     NSInteger timestampIn = [[NSDate date]timeIntervalSince1970] * 1000;
     NSString *printTime = [self getElapseTimeToString:timestampIn];
     [printer appendFooter:printTime];
@@ -283,7 +310,7 @@ static NSString *identifier = @"blueToothList";
             if (!error) {
                 NSLog(@"写入成功");
                 [_printAlertView changePrintState:BTPrintSuccess];
- 
+                
             }
         }];
     } else if (_infoss.count & CBCharacteristicPropertyWriteWithoutResponse) {
@@ -308,9 +335,15 @@ static NSString *identifier = @"blueToothList";
     GenerateContractViewController *generateContractVC = [[GenerateContractViewController alloc] init];
     UINavigationController *generateContractNV = [[UINavigationController alloc] initWithRootViewController:generateContractVC];
     [self presentViewController:generateContractNV animated:YES completion:nil];
+    [self handleDataCode];
+}
+
+-(void)handleDataCode
+{
     [[BoxDataManager sharedManager] removeDataWithCoding:@"codePassWord"];
+    [[BoxDataManager sharedManager] removeDataWithCoding:@"stringD"];
+    [[BoxDataManager sharedManager] removeDataWithCoding:@"passWord"];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"2"];
-    
 }
 
 

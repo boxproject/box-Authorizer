@@ -47,6 +47,8 @@
     self.randomValue = [defaults valueForKey:@"randomValue"];
     self.box_IpPort = [defaults valueForKey:@"box_IpPort"];
     self.codePassWord = [defaults valueForKey:@"codePassWord"];
+    self.stringD = [defaults valueForKey:@"stringD"];
+    self.checkTime = [defaults valueForKey:@"checkTime"];
 }
 
 
@@ -57,6 +59,12 @@
     [defaults synchronize];
     if ([coding isEqualToString:@"codePassWord"]){
         self.codePassWord = nil;
+    }else if([coding isEqualToString:@"stringD"]){
+        self.stringD = nil;
+    }else if([coding isEqualToString:@"passWord"]){
+        self.passWord = nil;
+    }else if([coding isEqualToString:@"checkTime"]){
+        self.checkTime = nil;
     }
 }
 
@@ -92,6 +100,10 @@
         self.box_IpPort = codeValue;
     }else if ([coding isEqualToString:@"codePassWord"]){
         self.codePassWord = codeValue;
+    }else if ([coding isEqualToString:@"stringD"]){
+        self.stringD = codeValue;
+    }else if ([coding isEqualToString:@"checkTime"]){
+        self.checkTime = codeValue;
     }
     [defaults setObject:codeValue forKey: coding];
     [defaults synchronize];

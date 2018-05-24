@@ -251,7 +251,7 @@
                 NSArray *HashOperatesArr = dict[@"HashOperates"];
                 if ([Status isEqualToString:@"0"] || [Status isEqualToString:@"3"]) {
                     for (NSDictionary *dic in HashOperatesArr) {
-                        if ([[BoxDataManager sharedManager].app_account_id isEqualToString:dic[@"AppId"]]) {
+                        if ([[BoxDataManager sharedManager].app_account_id isEqualToString:dic[@"CaptainId"]]) {
                             [self showBtnApprovalOption:dic[@"Option"]];
                         }
                     }
