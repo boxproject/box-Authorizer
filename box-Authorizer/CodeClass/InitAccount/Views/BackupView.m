@@ -160,6 +160,7 @@
     _confirmBtn.layer.cornerRadius = 2.0f;
     _confirmBtn.layer.masksToBounds = YES;
     _confirmBtn.titleLabel.font = Font(16);
+    _confirmBtn.timeInterVal = 1.0;
     [_confirmBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [_footView addSubview:_confirmBtn];
     [_confirmBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -201,7 +202,6 @@
         return;
     }
     if ([self.delegate respondsToSelector:@selector(backupViewDelegate:)]) {
-        _confirmBtn.userInteractionEnabled = NO;
         [self.delegate backupViewDelegate:_passwordTf.text];
     }
 }

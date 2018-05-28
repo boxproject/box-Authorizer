@@ -18,6 +18,7 @@
 		170D7889205F6B9E00916F25 /* CurrencyAccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D787D205F6B9E00916F25 /* CurrencyAccountModel.m */; };
 		170D788B205F6B9E00916F25 /* CurrencyAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */; };
 		170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7899205F92AC00916F25 /* AboutBoxViewController.m */; };
+		170F392420B7BF2F00B98E93 /* UIButton+touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 170F392320B7BF2F00B98E93 /* UIButton+touch.m */; };
 		171EA98E20B27E84006F53F1 /* AddressVerifyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */; };
 		171EA99120B2EB3D006F53F1 /* AgentStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */; };
 		171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EC0E020A2A58500CA7F20 /* PassWordManager.m */; };
@@ -134,6 +135,8 @@
 		170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyAccountTableViewCell.m; sourceTree = "<group>"; };
 		170D7898205F92AC00916F25 /* AboutBoxViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutBoxViewController.h; sourceTree = "<group>"; };
 		170D7899205F92AC00916F25 /* AboutBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutBoxViewController.m; sourceTree = "<group>"; };
+		170F392220B7BF2F00B98E93 /* UIButton+touch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+touch.h"; sourceTree = "<group>"; };
+		170F392320B7BF2F00B98E93 /* UIButton+touch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+touch.m"; sourceTree = "<group>"; };
 		171EA98C20B27E84006F53F1 /* AddressVerifyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVerifyManager.h; sourceTree = "<group>"; };
 		171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVerifyManager.m; sourceTree = "<group>"; };
 		171EA98F20B2EB3D006F53F1 /* AgentStatusManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentStatusManager.h; sourceTree = "<group>"; };
@@ -804,6 +807,8 @@
 				171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */,
 				171EA98F20B2EB3D006F53F1 /* AgentStatusManager.h */,
 				171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */,
+				170F392220B7BF2F00B98E93 /* UIButton+touch.h */,
+				170F392320B7BF2F00B98E93 /* UIButton+touch.m */,
 			);
 			path = ManagerCommon;
 			sourceTree = "<group>";
@@ -1305,6 +1310,7 @@
 				17640293207B599800E125B2 /* MemberInfoManager.m in Sources */,
 				1783575A205A679000CD6FA8 /* TimeManeger.m in Sources */,
 				170A8C1520610D7300E23542 /* JASidePanelController.m in Sources */,
+				170F392420B7BF2F00B98E93 /* UIButton+touch.m in Sources */,
 				170D7883205F6B9E00916F25 /* AddCurrencyViewController.m in Sources */,
 				176402D5207F785500E125B2 /* NewsTableViewCell.m in Sources */,
 				176402AE207E0DBF00E125B2 /* EditCurrencyViewController.m in Sources */,
@@ -1498,7 +1504,7 @@
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizerB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1536,7 +1542,7 @@
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizerB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;

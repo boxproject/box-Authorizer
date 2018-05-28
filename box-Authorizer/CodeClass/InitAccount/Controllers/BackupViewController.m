@@ -133,8 +133,6 @@
 #pragma mark ----- BackupViewDelegate 备份密码确认 -----
 - (void)backupViewDelegate:(NSString *)passwordStr
 {
-    [timer invalidate];
-    timer = nil;
     [_backupView removeFromSuperview];
     NSString *aesStr = [FSAES128 AES128EncryptStrig:[BoxDataManager sharedManager].passWord keyStr:[BoxDataManager sharedManager].randomValue];
     NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:aesStr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
@@ -151,6 +149,8 @@
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
+            [timer invalidate];
+            timer = nil;
             [WSProgressHUD showSuccessWithStatus:BackupVCSVProgressOne];
             AwaitBackupViewController *awaitBpVC = [[AwaitBackupViewController alloc] init];
             [self presentViewController:awaitBpVC animated:YES completion:nil];

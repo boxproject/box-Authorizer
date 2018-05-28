@@ -424,6 +424,16 @@
                             _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), kTopHeight + 8 + 304 + 10 + 304 + 25 + 50);
                             _contentView.contentOffset = CGPointMake(0, _contentView.contentSize.height - _contentView.bounds.size.height);
                         }
+                    }else if(ServerStatus == 2)
+                    {
+                        if ([BoxDataManager sharedManager].checkTime != nil) {
+                            NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
+                            NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
+                            NSInteger elapseTime = (currentTime - checkTime)/1000;
+                            if (elapseTime >= 10) {
+                                [self handleReInputPassword];
+                            }
+                        }
                     }
                 }else if(Status == 1){
                     if ([BoxDataManager sharedManager].checkTime != nil) {
@@ -450,7 +460,7 @@
 
 -(void)handleReInputPassword
 {
-    [WSProgressHUD showErrorWithStatus:@"校验密码输入错误，请重新输入私钥密码"];
+    [WSProgressHUD showErrorWithStatus:@"校验密码失败，请重新输入私钥密码"];
     [_privateBtn setTitle:GenerateContractVCprivateBtn forState:UIControlStateNormal];
     _privateBtnState = 0;
     if ([BoxDataManager sharedManager].checkTime != nil) {

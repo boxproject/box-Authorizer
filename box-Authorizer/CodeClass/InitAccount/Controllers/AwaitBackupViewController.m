@@ -38,7 +38,10 @@
     [self createView];
     _currentTime = 0;
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
-    timerNet = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(getBackUpResult:) userInfo:nil repeats:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        timerNet = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(getBackUpResult:) userInfo:nil repeats:YES];
+    });
+    
 }
 
 -(void)getBackUpResult:(NSTimer *)Timer
@@ -63,6 +66,7 @@
                     AuthorizerInfoModel *model = [[AuthorizerInfoModel alloc] initWithDict:dic];
                     if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
                         _contentLab.text = [NSString stringWithFormat:@"等待第%ld个私钥App持有者输入正确的备份密码", array.count + 1];
+                        _nextButton.hidden = YES;
                     }
                 }
             }else if (ServerStatus == 2){
@@ -74,6 +78,8 @@
                 [[BoxDataManager sharedManager] saveDataWithCoding:@"Address" codeValue:Address];
                 [[BoxDataManager sharedManager] saveDataWithCoding:@"stringD" codeValue:stringD];
                 _nextButton.hidden = NO;
+                [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+                statusIn = 0;
                 _contentLab.text = @"所有私钥App持有者都已正确输入备份密码";
             }
         }

@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/BackupViewController.m"
-            timestampString = "548597655.422931"
+            timestampString = "548939207.322281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "-backupViewDelegate:"
             landmarkType = "7">
             <Locations>
@@ -26,12 +26,12 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/BackupViewController.m"
-                  timestampString = "548750428.201833"
+                  timestampString = "548930660.9780771"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
-                  offsetFromSymbolStart = "1028">
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
+                  offsetFromSymbolStart = "948">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -41,11 +41,11 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/BackupViewController.m"
-                  timestampString = "548750428.203807"
+                  timestampString = "548930660.98016"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "151"
-                  endingLineNumber = "151"
+                  startingLineNumber = "149"
+                  endingLineNumber = "149"
                   offsetFromSymbolStart = "48">
                </Location>
                <Location
@@ -56,11 +56,11 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/BackupViewController.m"
-                  timestampString = "548750428.2058361"
+                  timestampString = "548930660.982432"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "150"
-                  endingLineNumber = "150"
+                  startingLineNumber = "148"
+                  endingLineNumber = "148"
                   offsetFromSymbolStart = "20">
                </Location>
             </Locations>
@@ -73,11 +73,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/BackupViewController.m"
-            timestampString = "548597655.423086"
+            timestampString = "548939207.322347"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "-backupViewDelegate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -89,11 +89,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.427411"
+            timestampString = "548939207.322397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "-getBackUpResult:"
             landmarkType = "7">
          </BreakpointContent>
@@ -105,11 +105,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.427725"
+            timestampString = "548939207.32245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "-getBackUpResult:"
             landmarkType = "7">
          </BreakpointContent>
@@ -121,11 +121,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.42778"
+            timestampString = "548939207.322498"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "-nextAction:"
             landmarkType = "7">
          </BreakpointContent>
@@ -137,11 +137,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.427827"
+            timestampString = "548939207.322546"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
             landmarkName = "-getBackUpResult:"
             landmarkType = "7">
          </BreakpointContent>
@@ -153,11 +153,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.427873"
+            timestampString = "548939207.322592"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "-getBackUpResult:"
             landmarkType = "7">
          </BreakpointContent>
@@ -169,123 +169,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/AwaitBackupViewController.m"
-            timestampString = "548762549.427916"
+            timestampString = "548939207.322638"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "-getBackUpResult:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/PerfectInformationViewController.m"
-            timestampString = "548676246.415287"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
-            landmarkName = "-cormfirmAction:"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PerfectInformationViewController cormfirmAction:]"
-                  moduleName = "box-Authorizer"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/PerfectInformationViewController.m"
-                  timestampString = "548750428.308784"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "256"
-                  endingLineNumber = "256"
-                  offsetFromSymbolStart = "2400">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__51-[PerfectInformationViewController cormfirmAction:]_block_invoke"
-                  moduleName = "box-Authorizer"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/PerfectInformationViewController.m"
-                  timestampString = "548750428.310511"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "257"
-                  endingLineNumber = "257"
-                  offsetFromSymbolStart = "64">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.286"
-                  moduleName = "box-Authorizer"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/PerfectInformationViewController.m"
-                  timestampString = "548750428.312447"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "256"
-                  endingLineNumber = "256"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/PerfectInformationViewController.m"
-            timestampString = "548676246.4155869"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
-            landmarkName = "-cormfirmAction:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
-            timestampString = "548597655.423436"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
-            landmarkName = "-requestData"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
-            timestampString = "548597655.42354"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
-            landmarkName = "-handleReloadData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -328,7 +217,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.331533"
+                  timestampString = "548930661.018811"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "130"
@@ -343,7 +232,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.333222"
+                  timestampString = "548930661.0207109"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "131"
@@ -376,7 +265,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.337858"
+                  timestampString = "548930661.025439"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "153"
@@ -391,7 +280,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.3395391"
+                  timestampString = "548930661.027192"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "154"
@@ -406,7 +295,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.341225"
+                  timestampString = "548930661.028967"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "153"
@@ -455,7 +344,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.349726"
+                  timestampString = "548930661.044427"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
@@ -470,7 +359,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.351371"
+                  timestampString = "548930661.0465519"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
@@ -485,7 +374,7 @@
                   moduleName = "box-Authorizer"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/%20HomeSection/Controllers/ScanAdressViewController.m"
-                  timestampString = "548750428.353032"
+                  timestampString = "548930661.048602"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
@@ -626,27 +515,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/Application/AppDelegate.m"
-            timestampString = "548762549.4283299"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "-requestAgentStatus"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.4283971"
+            timestampString = "548913764.339396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "234"
@@ -662,7 +535,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.429075"
+            timestampString = "548913764.339757"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "238"
@@ -678,7 +551,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.429442"
+            timestampString = "548913764.340003"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "240"
@@ -694,7 +567,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.429812"
+            timestampString = "548913764.3402621"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
@@ -710,7 +583,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.430313"
+            timestampString = "548913764.340506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "130"
@@ -726,7 +599,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.4306771"
+            timestampString = "548913764.3407429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "123"
@@ -742,7 +615,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.431007"
+            timestampString = "548913764.340978"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "125"
@@ -758,7 +631,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.431335"
+            timestampString = "548913764.3412091"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "126"
@@ -838,7 +711,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.431779"
+            timestampString = "548913764.341584"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "121"
@@ -854,7 +727,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.432085"
+            timestampString = "548913764.3418241"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "795"
@@ -870,11 +743,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/GenerateContractViewController.m"
-            timestampString = "548762549.432409"
+            timestampString = "548854333.9118561"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
             landmarkName = "-PrivatePasswordViewDelegate:"
             landmarkType = "7">
          </BreakpointContent>
@@ -886,7 +759,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.432721"
+            timestampString = "548913764.3421021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "836"
@@ -902,7 +775,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.43303"
+            timestampString = "548913764.342348"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "116"
@@ -918,7 +791,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.433291"
+            timestampString = "548913764.342581"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
@@ -934,39 +807,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/Application/AppDelegate.m"
-            timestampString = "548762549.433543"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-launchJumpVC"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/Application/AppDelegate.m"
-            timestampString = "548762549.4337879"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-launchJumpVC"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "box-Authorizer/Application/AppDelegate.m"
-            timestampString = "548762549.433856"
+            timestampString = "548854333.9122421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -982,12 +823,140 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "box-Authorizer/CodeClass/HomePage/Controllers/HomepageViewController.m"
-            timestampString = "548762549.433917"
+            timestampString = "548913764.342845"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "124"
             endingLineNumber = "124"
             landmarkName = "-agentStatusTimer:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.3236409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.323999"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
+            landmarkName = "-commitStartAction:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.3242429"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "437"
+            endingLineNumber = "437"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.324458"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "408"
+            endingLineNumber = "408"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[ServiceStartViewController requestData]_block_invoke"
+                  moduleName = "box-Authorizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+                  timestampString = "548930661.158891"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "408"
+                  endingLineNumber = "408"
+                  offsetFromSymbolStart = "2524">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__41-[ServiceStartViewController requestData]_block_invoke"
+                  moduleName = "box-Authorizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+                  timestampString = "548930661.160648"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "408"
+                  endingLineNumber = "408"
+                  offsetFromSymbolStart = "2536">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.324664"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/InitAccount/Controllers/ServiceStartViewController.m"
+            timestampString = "548939207.324869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "-requestData"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -84,7 +84,7 @@
     _sourceArray = [[NSMutableArray alloc] init];
     
     timeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeTimerAction:) userInfo:nil repeats:YES];
-    [self requestData];
+    dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
 }
 
 #pragma mark ----- scrollview取消弹簧效果 -----
@@ -222,6 +222,7 @@
     _commitStartBtn.layer.masksToBounds = YES;
     _commitStartBtn.layer.cornerRadius = 2.0f;
     _commitStartBtn.titleLabel.font = Font(17);
+    _commitStartBtn.timeInterVal = 1.5;
     [_commitStartBtn addTarget:self action:@selector(commitStartAction:) forControlEvents:UIControlEventTouchUpInside];
     [_importView addSubview:_commitStartBtn];
     [_commitStartBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -338,18 +339,25 @@
     [paramsDic setObject:signSHA256 forKey:@"sign"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
     [paramsDic setObject:@"3" forKey:@"type"];
+    [ProgressHUD showProgressHUD];
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/operate" params:paramsDic success:^(id responseObject) {
+        [WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
+            [dataTimer invalidate];
+            dataTimer = nil;
             _importView.hidden = YES;
             _startStateView.hidden = NO;
             _currentTime = -1;
-            dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
+            });
         }else{
             [ProgressHUD showStatus:RspNo];
         }
     } fail:^(NSError *error) {
+        [WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
 }
@@ -382,17 +390,18 @@
             }
             //等待下一位输入：1-自己还未输入 2-自己已经输入
             else if (ServerStatus == 3 && Status == 1 && NodesAuthorizedArr.count < Total){
+                BOOL NodesAuthorizedBool = NO;
                 for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                     if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
+                        NodesAuthorizedBool = YES;
                         if (_currentTime != 0) {
                         }else{
                             _currentTime = -1;
                         }
                     }
                 }
-                if (_currentTime == 0) {
-                    
+                if (_currentTime == 0 || (_currentTime > 0 && NodesAuthorizedBool == NO)) {
                     for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                         ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                         [_sourceArray addObject:model];
@@ -419,19 +428,21 @@
             }
             //重新输入私钥密码状态
             else if(ServerStatus == 3 && Status == 1 && NodesAuthorizedArr.count == Total){
-                [WSProgressHUD showErrorWithStatus:@"启动服务失败，请重新启动"];
-                _currentTime = 0;
-                _importView.hidden = NO;
-                _startStateView.hidden = YES;
-                [dataTimer invalidate];
-                dataTimer = nil;
-                [_launchState setTitle:ServiceStartLaunchUnstart forState:UIControlStateNormal];
                 for (int i = 0; i < Total; i++) {
                     NSDictionary *dic = @{@"ApplyerId":@"", @"ApplyerName":@"",@"Authorized":@(NO)};
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:dic];
                     [_sourceArray addObject:model];
                 }
                 [self handleReloadData];
+                if (!_importView.hidden) {
+                    return;
+                }
+                [WSProgressHUD showErrorWithStatus:@"启动服务失败，请重新启动"];
+                _currentTime = 0;
+                _importView.hidden = NO;
+                _startStateView.hidden = YES;
+                [_launchState setTitle:ServiceStartLaunchUnstart forState:UIControlStateNormal];
+               
             }else if(ServerStatus == 4 && Status == 0 && NodesAuthorizedArr.count == Total){
                 [_launchState setTitle:ServiceStartLaunchStateSecceed forState:UIControlStateNormal];
                 [dataTimer invalidate];

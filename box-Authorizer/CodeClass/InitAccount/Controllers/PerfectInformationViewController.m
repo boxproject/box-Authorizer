@@ -202,6 +202,7 @@
     _cormfirmButton.titleLabel.font = Font(16);
     _cormfirmButton.layer.masksToBounds = YES;
     _cormfirmButton.layer.cornerRadius = 2.0f;
+    _cormfirmButton.timeInterVal = 0.7;
     [_cormfirmButton addTarget:self action:@selector(cormfirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_cormfirmButton];
     [_cormfirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -267,6 +268,7 @@
             [ProgressHUD showStatus:RspNo];
         }
     } fail:^(NSError *error) {
+        [WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
 }
