@@ -27,7 +27,7 @@
 #define ServiceStateDetail  @"继续等待下一位私钥App持有者启动服务"
 #define ServiceStartAleartOne  @"请输入口令"
 #define ServiceStartAleartTwo  @"口令不一致"
-
+#define ServiceStartPwdTitle  @"输入口令"
 #define CellReuseIdentifier  @"ServiceStart"
 
 @interface ServiceStartViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -61,6 +61,7 @@
 /** 计时 */
 @property (nonatomic,assign) NSInteger currentTime;
 @property(nonatomic, strong)DDRSAWrapper *aWrapper;
+@property (nonatomic, strong)UIButton *showPwdBtn;
 
 @end
 
@@ -80,9 +81,14 @@
                            };
     [self.navigationController.navigationBar setTitleTextAttributes:dic];
     _aWrapper = [[DDRSAWrapper alloc] init];
-    [self createView];
     _sourceArray = [[NSMutableArray alloc] init];
-    
+    [self createView];
+    [self createTimer];
+}
+
+-(void)createTimer
+{
+    [self requestData];
     timeTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timeTimerAction:) userInfo:nil repeats:YES];
     dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
 }
@@ -151,6 +157,7 @@
         make.height.offset(236);
     }];
     
+    /*
     _passwordTf = [[UITextField alloc] init];
     _passwordTf.delegate = self;
     NSString *passwordText = ServiceStartPassword;
@@ -172,12 +179,27 @@
         make.right.offset(-25);
         make.height.offset(55);
     }];
+     */
+    
+    UILabel *titlelab = [[UILabel alloc] init];
+    titlelab.text = ServiceStartPwdTitle;
+    titlelab.textAlignment = NSTextAlignmentCenter;
+    titlelab.font = Font(16);
+    titlelab.textColor = [UIColor colorWithHexString:@"#666666"];
+    titlelab.numberOfLines = 1;
+    [_importView addSubview:titlelab];
+    [titlelab mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.offset(13);
+        make.left.offset(25);
+        make.right.offset(-25);
+        make.height.offset(55);
+    }];
     
     UIView *lineOne = [[UIView alloc] init];
     lineOne.backgroundColor = [UIColor colorWithHexString:@"#e8e8e8"];
     [_importView addSubview:lineOne];
     [lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_passwordTf.mas_bottom).offset(0);
+        make.top.equalTo(titlelab.mas_bottom).offset(0);
         make.left.offset(25);
         make.right.offset(-25);
         make.height.offset(1);
@@ -185,7 +207,7 @@
     
     _rePasswordTf = [[UITextField alloc] init];
     _rePasswordTf.delegate = self;
-    NSString *rePasswordText = ServiceStartRepassword;
+    NSString *rePasswordText = ServiceStartPassword;
     NSMutableAttributedString *reBackupHolder = [[NSMutableAttributedString alloc] initWithString:rePasswordText];
     [reBackupHolder addAttribute:NSForegroundColorAttributeName
                          value:[UIColor colorWithHexString:@"#cccccc"]
@@ -201,8 +223,21 @@
     [_rePasswordTf mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineOne.mas_bottom).offset(0);
         make.left.offset(25);
-        make.right.offset(-25);
+        make.right.offset(-25 - 38);
         make.height.offset(55);
+    }];
+    
+    _showPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_kejian"] forState:UIControlStateNormal];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_bukejian"] forState:UIControlStateSelected];
+    _showPwdBtn.selected = YES;
+    [_showPwdBtn addTarget:self action:@selector(showPwdBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_importView addSubview:_showPwdBtn];
+    [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_rePasswordTf);
+        make.width.offset(36);
+        make.right.equalTo(lineOne.mas_right).offset(0);
+        make.height.offset(27);
     }];
     
     UIView *lineTwo = [[UIView alloc] init];
@@ -320,20 +355,24 @@
     _startStateView.hidden = YES;
 }
 
+#pragma mark ----- 隐藏或者显示密码 -----
+- (void)showPwdBtnAction{
+    NSString *content = _rePasswordTf.text;
+    _showPwdBtn.selected = !_showPwdBtn.isSelected;
+    _rePasswordTf.secureTextEntry = _showPwdBtn.isSelected;
+    _rePasswordTf.text = @"";
+    _rePasswordTf.text = content;
+}
+
 #pragma mark ----- commitStar -----
 -(void)commitStartAction:(UIButton *)btn
 {
-    if ([_passwordTf.text isEqualToString:@""]) {
+    if ([_rePasswordTf.text isEqualToString:@""]) {
         [WSProgressHUD showErrorWithStatus:ServiceStartAleartOne];
         return;
     }
-    if (![_rePasswordTf.text isEqualToString:_passwordTf.text]) {
-        [WSProgressHUD showErrorWithStatus:ServiceStartAleartTwo];
-        return;
-    }
-    NSString *aesStr = [FSAES128 AES128EncryptStrig:_passwordTf.text keyStr:[BoxDataManager sharedManager].randomValue];
+    NSString *aesStr = [FSAES128 AES128EncryptStrig:_rePasswordTf.text keyStr:[BoxDataManager sharedManager].randomValue];
     NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:aesStr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
-    //BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:aesStr signature:signSHA256 publicStr:[BoxDataManager sharedManager].publicKeyBase64];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:aesStr forKey:@"password"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
@@ -345,14 +384,7 @@
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
-            [dataTimer invalidate];
-            dataTimer = nil;
-            _importView.hidden = YES;
-            _startStateView.hidden = NO;
-            _currentTime = -1;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
-            });
+            [self afterCommitPwd];
         }else{
             [ProgressHUD showStatus:RspNo];
         }
@@ -360,6 +392,18 @@
         [WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
+}
+
+-(void)afterCommitPwd
+{
+    [dataTimer invalidate];
+    dataTimer = nil;
+    _importView.hidden = YES;
+    _startStateView.hidden = NO;
+    _currentTime = -1;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dataTimer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
+    });
 }
 
 -(void)requestData
@@ -418,7 +462,6 @@
                     _statedetailLab.hidden = NO;
                     _stateTitleLab.hidden = NO;
                     [_launchState setTitle:ServiceStartLaunchState forState:UIControlStateNormal];
-                    
                     for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                         ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                         [_sourceArray addObject:model];
@@ -505,7 +548,6 @@
     [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"3"];
     HomepageViewController *homepageVC = [[HomepageViewController alloc] init];
     LeftMenuViewController *leftMenuVC = [[LeftMenuViewController alloc] init];
-    //侧滑栏
     JASidePanelController *panelVC = [[JASidePanelController alloc] init];
     UINavigationController *homepageNC = [[UINavigationController alloc]initWithRootViewController:homepageVC];
     UINavigationController *leftMenuNC = [[UINavigationController alloc]initWithRootViewController:leftMenuVC];
@@ -532,7 +574,7 @@
     return cell;
 }
 
-#pragma mark - UITextFieldDelegate
+#pragma mark ----- UITextFieldDelegate -----
 - (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string{
     NSString *allStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if(textField.isSecureTextEntry==YES) {
@@ -541,7 +583,6 @@
     }
     return YES;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

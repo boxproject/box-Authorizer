@@ -11,7 +11,7 @@
 
 #define PerfectInformationVCTitle  @"完善信息"
 #define PerfectInformationVCNameText  @"请输入姓名"
-#define PerfectInformationVCPasswordText  @"请输入口令(只支持6-12位数字、字母区分大小写)"
+#define PerfectInformationVCPasswordText  @"请输入口令(6-12位数字和字母组成)"
 #define PerfectInformationVCVerifiyText  @"请再次输入口令"
 #define PerfectInformationVCAleartLab  @"口令切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
 #define PerfectInformationVCCormfirmBtn  @"提交"
@@ -33,6 +33,7 @@
 /** 提交完善的信息 */
 @property (nonatomic, strong) UIButton *cormfirmButton;
 @property (nonatomic, strong) DDRSAWrapper *aWrapper;
+@property (nonatomic, strong)UIButton *showPwdBtn;
 
 @end
 
@@ -108,8 +109,21 @@
     [_passwordTf mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(16);
         make.top.equalTo(lineOne.mas_bottom).offset(0);
-        make.width.offset(SCREEN_WIDTH - 32);
+        make.width.offset(SCREEN_WIDTH - 32 - 38);
         make.height.offset(55);
+    }];
+    
+    _showPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_kejian"] forState:UIControlStateNormal];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_bukejian"] forState:UIControlStateSelected];
+    _showPwdBtn.selected = YES;
+    [_showPwdBtn addTarget:self action:@selector(showPwdBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_contentView addSubview:_showPwdBtn];
+    [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_passwordTf);
+        make.width.offset(36);
+        make.right.equalTo(lineOne.mas_right).offset(0);
+        make.height.offset(27);
     }];
     
     UIView *lineTwo = [[UIView alloc] init];
@@ -141,7 +155,7 @@
     [_verifyPwFf mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.offset(16);
         make.top.equalTo(lineTwo.mas_bottom).offset(0);
-        make.width.offset(SCREEN_WIDTH - 32);
+        make.width.offset(SCREEN_WIDTH - 32  - 38);
         make.height.offset(55);
     }];
     
@@ -202,7 +216,7 @@
     _cormfirmButton.titleLabel.font = Font(16);
     _cormfirmButton.layer.masksToBounds = YES;
     _cormfirmButton.layer.cornerRadius = 2.0f;
-    _cormfirmButton.timeInterVal = 0.7;
+    _cormfirmButton.timeInterVal = 0.9;
     [_cormfirmButton addTarget:self action:@selector(cormfirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [_contentView addSubview:_cormfirmButton];
     [_cormfirmButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -245,7 +259,7 @@
     //NSString *aesdeStr = [FSAES128 AES128DecryptString:aesStr keyStr:randomStr];
     NSLog(@"%@", aesStr);
     NSInteger applyer_idIn = [[NSDate date]timeIntervalSince1970] * 1000;
-    NSString *applyer_id = [NSString stringWithFormat:@"%ld", applyer_idIn];
+    NSString *applyer_id = [NSString stringWithFormat:@"%ld", (long)applyer_idIn];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"applyer_account" codeValue:_nameTf.text];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"applyer_id" codeValue:applyer_id];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"passWord" codeValue:_passwordTf.text];
@@ -271,6 +285,15 @@
         [WSProgressHUD dismiss];
         NSLog(@"%@", error.description);
     }];
+}
+
+#pragma mark ----- 隐藏或者显示密码 -----
+- (void)showPwdBtnAction{
+    NSString *content = _passwordTf.text;
+    _showPwdBtn.selected = !_showPwdBtn.isSelected;
+    _passwordTf.secureTextEntry = _showPwdBtn.isSelected;
+    _passwordTf.text = @"";
+    _passwordTf.text = content;
 }
 
 #pragma mark - UITextFieldDelegate

@@ -24,7 +24,6 @@
     NSTimer *timer;
     NSInteger totalIn;
 }
-
 @property(nonatomic, strong)UILabel *contentlab;
 /** 备份 */
 @property(nonatomic, strong)UIButton *backupButton;
@@ -45,11 +44,23 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _aWrapper = [[DDRSAWrapper alloc] init];
     [self createView];
+    [self firstGetAgentStatus];
+}
+
+-(void)firstGetAgentStatus
+{
+    [self requestAgentStatus];
     timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(getApprovalResult:) userInfo:nil repeats:YES];
 }
 
 #pragma mark ------ 私钥APP轮询注册审批结果 -----
 -(void)getApprovalResult:(NSTimer *)timer
+{
+    [self requestAgentStatus];
+}
+
+#pragma mark ------ 拉取签名机状态信息 -----
+-(void)requestAgentStatus
 {
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
@@ -130,21 +141,18 @@
     [[UIApplication sharedApplication].keyWindow addSubview:_backupView];
 }
 
-#pragma mark ----- BackupViewDelegate 备份密码确认 -----
+#pragma mark ----- BackupViewDelegate 备份密码 -----
 - (void)backupViewDelegate:(NSString *)passwordStr
 {
     [_backupView removeFromSuperview];
     NSString *aesStr = [FSAES128 AES128EncryptStrig:[BoxDataManager sharedManager].passWord keyStr:[BoxDataManager sharedManager].randomValue];
     NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:aesStr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
-    //BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:aesStr signature:signSHA256 publicStr:[BoxDataManager sharedManager].publicKeyBase64];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
-    
     [paramsDic setObject:aesStr forKey:@"password"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
     [paramsDic setObject:@"1" forKey:@"type"];
     [paramsDic setObject:passwordStr forKey:@"code"];
-    
     [[NetworkManager shareInstance] requestWithMethod:POST withUrl:@"/agent/operate" params:paramsDic success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];

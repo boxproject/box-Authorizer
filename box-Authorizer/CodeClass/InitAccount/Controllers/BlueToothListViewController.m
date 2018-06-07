@@ -293,11 +293,14 @@ static NSString *identifier = @"blueToothList";
     for (int i = 0; i < printerArr.count; i ++) {
         //UIImage *image = [CIQRCodeManager createImageWithString:printStr];
         //[printer appendImage:image alignment:HLTextAlignmentCenter maxWidth:300];
-        NSString *detailStr = [NSString stringWithFormat:@"二维码 %d", i + 1];
+        NSString *detailStr = [NSString stringWithFormat:@"二维码 %d（%@）", i + 1, [BoxDataManager sharedManager].applyer_account];
         [printer appendFooter:detailStr];
         [printer appendFooter:nil];
-        [printer appendQRCodeWithInfo:printerArr[i] size:6];
-        
+        if (i == 2) {
+            [printer appendQRCodeWithInfo:printerArr[i] size:7.5];
+        }else{
+            [printer appendQRCodeWithInfo:printerArr[i] size:6];
+        }
     }
     NSInteger timestampIn = [[NSDate date]timeIntervalSince1970] * 1000;
     NSString *printTime = [self getElapseTimeToString:timestampIn];

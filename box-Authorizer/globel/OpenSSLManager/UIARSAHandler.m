@@ -170,8 +170,6 @@ typedef enum {
     
 }
 
-
-
 /**
  *  加密方式,MAC算法: HmacSHA256
  *

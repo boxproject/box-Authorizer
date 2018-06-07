@@ -26,6 +26,8 @@
 
 @property (nonatomic,strong)UIView *footView;
 
+@property (nonatomic, strong)UIButton *showPwdBtn;
+
 @end
 
 @implementation BackupView
@@ -115,9 +117,23 @@
     [_passwordTf mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topViewLine.mas_bottom).offset(0);
         make.left.offset(16);
-        make.right.offset(-16);
+        make.right.offset(-16-38);
         make.height.offset(56);
     }];
+    
+    _showPwdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_kejian"] forState:UIControlStateNormal];
+    [_showPwdBtn setImage:[UIImage imageNamed:@"icon_bukejian"] forState:UIControlStateSelected];
+    _showPwdBtn.selected = YES;
+    [_showPwdBtn addTarget:self action:@selector(showPwdBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    [_footView addSubview:_showPwdBtn];
+    [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_passwordTf);
+        make.width.offset(36);
+        make.right.offset(-16);
+        make.height.offset(27);
+    }];
+    
     
     UIView *line = [[UIView alloc] init];
     line.backgroundColor = [UIColor colorWithHexString:@"#eaeaea"];
@@ -187,6 +203,15 @@
 {
     [self removeFromSuperview];
     
+}
+
+#pragma mark ----- 隐藏或者显示密码 -----
+- (void)showPwdBtnAction{
+    NSString *content = _passwordTf.text;
+    _showPwdBtn.selected = !_showPwdBtn.isSelected;
+    _passwordTf.secureTextEntry = _showPwdBtn.isSelected;
+    _passwordTf.text = @"";
+    _passwordTf.text = content;
 }
 
 #pragma mark ----- 备份密码确认 -----

@@ -248,7 +248,6 @@
     
 }
 
-
 #pragma mark --- AVCaptureVideoDataOutputSampleBufferDelegate
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
     int bright = [self getBrightWith:sampleBuffer];
@@ -433,7 +432,7 @@
             [_scanImageView removeFromSuperview];
             result = metadataObject.stringValue;
             // 当前延迟1.0秒
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 // 隐藏遮盖
                 [SVProgressHUD dismiss];
                 if (_fromFunction == fromInitAccount) {

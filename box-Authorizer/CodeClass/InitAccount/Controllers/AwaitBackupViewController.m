@@ -36,15 +36,25 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
     [self createView];
+    [self createTimer];
+}
+
+-(void)createTimer
+{
     _currentTime = 0;
     timer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updateTimeAction:) userInfo:nil repeats:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         timerNet = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(getBackUpResult:) userInfo:nil repeats:YES];
     });
-    
 }
 
 -(void)getBackUpResult:(NSTimer *)Timer
+{
+    [self requestAgentStatus];
+}
+
+#pragma mark ------ 拉取签名机状态信息 -----
+-(void)requestAgentStatus
 {
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
@@ -152,7 +162,6 @@
         make.height.offset(45);
     }];
     _nextButton.hidden = YES;
-    
 }
 
 -(void)nextAction:(UIButton *)btn

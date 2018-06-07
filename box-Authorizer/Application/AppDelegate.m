@@ -108,7 +108,6 @@
     }
 }
 
-
 //进入主页
 -(void)enterHomeBoxPage
 {

@@ -42,9 +42,7 @@
 @property(nonatomic, strong)UIButton *importCodeBtn;
 /** 输入私钥APP／刷新 */
 @property(nonatomic, strong)UIButton *privateBtn;
-
 @property(nonatomic, assign)NSInteger privateBtnState;
-
 @property(nonatomic, strong)PrivatePasswordView *privatePasswordView;
 /** 启动服务 */
 @property(nonatomic, strong)UIButton *serviceStartBtn;
@@ -68,6 +66,11 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"#292e40"];
     _aWrapper = [[DDRSAWrapper alloc] init];
     [self createView];
+    [self createProgressHUD];
+}
+
+-(void)createProgressHUD
+{
     self.progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.progressHUD.delegate = self;
     //添加ProgressHUD到界面中
@@ -327,8 +330,10 @@
     self.progressHUD.mode = MBProgressHUDModeText;
     self.progressHUD.label.textColor = kWhiteColor;
     self.progressHUD.bezelView.backgroundColor=[UIColor blackColor];
-    //self.progressHUD.dimBackground = YES; //设置有遮罩
-    self.progressHUD.label.text = @"地址复制成功"; //设置进度框中的提示文字
+    //设置有遮罩
+    //self.progressHUD.dimBackground = YES;
+    //设置进度框中的提示文字
+    self.progressHUD.label.text = @"地址复制成功";
     [self.progressHUD showAnimated:YES];
     [self.progressHUD hideAnimated:YES afterDelay:0.5];
 }
@@ -388,74 +393,85 @@
 -(void)privateAction:(UIButton *)btn
 {
     if (_privateBtnState == 0) {
-        _privatePasswordView = [[PrivatePasswordView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _privatePasswordView.delegate = self;
-        [[UIApplication sharedApplication].keyWindow addSubview:_privatePasswordView];
+        [self showPasswordView];
     }else if(_privateBtnState == 1){
-        [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
-            NSDictionary *dict = responseObject;
-            if ([dict[@"RspNo"] isEqualToString:@"0"]) {
-                NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
-                NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
-                NSInteger Total = [dict[@"Status"][@"Total"] integerValue];
-                NSArray *NodesAuthorizedArr = dict[@"Status"][@"NodesAuthorized"];
-                if (NodesAuthorizedArr.count < Total) {
-                    for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
-                        ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
-                        if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
-                            [WSProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"等待第%ld位私钥App输入密码", NodesAuthorizedArr.count + 1]];
-                            return;
-                        }
+        [self requestAgentStatus];
+    }
+}
+
+#pragma mark ------ 拉取签名机状态信息 -----
+-(void)requestAgentStatus
+{
+    [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
+        NSDictionary *dict = responseObject;
+        if ([dict[@"RspNo"] isEqualToString:@"0"]) {
+            NSInteger ServerStatus = [dict[@"Status"][@"ServerStatus"] integerValue];
+            NSInteger Status = [dict[@"Status"][@"Status"] integerValue];
+            NSInteger Total = [dict[@"Status"][@"Total"] integerValue];
+            NSArray *NodesAuthorizedArr = dict[@"Status"][@"NodesAuthorized"];
+            if (NodesAuthorizedArr.count < Total) {
+                for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
+                    ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
+                    if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
+                        [WSProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"等待第%ld位私钥App输入密码", NodesAuthorizedArr.count + 1]];
+                        return;
                     }
                 }
-                if (Status == 0) {
-                    if (ServerStatus == 3){
-                        //合约地址
-                        NSString *ContractAddress = dict[@"Status"][@"ContractAddress"];
-                        if (![ContractAddress isEqualToString:@""]) {
-                            [[BoxDataManager sharedManager] saveDataWithCoding:@"ContractAddress" codeValue:ContractAddress];
-                            _contractQRCodeImg.image = [CIQRCodeManager createImageWithString:ContractAddress];
-                            _contractQRLab.text = ContractAddress;
-                            _contractCopyBtn.hidden = NO;
-                            _contractSaveBtn.hidden = NO;
-                            _contractQRLab.hidden = NO;
-                            _privateBtn.hidden = YES;
-                            _serviceStartBtn.hidden = NO;
-                            _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), kTopHeight + 8 + 304 + 10 + 304 + 25 + 50);
-                            _contentView.contentOffset = CGPointMake(0, _contentView.contentSize.height - _contentView.bounds.size.height);
-                        }
-                    }else if(ServerStatus == 2)
-                    {
-                        if ([BoxDataManager sharedManager].checkTime != nil) {
-                            NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
-                            NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
-                            NSInteger elapseTime = (currentTime - checkTime)/1000;
-                            if (elapseTime >= 10) {
-                                [self handleReInputPassword];
-                            }
-                        }
+            }
+            if (Status == 0) {
+                if (ServerStatus == 3){
+                    //合约地址
+                    NSString *ContractAddress = dict[@"Status"][@"ContractAddress"];
+                    if (![ContractAddress isEqualToString:@""]) {
+                        [[BoxDataManager sharedManager] saveDataWithCoding:@"ContractAddress" codeValue:ContractAddress];
+                        _contractQRCodeImg.image = [CIQRCodeManager createImageWithString:ContractAddress];
+                        _contractQRLab.text = ContractAddress;
+                        _contractCopyBtn.hidden = NO;
+                        _contractSaveBtn.hidden = NO;
+                        _contractQRLab.hidden = NO;
+                        _privateBtn.hidden = YES;
+                        _serviceStartBtn.hidden = NO;
+                        _contentView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), kTopHeight + 8 + 304 + 10 + 304 + 25 + 50);
+                        _contentView.contentOffset = CGPointMake(0, _contentView.contentSize.height - _contentView.bounds.size.height);
                     }
-                }else if(Status == 1){
+                }else if(ServerStatus == 2)
+                {
                     if ([BoxDataManager sharedManager].checkTime != nil) {
                         NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
                         NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
                         NSInteger elapseTime = (currentTime - checkTime)/1000;
-                        if (elapseTime < 10) {
-                            [WSProgressHUD showSuccessWithStatus:@"密码已提交，等待校验"];
-                        }else{
+                        if (elapseTime >= 10) {
                             [self handleReInputPassword];
                         }
+                    }
+                }
+            }else if(Status == 1){
+                if ([BoxDataManager sharedManager].checkTime != nil) {
+                    NSInteger currentTime = [[NSDate date]timeIntervalSince1970] * 1000;
+                    NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
+                    NSInteger elapseTime = (currentTime - checkTime)/1000;
+                    if (elapseTime < 10) {
+                        [WSProgressHUD showSuccessWithStatus:@"密码已提交，等待校验"];
                     }else{
                         [self handleReInputPassword];
                     }
-                }else if(Status == 2){
-                    [WSProgressHUD showErrorWithStatus:@"服务异常"];
+                }else{
+                    [self handleReInputPassword];
                 }
+            }else if(Status == 2){
+                [WSProgressHUD showErrorWithStatus:@"服务异常"];
             }
-        } fail:^(NSError *error) {
-            NSLog(@"%@", error.description);
-        }];
-    }
+        }
+    } fail:^(NSError *error) {
+        NSLog(@"%@", error.description);
+    }];
+}
+
+-(void)showPasswordView
+{
+    _privatePasswordView = [[PrivatePasswordView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _privatePasswordView.delegate = self;
+    [[UIApplication sharedApplication].keyWindow addSubview:_privatePasswordView];
 }
 
 -(void)handleReInputPassword
@@ -473,7 +489,6 @@
 {
     NSString *aesStr = [FSAES128 AES128EncryptStrig:passwordStr keyStr:[BoxDataManager sharedManager].randomValue];
     NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:aesStr privateStr:[BoxDataManager sharedManager].privateKeyBase64];
-    //BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:aesStr signature:signSHA256 publicStr:[BoxDataManager sharedManager].publicKeyBase64];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:aesStr forKey:@"password"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
@@ -500,7 +515,7 @@
 -(void)handleCheckTime
 {
     NSInteger checkTime = [[NSDate date]timeIntervalSince1970] * 1000;
-    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", checkTime];
+    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", (long)checkTime];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"checkTime" codeValue:checkTimeStr];
 }
 

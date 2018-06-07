@@ -66,12 +66,10 @@
     NewsModel *newsModel = [[NewsModel alloc] init];
     newsModel.content = news;
     NSInteger timestampIn = [[NSDate date]timeIntervalSince1970] * 1000;
-    newsModel.newsId = [NSString stringWithFormat:@"%ld", timestampIn];
+    newsModel.newsId = [NSString stringWithFormat:@"%ld", (long)timestampIn];
     BOOL isOK = [[DBHelp dataBase]executeUpdate:@"insert into newsInfoTable (content,newsId,newsType) values(?,?,?);"
                            withArgumentsInArray:@[newsModel.content,newsModel.newsId,@(newsModel.newsType)]];
     return isOK;
 }
-
-
 
 @end

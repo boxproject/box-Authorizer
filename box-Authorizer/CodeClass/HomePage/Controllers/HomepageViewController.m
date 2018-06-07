@@ -10,13 +10,14 @@
 #import "SeviceStateView.h"
 #import "CurrencyAccountViewController.h"
 #import "ApprovalBusinessViewController.h"
-#import "ScanAdressViewController.h" //授权码
+#import "ScanAdressViewController.h"
 #import "NewsModel.h"
 #import "NewsTableViewCell.h"
 #import "PrivatePasswordView.h"
 #import "AboutBoxViewController.h"
 #import "UIViewController+JASidePanel.h"
 #import "CoinlistModel.h"
+#import "ServiceStartModel.h"
 
 #define CellReuseIdentifier  @"Homepage"
 #define HomepageMidOneLabStop  @"关停"
@@ -37,7 +38,7 @@
 {
     NSTimer *timer;
 }
-@property(nonatomic, strong)UIScrollView *contentView;
+@property (nonatomic, strong)UIScrollView *contentView;
 @property (nonatomic,strong)UIImageView *topView;
 @property (nonatomic,strong)UIView *middleView;
 @property (nonatomic,strong)UIView *middleOneView;
@@ -57,7 +58,6 @@
 @property (nonatomic,strong)NSMutableArray *agentStatusArray;
 @property (nonatomic,assign)NSInteger firstInit;
 @property (nonatomic,strong)DDRSAWrapper *aWrapper;
-
 @end
 
 @implementation HomepageViewController
@@ -65,14 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#ededee"];
-    self.title = HomepageTitle;
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:kWhiteColor}];
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    UIImage *bgImage = [self imageWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, kTopHeight) hexString:@"4867FF"];
-    [bar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"4867FF"];
-    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    [self loadNavigationBar];
     [self createMenberInfo];
     _sourceArray = [[NSMutableArray alloc] init];
     _agentStatusArray = [[NSMutableArray alloc] init];
@@ -84,7 +77,20 @@
     [[NewsInfoModel sharedManager] insertNewsInfoNews:@"打开私钥App"];
     [self loadNews];
     timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(agentStatusTimer:) userInfo:nil repeats:YES];
+    [self requestAgentStatus];
     [self headRefresh];
+}
+
+-(void)loadNavigationBar
+{
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ededee"];
+    self.title = HomepageTitle;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:kWhiteColor}];
+    UINavigationBar * bar = self.navigationController.navigationBar;
+    UIImage *bgImage = [self imageWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, kTopHeight) hexString:@"4867FF"];
+    [bar setBackgroundImage:bgImage forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithHexString:@"4867FF"];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,10 +99,16 @@
     [self approvallist];
 }
 
-#pragma mark ------ 签名机状态查询 -----
+#pragma mark ------ 签名机状态轮询 -----
 -(void)agentStatusTimer:(NSTimer *)timer
 {
     [self approvallist];
+    [self requestAgentStatus];
+}
+
+#pragma mark ------ 拉取签名机状态信息 -----
+-(void)requestAgentStatus
+{
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/status" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
@@ -130,7 +142,19 @@
                                     [BoxDataManager sharedManager].serverStatus = ServerStatus;
                                     [self seviceType:StoppedServiceStatus];
                                 }else{
-                                     [self handleCheckTime];
+                                    BOOL nodesAuthorizedBool = NO;
+                                    for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
+                                        ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
+                                        if ([model.ApplyerId isEqualToString:[BoxDataManager sharedManager].app_account_id]) {
+                                            nodesAuthorizedBool = YES;
+                                        }
+                                    }
+                                    if (nodesAuthorizedBool) {
+                                        [self handleCheckTime];
+                                    }else{
+                                        [BoxDataManager sharedManager].serverStatus = ServerStatus;
+                                        [self seviceType:StoppedServiceStatus];
+                                    }
                                 }
                             }
                         }else{
@@ -809,7 +833,7 @@
 {
     [self checkTimeStatus];
     NSInteger checkTime = [[NSDate date]timeIntervalSince1970] * 1000;
-    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", checkTime];
+    NSString *checkTimeStr = [NSString stringWithFormat:@"%ld", (long)checkTime];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"checkTime" codeValue:checkTimeStr];
 }
 
