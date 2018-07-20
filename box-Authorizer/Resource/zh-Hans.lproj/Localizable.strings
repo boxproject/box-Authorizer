@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  box-Authorizer
+
+  Created by Yu Huang on 2018/7/17.
+  Copyright © 2018年 2se. All rights reserved.
+*/
+
+"LimitTimes" = "额度恢复时间";
+"AccountPasswordHour" = "小时";
+"Limit" = "上限";
+"LimitAlertAffirm" = "我知道了";
+"LimitAlertTitle" = "什么是额度恢复时间？";
+"LimitAlertContent" = "审批流中，可设定币种在一段时间内，申请转账的累计上限。超出时间后，转账额度即可恢复。如：设置ETH的转账上限为10，额度恢复时间为24小时，则最近24小时内，最多可累计申请10个ETH；若额度恢复时间为0，则每次最多转10个ETH，无时间限制。";
+"viewLog" = "查看日志";
+"ApprovalBusinessSucceed" = "审批通过";
+"ApprovalBusinessFail" = "审批不通过";
+"RefuseApproval" = "拒绝审批";
+"RefuseApprovalInfo" = "拒绝的审批无法恢复，请谨慎操作！";
+"Submit" = "提交";
+"RefuseApprovalPlacehode" = "请输入拒绝原因";
+"Cancel" = " 取消";
+"RefuseTransfer" = "撤回转账申请";
+
+

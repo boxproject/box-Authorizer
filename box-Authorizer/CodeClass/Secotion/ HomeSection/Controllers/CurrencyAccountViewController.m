@@ -227,7 +227,6 @@
 #pragma mark ----- 删除代币 -----
 -(void)deleteCurrentcy:(NSIndexPath *)indexPath
 {
-    
     CurrencyAccountModel *model = self.sourceArray[indexPath.row];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:model.ContractAddr forKey:@"contractaddr"];

@@ -83,6 +83,26 @@
 		1783575A205A679000CD6FA8 /* TimeManeger.m in Sources */ = {isa = PBXBuildFile; fileRef = 17835759205A679000CD6FA8 /* TimeManeger.m */; };
 		17835761205A700C00CD6FA8 /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17835760205A700C00CD6FA8 /* HomepageViewController.m */; };
 		17835764205BA43600CD6FA8 /* SeviceStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17835763205BA43600CD6FA8 /* SeviceStateView.m */; };
+		17A812B120FD8061007A791A /* CurrencyDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812AF20FD8061007A791A /* CurrencyDetailTableViewCell.m */; };
+		17A812B420FD80BD007A791A /* CurrencyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812B220FD80BC007A791A /* CurrencyModel.m */; };
+		17A812B820FD86CA007A791A /* ApprovalBusinessFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812B620FD86CA007A791A /* ApprovalBusinessFooterView.m */; };
+		17A812BB20FD8B2F007A791A /* ViewLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812BA20FD8B2E007A791A /* ViewLogViewController.m */; };
+		17A812BE20FD8B4D007A791A /* ViewLogModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812BC20FD8B4D007A791A /* ViewLogModel.m */; };
+		17A812C120FD8B6C007A791A /* ViewLogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17A812C020FD8B6C007A791A /* ViewLogTableViewCell.m */; };
+		17A812C620FD9042007A791A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 17A812C820FD9042007A791A /* InfoPlist.strings */; };
+		17A812CC20FD909B007A791A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 17A812CE20FD909B007A791A /* Localizable.strings */; };
+		17B4FFB120F5ED4C0040ED73 /* AssetAmountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFAE20F5ED4B0040ED73 /* AssetAmountViewController.m */; };
+		17B4FFB220F5ED4C0040ED73 /* AssetAmountListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFAF20F5ED4B0040ED73 /* AssetAmountListViewController.m */; };
+		17B4FFB520F5ED8B0040ED73 /* AssetAmountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFB420F5ED8B0040ED73 /* AssetAmountTableViewCell.m */; };
+		17B4FFB820F5EDAE0040ED73 /* AssetAmountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFB620F5EDAE0040ED73 /* AssetAmountModel.m */; };
+		17B4FFBB20F5EE270040ED73 /* TransferRecordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFB920F5EE270040ED73 /* TransferRecordTableViewCell.m */; };
+		17B4FFBE20F5EE5E0040ED73 /* TransferAwaitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFBC20F5EE5E0040ED73 /* TransferAwaitModel.m */; };
+		17B4FFC120F5EF380040ED73 /* TransferRecordDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFC020F5EF380040ED73 /* TransferRecordDetailViewController.m */; };
+		17B4FFC420F5EF770040ED73 /* TransferModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFC320F5EF770040ED73 /* TransferModel.m */; };
+		17B4FFC920F5F3240040ED73 /* TransferCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFC520F5F3240040ED73 /* TransferCollectionViewCell.m */; };
+		17B4FFCA20F5F3240040ED73 /* TransferCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFC820F5F3240040ED73 /* TransferCollectionReusableView.m */; };
+		17B4FFCD20F5F3470040ED73 /* TransferTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFCB20F5F3470040ED73 /* TransferTopView.m */; };
+		17B4FFD020F5F3600040ED73 /* TransferApproversModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B4FFCE20F5F3600040ED73 /* TransferApproversModel.m */; };
 		402C032A7E658ECCBF3FB289 /* libPods-box-Authorizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 863B8F440FED4A6A704ED86E /* libPods-box-Authorizer.a */; };
 		568445262043AEED004891D8 /* box_AuthorizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568445252043AEED004891D8 /* box_AuthorizerTests.m */; };
 		568445312043AEED004891D8 /* box_AuthorizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 568445302043AEED004891D8 /* box_AuthorizerUITests.m */; };
@@ -342,6 +362,49 @@
 		17835760205A700C00CD6FA8 /* HomepageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
 		17835762205BA43600CD6FA8 /* SeviceStateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeviceStateView.h; sourceTree = "<group>"; };
 		17835763205BA43600CD6FA8 /* SeviceStateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SeviceStateView.m; sourceTree = "<group>"; };
+		17A812AF20FD8061007A791A /* CurrencyDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyDetailTableViewCell.m; sourceTree = "<group>"; };
+		17A812B020FD8061007A791A /* CurrencyDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyDetailTableViewCell.h; sourceTree = "<group>"; };
+		17A812B220FD80BC007A791A /* CurrencyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrencyModel.m; sourceTree = "<group>"; };
+		17A812B320FD80BD007A791A /* CurrencyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrencyModel.h; sourceTree = "<group>"; };
+		17A812B520FD8270007A791A /* Localizable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Localizable.h; sourceTree = "<group>"; };
+		17A812B620FD86CA007A791A /* ApprovalBusinessFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApprovalBusinessFooterView.m; sourceTree = "<group>"; };
+		17A812B720FD86CA007A791A /* ApprovalBusinessFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApprovalBusinessFooterView.h; sourceTree = "<group>"; };
+		17A812B920FD8B2E007A791A /* ViewLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewLogViewController.h; sourceTree = "<group>"; };
+		17A812BA20FD8B2E007A791A /* ViewLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewLogViewController.m; sourceTree = "<group>"; };
+		17A812BC20FD8B4D007A791A /* ViewLogModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewLogModel.m; sourceTree = "<group>"; };
+		17A812BD20FD8B4D007A791A /* ViewLogModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewLogModel.h; sourceTree = "<group>"; };
+		17A812BF20FD8B6C007A791A /* ViewLogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewLogTableViewCell.h; sourceTree = "<group>"; };
+		17A812C020FD8B6C007A791A /* ViewLogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewLogTableViewCell.m; sourceTree = "<group>"; };
+		17A812C220FD8FD8007A791A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		17A812C320FD8FD8007A791A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		17A812C720FD9042007A791A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		17A812C920FD9047007A791A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		17A812CD20FD909B007A791A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		17A812CF20FD909C007A791A /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		17B4FFAD20F5ED4B0040ED73 /* AssetAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAmountViewController.h; sourceTree = "<group>"; };
+		17B4FFAE20F5ED4B0040ED73 /* AssetAmountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAmountViewController.m; sourceTree = "<group>"; };
+		17B4FFAF20F5ED4B0040ED73 /* AssetAmountListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAmountListViewController.m; sourceTree = "<group>"; };
+		17B4FFB020F5ED4C0040ED73 /* AssetAmountListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAmountListViewController.h; sourceTree = "<group>"; };
+		17B4FFB320F5ED8B0040ED73 /* AssetAmountTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAmountTableViewCell.h; sourceTree = "<group>"; };
+		17B4FFB420F5ED8B0040ED73 /* AssetAmountTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAmountTableViewCell.m; sourceTree = "<group>"; };
+		17B4FFB620F5EDAE0040ED73 /* AssetAmountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetAmountModel.m; sourceTree = "<group>"; };
+		17B4FFB720F5EDAE0040ED73 /* AssetAmountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetAmountModel.h; sourceTree = "<group>"; };
+		17B4FFB920F5EE270040ED73 /* TransferRecordTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferRecordTableViewCell.m; sourceTree = "<group>"; };
+		17B4FFBA20F5EE270040ED73 /* TransferRecordTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecordTableViewCell.h; sourceTree = "<group>"; };
+		17B4FFBC20F5EE5E0040ED73 /* TransferAwaitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferAwaitModel.m; sourceTree = "<group>"; };
+		17B4FFBD20F5EE5E0040ED73 /* TransferAwaitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferAwaitModel.h; sourceTree = "<group>"; };
+		17B4FFBF20F5EF380040ED73 /* TransferRecordDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferRecordDetailViewController.h; sourceTree = "<group>"; };
+		17B4FFC020F5EF380040ED73 /* TransferRecordDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferRecordDetailViewController.m; sourceTree = "<group>"; };
+		17B4FFC220F5EF770040ED73 /* TransferModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferModel.h; sourceTree = "<group>"; };
+		17B4FFC320F5EF770040ED73 /* TransferModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferModel.m; sourceTree = "<group>"; };
+		17B4FFC520F5F3240040ED73 /* TransferCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferCollectionViewCell.m; sourceTree = "<group>"; };
+		17B4FFC620F5F3240040ED73 /* TransferCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferCollectionViewCell.h; sourceTree = "<group>"; };
+		17B4FFC720F5F3240040ED73 /* TransferCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferCollectionReusableView.h; sourceTree = "<group>"; };
+		17B4FFC820F5F3240040ED73 /* TransferCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferCollectionReusableView.m; sourceTree = "<group>"; };
+		17B4FFCB20F5F3470040ED73 /* TransferTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferTopView.m; sourceTree = "<group>"; };
+		17B4FFCC20F5F3470040ED73 /* TransferTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferTopView.h; sourceTree = "<group>"; };
+		17B4FFCE20F5F3600040ED73 /* TransferApproversModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransferApproversModel.m; sourceTree = "<group>"; };
+		17B4FFCF20F5F3600040ED73 /* TransferApproversModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransferApproversModel.h; sourceTree = "<group>"; };
 		3140BB9D269809C22957D91B /* libPods-box-AuthorizerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-box-AuthorizerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		568445092043AEEC004891D8 /* box-Authorizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "box-Authorizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		568445212043AEED004891D8 /* box-AuthorizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "box-AuthorizerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -423,6 +486,12 @@
 				1739E28320623B6100297249 /* LanguageSwitchViewController.m */,
 				176402E820858F1600E125B2 /* ModifyServerAddressViewController.h */,
 				176402E920858F1600E125B2 /* ModifyServerAddressViewController.m */,
+				17B4FFB020F5ED4C0040ED73 /* AssetAmountListViewController.h */,
+				17B4FFAF20F5ED4B0040ED73 /* AssetAmountListViewController.m */,
+				17B4FFAD20F5ED4B0040ED73 /* AssetAmountViewController.h */,
+				17B4FFAE20F5ED4B0040ED73 /* AssetAmountViewController.m */,
+				17B4FFBF20F5EF380040ED73 /* TransferRecordDetailViewController.h */,
+				17B4FFC020F5EF380040ED73 /* TransferRecordDetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -432,6 +501,14 @@
 			children = (
 				1739E28520623C2D00297249 /* LanguageSwitchModel.h */,
 				1739E28620623C2D00297249 /* LanguageSwitchModel.m */,
+				17B4FFB720F5EDAE0040ED73 /* AssetAmountModel.h */,
+				17B4FFB620F5EDAE0040ED73 /* AssetAmountModel.m */,
+				17B4FFBD20F5EE5E0040ED73 /* TransferAwaitModel.h */,
+				17B4FFBC20F5EE5E0040ED73 /* TransferAwaitModel.m */,
+				17B4FFC220F5EF770040ED73 /* TransferModel.h */,
+				17B4FFC320F5EF770040ED73 /* TransferModel.m */,
+				17B4FFCF20F5F3600040ED73 /* TransferApproversModel.h */,
+				17B4FFCE20F5F3600040ED73 /* TransferApproversModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -439,6 +516,16 @@
 		170D786C205F6B9E00916F25 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				17B4FFB320F5ED8B0040ED73 /* AssetAmountTableViewCell.h */,
+				17B4FFB420F5ED8B0040ED73 /* AssetAmountTableViewCell.m */,
+				17B4FFBA20F5EE270040ED73 /* TransferRecordTableViewCell.h */,
+				17B4FFB920F5EE270040ED73 /* TransferRecordTableViewCell.m */,
+				17B4FFC720F5F3240040ED73 /* TransferCollectionReusableView.h */,
+				17B4FFC820F5F3240040ED73 /* TransferCollectionReusableView.m */,
+				17B4FFC620F5F3240040ED73 /* TransferCollectionViewCell.h */,
+				17B4FFC520F5F3240040ED73 /* TransferCollectionViewCell.m */,
+				17B4FFCC20F5F3470040ED73 /* TransferTopView.h */,
+				17B4FFCB20F5F3470040ED73 /* TransferTopView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -468,6 +555,8 @@
 				176402B2207F280600E125B2 /* ApprovalBusinessDetailViewController.m */,
 				176402AF207F280500E125B2 /* ApprovalBusinessViewController.h */,
 				176402B1207F280500E125B2 /* ApprovalBusinessViewController.m */,
+				17A812B920FD8B2E007A791A /* ViewLogViewController.h */,
+				17A812BA20FD8B2E007A791A /* ViewLogViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -485,6 +574,8 @@
 				176402C2207F299900E125B2 /* ApprovalBusApproversModel.m */,
 				176402C4207F299A00E125B2 /* ApprovalBusinessDetailModel.h */,
 				176402C3207F299900E125B2 /* ApprovalBusinessDetailModel.m */,
+				17A812BD20FD8B4D007A791A /* ViewLogModel.h */,
+				17A812BC20FD8B4D007A791A /* ViewLogModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -494,6 +585,8 @@
 			children = (
 				176402C8207F29B000E125B2 /* ApprovalBusinessTopView.h */,
 				176402C7207F29B000E125B2 /* ApprovalBusinessTopView.m */,
+				17A812B720FD86CA007A791A /* ApprovalBusinessFooterView.h */,
+				17A812B620FD86CA007A791A /* ApprovalBusinessFooterView.m */,
 				176402B8207F292F00E125B2 /* ApprovalBusinessTableViewCell.h */,
 				176402B9207F293000E125B2 /* ApprovalBusinessTableViewCell.m */,
 				170D7881205F6B9E00916F25 /* CurrencyAccountTableViewCell.h */,
@@ -502,6 +595,10 @@
 				176402BD207F296300E125B2 /* ApprovalBusinessCollectionReusableView.m */,
 				176402BE207F296400E125B2 /* ApprovalBusinessCollectionViewCell.h */,
 				176402BC207F296300E125B2 /* ApprovalBusinessCollectionViewCell.m */,
+				17A812B020FD8061007A791A /* CurrencyDetailTableViewCell.h */,
+				17A812AF20FD8061007A791A /* CurrencyDetailTableViewCell.m */,
+				17A812BF20FD8B6C007A791A /* ViewLogTableViewCell.h */,
+				17A812C020FD8B6C007A791A /* ViewLogTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -611,6 +708,8 @@
 				176402CE207F644B00E125B2 /* NewsModel.m */,
 				176402D0207F65DA00E125B2 /* NewsInfoModel.h */,
 				176402D1207F65DA00E125B2 /* NewsInfoModel.m */,
+				17A812B320FD80BD007A791A /* CurrencyModel.h */,
+				17A812B220FD80BC007A791A /* CurrencyModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -945,6 +1044,8 @@
 				568445812043B10D004891D8 /* Main.storyboard */,
 				568445832043B10D004891D8 /* main.m */,
 				568445842043B10D004891D8 /* Info.plist */,
+				17A812C820FD9042007A791A /* InfoPlist.strings */,
+				17A812CE20FD909B007A791A /* Localizable.strings */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -964,6 +1065,7 @@
 				171EEA6D2050DE44002DABD3 /* AppConstant.h */,
 				171EEA6C2050DE44002DABD3 /* ColorHeaders.h */,
 				171EEA6E2050DE44002DABD3 /* SizeHeader.h */,
+				17A812B520FD8270007A791A /* Localizable.h */,
 			);
 			path = Macro;
 			sourceTree = "<group>";
@@ -1132,6 +1234,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 568445002043AEEC004891D8;
 			productRefGroup = 5684450A2043AEEC004891D8 /* Products */;
@@ -1151,7 +1254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1783572F205773AE00CD6FA8 /* LICENSE in Resources */,
+				17A812C620FD9042007A791A /* InfoPlist.strings in Resources */,
 				568445952043B10D004891D8 /* Info.plist in Resources */,
+				17A812CC20FD909B007A791A /* Localizable.strings in Resources */,
 				568445932043B10D004891D8 /* Main.storyboard in Resources */,
 				568445912043B10D004891D8 /* Assets.xcassets in Resources */,
 				568445922043B10D004891D8 /* LaunchScreen.storyboard in Resources */,
@@ -1243,20 +1348,27 @@
 				170D788B205F6B9E00916F25 /* CurrencyAccountTableViewCell.m in Sources */,
 				176402B3207F280600E125B2 /* ApprovalBusinessViewController.m in Sources */,
 				171EEA4F2050DBE4002DABD3 /* NetworkManager.m in Sources */,
+				17B4FFC420F5EF770040ED73 /* TransferModel.m in Sources */,
 				170A8C1620610D7300E23542 /* UIViewController+JASidePanel.m in Sources */,
 				176402BF207F296400E125B2 /* ApprovalBusinessCollectionViewCell.m in Sources */,
 				171EEA9C20527C48002DABD3 /* HLBLEManager.m in Sources */,
+				17A812B420FD80BD007A791A /* CurrencyModel.m in Sources */,
 				171EEA8920514A4A002DABD3 /* BackupView.m in Sources */,
 				17835757205A3AD400CD6FA8 /* TBButton.m in Sources */,
 				178357392057BD0700CD6FA8 /* BlueToothListViewController.m in Sources */,
 				176402A2207B88AD00E125B2 /* AuthorizerInfoModel.m in Sources */,
+				17B4FFBE20F5EE5E0040ED73 /* TransferAwaitModel.m in Sources */,
+				17A812BB20FD8B2F007A791A /* ViewLogViewController.m in Sources */,
 				17640296207B5B4D00E125B2 /* DBHelp.m in Sources */,
 				176402C6207F299A00E125B2 /* ApprovalBusinessDetailModel.m in Sources */,
 				176402B4207F280600E125B2 /* ApprovalBusinessDetailViewController.m in Sources */,
 				1739E28720623C2D00297249 /* LanguageSwitchModel.m in Sources */,
 				17835754205A28A900CD6FA8 /* LYButton.m in Sources */,
 				1764028D207B51C600E125B2 /* BoxDataManager.m in Sources */,
+				17A812C120FD8B6C007A791A /* ViewLogTableViewCell.m in Sources */,
 				176402C5207F299A00E125B2 /* ApprovalBusApproversModel.m in Sources */,
+				17B4FFCA20F5F3240040ED73 /* TransferCollectionReusableView.m in Sources */,
+				17B4FFB820F5EDAE0040ED73 /* AssetAmountModel.m in Sources */,
 				1764029F207B712E00E125B2 /* ProgressHUD.m in Sources */,
 				171EEA7A2050E074002DABD3 /* ScanCodeViewController.m in Sources */,
 				170A8C1C206206F100E23542 /* LeftMenuTableViewCell.m in Sources */,
@@ -1275,6 +1387,10 @@
 				171EEA8620513495002DABD3 /* BackupViewController.m in Sources */,
 				178357452058FAAA00CD6FA8 /* GenerateContractViewController.m in Sources */,
 				176402C9207F29B000E125B2 /* ApprovalBusinessTopView.m in Sources */,
+				17B4FFB120F5ED4C0040ED73 /* AssetAmountViewController.m in Sources */,
+				17A812B820FD86CA007A791A /* ApprovalBusinessFooterView.m in Sources */,
+				17B4FFCD20F5F3470040ED73 /* TransferTopView.m in Sources */,
+				17B4FFC920F5F3240040ED73 /* TransferCollectionViewCell.m in Sources */,
 				171EEA582050DC35002DABD3 /* FSAES128.m in Sources */,
 				1783574F205941BA00CD6FA8 /* ServiceStartViewController.m in Sources */,
 				1783574920592B1300CD6FA8 /* CIQRCodeManager.m in Sources */,
@@ -1284,6 +1400,7 @@
 				176402CF207F644B00E125B2 /* NewsModel.m in Sources */,
 				171EEA9620527C36002DABD3 /* UIImage+Bitmap.m in Sources */,
 				171EEA8C2052668F002DABD3 /* AwaitBackupViewController.m in Sources */,
+				17B4FFC120F5EF380040ED73 /* TransferRecordDetailViewController.m in Sources */,
 				171EEA832051095A002DABD3 /* PerfectInformationViewController.m in Sources */,
 				176402B7207F286F00E125B2 /* ApprovalBusinessModel.m in Sources */,
 				170D7886205F6B9E00916F25 /* CurrencyAccountViewController.m in Sources */,
@@ -1295,14 +1412,20 @@
 				1783574C2059395B00CD6FA8 /* PrivatePasswordView.m in Sources */,
 				170A8C192062069D00E23542 /* LeftMenuModel.m in Sources */,
 				171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */,
+				17B4FFB220F5ED4C0040ED73 /* AssetAmountListViewController.m in Sources */,
 				170A8C102061023400E23542 /* LeftMenuViewController.m in Sources */,
 				176402BA207F293000E125B2 /* ApprovalBusinessTableViewCell.m in Sources */,
 				1764029C207B64FB00E125B2 /* UIARSAHandler.m in Sources */,
 				170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */,
+				17A812BE20FD8B4D007A791A /* ViewLogModel.m in Sources */,
+				17B4FFB520F5ED8B0040ED73 /* AssetAmountTableViewCell.m in Sources */,
+				17B4FFBB20F5EE270040ED73 /* TransferRecordTableViewCell.m in Sources */,
 				171EEA592050DC35002DABD3 /* NSData+AES128.m in Sources */,
 				171EA98E20B27E84006F53F1 /* AddressVerifyManager.m in Sources */,
 				171EEA5A2050DC35002DABD3 /* JsonObject.m in Sources */,
 				568445972043B10D004891D8 /* AppDelegate.m in Sources */,
+				17A812B120FD8061007A791A /* CurrencyDetailTableViewCell.m in Sources */,
+				17B4FFD020F5F3600040ED73 /* TransferApproversModel.m in Sources */,
 				171EA99120B2EB3D006F53F1 /* AgentStatusManager.m in Sources */,
 				171EEA9720527C36002DABD3 /* UIWebView+UIImage.m in Sources */,
 				176402EA20858F1700E125B2 /* ModifyServerAddressViewController.m in Sources */,
@@ -1350,10 +1473,29 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		17A812C820FD9042007A791A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17A812C720FD9042007A791A /* en */,
+				17A812C920FD9047007A791A /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		17A812CE20FD909B007A791A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17A812CD20FD909B007A791A /* en */,
+				17A812CF20FD909C007A791A /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		5684457F2043B10D004891D8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				568445802043B10D004891D8 /* Base */,
+				17A812C220FD8FD8007A791A /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1362,6 +1504,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				568445822043B10D004891D8 /* Base */,
+				17A812C320FD8FD8007A791A /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1373,6 +1516,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1428,6 +1572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

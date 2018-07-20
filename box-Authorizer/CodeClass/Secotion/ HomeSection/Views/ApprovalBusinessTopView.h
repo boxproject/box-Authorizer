@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ApprovalBusinessTopDelegate <NSObject>
+
+@optional
+- (void)queryForLimitTime;
+@end
+
 @interface ApprovalBusinessTopView : UIView
 
 -(id)initWithFrame:(CGRect)frame dic:(NSDictionary *)dic;
 
 -(void)setValueWithData:(NSDictionary *)dic;
+
+@property (nonatomic,weak) id <ApprovalBusinessTopDelegate> delegate;
+@property (nonatomic,strong)UILabel *rightLab;
 
 @end

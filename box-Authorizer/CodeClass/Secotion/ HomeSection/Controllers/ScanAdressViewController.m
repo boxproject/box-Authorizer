@@ -49,6 +49,13 @@
     [self createView];
     [self initProgressHUD];
     [self getManagerIpPort];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(screenShotAction) name:UIApplicationUserDidTakeScreenshotNotification  object:nil];
+}
+
+#pragma mark ----- ScreenshotNotification -----
+-(void)screenShotAction
+{
+    _accountQRCodeImg.image = [CIQRCodeManager createImageWithString:[self generateAuthorizationCode]];
 }
 
 -(void)getManagerIpPort
@@ -348,12 +355,14 @@
             [codeTimer invalidate];
             codeTimer = nil;
             [self dismissViewControllerAnimated:YES completion:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationUserDidTakeScreenshotNotification object:nil];
             
         }]];
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationUserDidTakeScreenshotNotification object:nil];
     }
 }
 

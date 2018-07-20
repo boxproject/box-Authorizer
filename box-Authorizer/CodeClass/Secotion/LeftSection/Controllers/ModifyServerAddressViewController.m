@@ -117,10 +117,12 @@
         return;
     }
     [[BoxDataManager sharedManager] saveDataWithCoding:@"box_IpPort" codeValue:_addressTf.text];
-    NSString *boxIpStr = [NSString stringWithFormat:@"http://%@", _addressTf.text];
+    NSString *boxIpStr = [NSString stringWithFormat:@"https://%@", _addressTf.text];
     [[BoxDataManager sharedManager] saveDataWithCoding:@"box_IP" codeValue:boxIpStr];
     [self.navigationController popViewControllerAnimated:YES];
     [WSProgressHUD showSuccessWithStatus:ModifyServerAddressVCVerifyBtn];
+    [self.sidePanelController setCenterPanelHidden:NO];
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 #pragma mark - createBarItem

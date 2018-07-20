@@ -12,6 +12,7 @@
 #import "AboutBoxViewController.h"
 #import "LanguageSwitchViewController.h"
 #import "ModifyServerAddressViewController.h"
+#import "AssetAmountViewController.h"
 
 #define CellReuseIdentifier  @"LeftMenu"
 #define TableViewCellHeight  55
@@ -35,6 +36,7 @@
     _sourceArray = [[NSMutableArray alloc] init];
     NSDictionary *dict = @{
                            @"data":@[
+                                   @{@"titleName":@"资产总览"},
                                    @{@"titleName":@"服务器地址"},
                                    @{@"titleName":@"关于BOX"}
                                    ]
@@ -110,11 +112,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row == 0) {
+        AssetAmountViewController *assetAmountVc = [[AssetAmountViewController alloc] init];
+        [self.navigationController pushViewController:assetAmountVc animated:YES];
+        [self.sidePanelController toggleRightPanel:nil];
+        [self addNSNotificationCenter:assetAmountVc];
+    }else if(indexPath.row == 1) {
         ModifyServerAddressViewController *modifyServerAdressVC = [[ModifyServerAddressViewController alloc] init];
         [self.navigationController pushViewController:modifyServerAdressVC animated:YES];
         [self.sidePanelController toggleRightPanel:nil];
         [self addNSNotificationCenter:modifyServerAdressVC];
-    }else if(indexPath.row == 1){
+    }else if(indexPath.row == 2){
         AboutBoxViewController *aboutBoxVC = [[AboutBoxViewController alloc] init];
         [self.navigationController pushViewController:aboutBoxVC animated:YES];
         [self addNSNotificationCenter:aboutBoxVC];

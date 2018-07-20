@@ -84,7 +84,6 @@
         //[attri appendAttributedString:string];
         //将图片放在第一位
         [attri insertAttributedString:string atIndex:0];
-        
         _currencyLab.attributedText = attri;
     }
 }
