@@ -11,6 +11,7 @@
 @interface LanguageSwitchModel : NSObject
 
 @property (nonatomic,strong) NSString *titleName;
+@property (nonatomic,assign) BOOL select;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 
 @end

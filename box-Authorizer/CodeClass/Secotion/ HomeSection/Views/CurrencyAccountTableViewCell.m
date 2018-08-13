@@ -8,8 +8,6 @@
 
 #import "CurrencyAccountTableViewCell.h"
 
-#define CurrencyAccountTableViewCellAddCurrency  @"新增代币"
-
 @interface CurrencyAccountTableViewCell()
 
 @property (nonatomic,strong) UILabel *currencyLab;
@@ -48,8 +46,8 @@
     [_checkImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_currencyLab);
         make.right.offset(-18);
-        make.height.offset(16);
-        make.width.offset(20);
+        make.height.offset(13);
+        make.width.offset(18);
     }];
     _checkImage.hidden = YES;
     

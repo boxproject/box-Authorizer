@@ -46,7 +46,7 @@
     }];
     
     _linkLabel = [[UILabel alloc]init];
-    _linkLabel.text = @"未连接";
+    _linkLabel.text = Unconnected;
     _linkLabel.textAlignment = NSTextAlignmentRight;
     _linkLabel.font = [UIFont systemFontOfSize:16];
     _linkLabel.textColor = [UIColor colorWithHexString:@"#474747"];
@@ -72,16 +72,9 @@
 }
 
 
-- (void)setDataWithModel:(BlueToothListModel *)model
+- (void)setDataWithModel:(NSString *)model
 {
-    _nameLabel.text = model.blueTooth;
-    if (model.isSelect) {
-        _linkLabel.text = @"连接成功";
-        _linkLabel.textColor = [UIColor colorWithHexString:@"#f96268"];
-    }else{
-        _linkLabel.text = @"未连接";
-        _linkLabel.textColor = [UIColor colorWithHexString:@"#50b4ff"];
-    }
+    _nameLabel.text = model;
 }
 
 

@@ -9,20 +9,10 @@
 #import "PerfectInformationViewController.h"
 #import "BackupViewController.h"
 
-#define PerfectInformationVCTitle  @"完善信息"
-#define PerfectInformationVCNameText  @"请输入姓名"
-#define PerfectInformationVCPasswordText  @"请输入口令(6-12位数字和字母组成，区分大小写)"
-#define PerfectInformationVCVerifiyText  @"请再次输入口令"
-#define PerfectInformationVCAleartLab  @"口令切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录"
-#define PerfectInformationVCCormfirmBtn  @"提交"
-#define PerfectInformationVCAleartOne  @"请完善信息"
-#define PerfectInformationVCAleartTwo  @"请输入口令"
-#define PerfectInformationVCAleartThree  @"口令不一致"
-#define PerfectInformationVCSucceed  @"提交完成"
-#define PerfectInformationVCCheckPwd  @"口令格式为6-12位数字和字母组成，区分大小写"
-
 @interface PerfectInformationViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
-
+{
+    IQKeyboardReturnKeyHandler *returnKeyHandler;
+}
 @property(nonatomic, strong)UIScrollView *contentView;
 /** 姓名 */
 @property (nonatomic,strong)UITextField *nameTf;
@@ -46,6 +36,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self createView];
     _aWrapper = [[DDRSAWrapper alloc] init];
+    returnKeyHandler = [[IQKeyboardReturnKeyHandler alloc] initWithViewController:self];
 }
 
 -(void)createView
@@ -102,8 +93,11 @@
                         value:[UIColor colorWithHexString:@"#cccccc"]
                         range:NSMakeRange(0, passwordText.length)];
     [passwordholder addAttribute:NSFontAttributeName
-                        value:Font(14)
-                        range:NSMakeRange(0, passwordText.length)];
+                           value:Font(14)
+                           range:NSMakeRange(0, 5)];
+    [passwordholder addAttribute:NSFontAttributeName
+                           value:Font(13)
+                           range:NSMakeRange(5, passwordText.length - 5)];
     _passwordTf.attributedPlaceholder = passwordholder;
     _passwordTf.keyboardType = UIKeyboardTypeAlphabet;
     _passwordTf.secureTextEntry = YES;
@@ -123,9 +117,9 @@
     [_contentView addSubview:_showPwdBtn];
     [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_passwordTf);
-        make.width.offset(36);
-        make.right.equalTo(lineOne.mas_right).offset(0);
-        make.height.offset(27);
+        make.width.offset(23);
+        make.right.equalTo(lineOne.mas_right).offset(-5);
+        make.height.offset(15);
     }];
     
     UIView *lineTwo = [[UIView alloc] init];
@@ -142,7 +136,7 @@
     _verifyPwFf.backgroundColor = [UIColor whiteColor];
     _verifyPwFf.delegate = self;
     _verifyPwFf.clearButtonMode=UITextFieldViewModeWhileEditing;
-    NSString *verifiyText = PerfectInformationVCVerifiyText;
+    NSString *verifiyText = PerfectInformationVCVerifyText;
     NSMutableAttributedString *verifiyHolder = [[NSMutableAttributedString alloc] initWithString:verifiyText];
     [verifiyHolder addAttribute:NSForegroundColorAttributeName
                        value:[UIColor colorWithHexString:@"#cccccc"]
@@ -198,7 +192,7 @@
     }];
     
     UILabel *aleartLab = [[UILabel alloc]init];
-    aleartLab.text = PerfectInformationVCAleartLab;
+    aleartLab.text = PerfectInformationVCAlert;
     aleartLab.textAlignment = NSTextAlignmentLeft;
     aleartLab.font = Font(11);
     aleartLab.textColor = [UIColor colorWithHexString:@"#d94122"];
@@ -212,7 +206,7 @@
     }];
     
     _cormfirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_cormfirmButton setTitle:PerfectInformationVCCormfirmBtn forState:UIControlStateNormal];
+    [_cormfirmButton setTitle:Submit forState:UIControlStateNormal];
     [_cormfirmButton setTitleColor:kWhiteColor forState:UIControlStateNormal];
     _cormfirmButton.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _cormfirmButton.titleLabel.font = Font(16);
@@ -232,11 +226,11 @@
 -(void)cormfirmAction:(UIButton *)btn
 {
     if ( [_nameTf.text isEqualToString:@""]) {
-        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartOne];
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAlertOne];
         return;
     }
     if ([_passwordTf.text isEqualToString:@""]) {
-        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartTwo];
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAlertTwo];
         return;
     }
     BOOL checkBool = [PassWordManager checkPassWord:_passwordTf.text];
@@ -245,7 +239,7 @@
         return;
     }
     if (![_passwordTf.text isEqualToString:_verifyPwFf.text]) {
-        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAleartThree];
+        [WSProgressHUD showErrorWithStatus:PerfectInformationVCAlertThree];
         return;
     }
     NSArray *codeArray = [JsonObject dictionaryWithJsonStringArr:_scanResult];
@@ -276,7 +270,7 @@
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
             [[BoxDataManager sharedManager] saveDataWithCoding:@"launchState" codeValue:@"0"];
-            [WSProgressHUD showSuccessWithStatus:PerfectInformationVCSucceed];
+            [WSProgressHUD showSuccessWithStatus:SubmissionCompletion];
             BackupViewController *backupVC = [[BackupViewController alloc] init];
             [self presentViewController:backupVC animated:YES completion:nil];
         }
@@ -294,7 +288,7 @@
     if (textField.tag == 100) {
         // 需要限制的长度
         NSUInteger maxLength = 0;
-        maxLength = 20;
+        maxLength = 12;
         if (maxLength == 0) return;
         // text field 的内容
         NSString *contentText = textField.text;
@@ -335,6 +329,10 @@
     return YES;
 }
 
+-(void)dealloc
+{
+    returnKeyHandler = nil;
+}
 
 //[SVProgressHUD dismiss];
 - (void)didReceiveMemoryWarning {

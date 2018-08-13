@@ -29,8 +29,19 @@
     [NSThread sleepForTimeInterval:2.0];
     //网络监测
     [self monitorReachabilityStatus];
+    [self initIQKeyboardManager];
     [self launchJumpVC];
     return YES;
+}
+
+-(void)initIQKeyboardManager
+{
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager]; //处理键盘遮挡
+    //[manager setCanAdjustTextView:YES];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
 }
  
 //启动跳转的VC

@@ -9,10 +9,6 @@
 #import "InitAccountViewController.h"
 #import "ScanCodeViewController.h"
 
-#define InitAccountVCTitle  @"扫一扫"
-#define PerfectInformationVCLaber  @"扫一扫完成初始化"
-#define PerfectInformationVCSubLaber  @"扫一扫MAC端的签名机完成初始化"
- 
 @interface InitAccountViewController ()
 /** 开始扫描 */
 @property(nonatomic, strong)UIButton *scanButton;

@@ -13,7 +13,6 @@
 
 #define PageSize  12
 #define CellReuseIdentifier  @"ApprovalBusiness"
-#define ApprovalBusinessVCTitle  @"审批流"
 
 @interface ApprovalBusinessViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -48,7 +47,7 @@
     if(_viewLayer) return _viewLayer;
     _viewLayer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 30)];
     _viewLayer.backgroundColor = [UIColor clearColor];
-    _segmentedView = [[UISegmentedControl alloc]initWithItems:@[@"待审批",@"已审批"]];
+    _segmentedView = [[UISegmentedControl alloc]initWithItems:@[ApprovalBusinessVCSegmentedTitleOne,ApprovalBusinessVCSegmentedTitleTwo]];
     [_segmentedView addTarget:self action:@selector(segmentedChangle) forControlEvents:UIControlEventValueChanged];
     [_viewLayer addSubview:self.segmentedView];
     self.segmentedView.frame = CGRectMake(30, 0, 200 - 60, 30);

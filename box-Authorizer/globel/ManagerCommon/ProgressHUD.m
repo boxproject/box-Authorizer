@@ -14,6 +14,7 @@
 #define NetWorkCode103  @"非法金额"
 #define NetWorkCode10000  @"请求失败"
 #define NetWorkCode107  @"密码错误"
+#define NetWorkCode112  @"重复请求"
 
 @implementation ProgressHUD
 
@@ -37,6 +38,8 @@
         [WSProgressHUD showErrorWithStatus:NetWorkCode10000];
     }else if (code == 107){
         [WSProgressHUD showErrorWithStatus:NetWorkCode107];
+    }else if (code == 112){
+        [WSProgressHUD showErrorWithStatus:NetWorkCode112];
     }
 }
 

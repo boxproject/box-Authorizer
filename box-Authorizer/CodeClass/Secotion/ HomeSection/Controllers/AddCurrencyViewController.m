@@ -10,11 +10,6 @@
 #import "ScanAdressViewController.h"
 #import "ScanCodeViewController.h"
 
-#define AddCurrencyVCTitle  @"新增代币"
-#define AddCurrencyVCCurrencyNameTf  @"请输入代币名称"
-#define AddCurrencyVCCurrencyAdressTf  @"请输入代币地址"
-#define AddCurrencyVCaccuracyTf  @"请输入代币精度 (位数)"
-
 @interface AddCurrencyViewController ()<UIScrollViewDelegate, UITextFieldDelegate>
 
 @property(nonatomic, strong)UIScrollView *contentView;
@@ -181,7 +176,7 @@
     }];
     
     _cormfirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_cormfirmButton setTitle:@"确认增加" forState:UIControlStateNormal];
+    [_cormfirmButton setTitle:AddCurrencyVCCormfirmButton forState:UIControlStateNormal];
     [_cormfirmButton setTitleColor:kWhiteColor forState:UIControlStateNormal];
     _cormfirmButton.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _cormfirmButton.titleLabel.font = Font(16);
@@ -228,12 +223,15 @@
         [WSProgressHUD showErrorWithStatus:AddCurrencyVCaccuracyTf];
         return;
     }
+    NSString *currencyAdress = [_currencyAdressTf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *currencyName = [_currencyNameTf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *accuracyStr = [_accuracyTf.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:_currencyAdressTf.text privateStr:[BoxDataManager sharedManager].privateKeyBase64];
-    NSInteger accuracy = [_accuracyTf.text integerValue];
+    NSString *signSHA256 = [_aWrapper PKCSSignBytesSHA256withRSA:currencyAdress privateStr:[BoxDataManager sharedManager].privateKeyBase64];
+    NSInteger accuracy = [accuracyStr integerValue];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
-    [paramsDic setObject: _currencyNameTf.text forKey:@"tokenname"];
-    [paramsDic setObject:_currencyAdressTf.text forKey:@"contractaddr"];
+    [paramsDic setObject: currencyName forKey:@"tokenname"];
+    [paramsDic setObject:currencyAdress forKey:@"contractaddr"];
     [paramsDic setObject:@(accuracy) forKey:@"decimals"];
     [paramsDic setObject:signSHA256 forKey:@"sign"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
@@ -242,8 +240,8 @@
         [WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] integerValue] == 0) {
-            [WSProgressHUD showSuccessWithStatus:@"新增成功"];
-            [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", @"开户",_currencyNameTf.text]];
+            [WSProgressHUD showSuccessWithStatus:AddCurrencyVCAddSuccess];
+            [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", OpenAccount,currencyName]];
             if ([self.delegate respondsToSelector:@selector(addCurrencyDelegateReflesh)]) {
                 [self.navigationController popViewControllerAnimated:YES];
                 [self.delegate addCurrencyDelegateReflesh];

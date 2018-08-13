@@ -20,19 +20,6 @@
 #import "ServiceStartModel.h"
 
 #define CellReuseIdentifier  @"Homepage"
-#define HomepageMidOneLabStop  @"关停"
-#define HomepageMidOneLabStart  @"启动"
-#define HomepageMidOneLabDetailStop  @"您的服务为启动状态"
-#define HomepageMidOneLabDetailStart  @"您的服务为关停状态"
-#define HomepageMidOneLabDetailError  @"您的服务异常"
-#define HomepageMidTwoLab  @"币种开户"
-#define HomepageMidThreeLab  @"审批业务流"
-#define HomepageMidFourLab  @"授权码"
-#define HomepageMidFourDetailLab  @"授权员工最高权限"
-#define HomepageFootTitle  @"最新动态"
-#define HomepageTitle  @"首页"
-#define HomepageNoApproval  @"暂无待审批"
-#define HomepageNoCurrency  @"暂无开户币种"
 
 @interface HomepageViewController ()<UIScrollViewDelegate, SeviceStateViewDelegate,UITableViewDelegate, UITableViewDataSource,PrivatePasswordViewDelegate>
 {
@@ -74,12 +61,14 @@
     [self createBarItem];
     _firstInit = 1;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNextVCAction:) name:@"pushNextVC" object:nil];
-    [[NewsInfoModel sharedManager] insertNewsInfoNews:@"打开私钥App"];
+    [[NewsInfoModel sharedManager] insertNewsInfoNews:OpenApp];
     [self loadNews];
     timer = [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(agentStatusTimer:) userInfo:nil repeats:YES];
     [self requestAgentStatus];
     [self headRefresh];
 }
+
+
 
 -(void)loadNavigationBar
 {
@@ -221,7 +210,7 @@
         hexString = @"F17B00";
         _topView.image = [UIImage imageNamed:@"image_home_yellow"];
     }else{
-       hexString = @"4867FF";
+       hexString = @"4C5CFF";
         _topView.image = [UIImage imageNamed:@"homePageTopImg"];
     }
     UINavigationBar * bar = self.navigationController.navigationBar;
@@ -711,7 +700,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _labelTip = [[UILabel alloc]initWithFrame:CGRectMake(30, 15, SCREEN_WIDTH - 60, 30)];
-    _labelTip.text = @"暂无动态";
+    _labelTip.text = NoDynamic;
     _labelTip.textAlignment = NSTextAlignmentCenter;
     _labelTip.textColor = [UIColor colorWithHue:0.00 saturation:0.00 brightness:0.66 alpha:1.00];
     _labelTip.font = [UIFont systemFontOfSize:17];
@@ -819,6 +808,11 @@
                 [self handleCheckTime];
             }else{
                 [self seviceType:StoppedServiceStatus];
+                if (state == StopServiceOperate) {
+                    [[NewsInfoModel sharedManager] insertNewsInfoNews:StoppedService];
+                    [self loadNews];
+                }
+               
             }
         }else{
             [ProgressHUD showStatus:RspNo];
@@ -840,7 +834,7 @@
 -(void)checkTimeStatus
 {
     _middleOneView.userInteractionEnabled = NO;
-    _middleOneLab.text = @"等待校验";
+    _middleOneLab.text = WaitCheck;
     _middleOneDetailLab.text = HomepageMidOneLabDetailStart;
 }
 
@@ -848,21 +842,20 @@
 {
     if (state == StartedServiceStatus) {
          _middleOneView.userInteractionEnabled = YES;
-        [[NewsInfoModel sharedManager] insertNewsInfoNews:@"已启动服务"];
+        [[NewsInfoModel sharedManager] insertNewsInfoNews:StartedService];
         //可关停
         [BoxDataManager sharedManager].agentOperate = StopServiceOperate;
         _middleOneLab.text = HomepageMidOneLabStop;
         _middleOneDetailLab.text = HomepageMidOneLabDetailStop;
     }else if(state == StoppedServiceStatus){
         _middleOneView.userInteractionEnabled = YES;
-        [[NewsInfoModel sharedManager] insertNewsInfoNews:@"已关停服务"];
         //可启动
         [BoxDataManager sharedManager].agentOperate = StartServiceOperate;
         _middleOneLab.text = HomepageMidOneLabStart;
         _middleOneDetailLab.text = HomepageMidOneLabDetailStart;
     }else if(state == NotConnectedStatus){
          _middleOneView.userInteractionEnabled = NO;
-        [[NewsInfoModel sharedManager] insertNewsInfoNews:@"服务异常"];
+        [[NewsInfoModel sharedManager] insertNewsInfoNews:NotConnected];
         _middleOneLab.text = HomepageMidOneLabStart;
         _middleOneDetailLab.text = HomepageMidOneLabDetailError;
     }

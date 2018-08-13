@@ -13,8 +13,7 @@
 
 #define PageSize  12
 #define CellReuseIdentifier  @"AssetAmount"
-#define AssetAmountVCTitle  @"资产总览"
- 
+
 @interface AssetAmountViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic,strong) UITableView *tableView;
@@ -30,7 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
-    self.title = AssetAmountVCTitle;
+    self.title = AssetOverview;
     self.navigationController.navigationBar.hidden = NO;
     _sourceArray = [[NSMutableArray alloc] init];
     self.page = 1;

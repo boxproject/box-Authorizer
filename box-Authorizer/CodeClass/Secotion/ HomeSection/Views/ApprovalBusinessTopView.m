@@ -9,10 +9,6 @@
 #import "ApprovalBusinessTopView.h"
 #import "CurrencyDetailTableViewCell.h"
 
-#define ApprovalBusinessDetailApprovaling  @"审批中"
-#define ApprovalBusinessDetailSucceed  @"审批通过"
-#define ApprovalBusinessDetailFail  @"已拒绝审批"
-#define ApprovalBusinessDetailAwait  @"待审批"
 #define CellReuseIdentifier  @"CurrencyDetailTableViewCell"
 
 @interface ApprovalBusinessTopView ()<UITableViewDelegate, UITableViewDataSource>

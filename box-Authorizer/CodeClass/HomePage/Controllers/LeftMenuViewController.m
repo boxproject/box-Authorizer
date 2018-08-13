@@ -36,9 +36,9 @@
     _sourceArray = [[NSMutableArray alloc] init];
     NSDictionary *dict = @{
                            @"data":@[
-                                   @{@"titleName":@"资产总览"},
-                                   @{@"titleName":@"服务器地址"},
-                                   @{@"titleName":@"关于BOX"}
+                                   @{@"titleName":AssetOverview},
+                                   @{@"titleName":ServerAddress},
+                                   @{@"titleName":AboutBOX}
                                    ]
                            };
     for (NSDictionary *dataDic in dict[@"data"]) {
@@ -121,7 +121,16 @@
         [self.navigationController pushViewController:modifyServerAdressVC animated:YES];
         [self.sidePanelController toggleRightPanel:nil];
         [self addNSNotificationCenter:modifyServerAdressVC];
-    }else if(indexPath.row == 2){
+    }
+    /*
+    else if(indexPath.row == 2) {
+        LanguageSwitchViewController *languageSwitchVc = [[LanguageSwitchViewController alloc] init];
+        [self.navigationController pushViewController:languageSwitchVc animated:YES];
+        [self.sidePanelController toggleRightPanel:nil];
+        [self addNSNotificationCenter:languageSwitchVc];
+    }
+     */
+    else if(indexPath.row == 2){
         AboutBoxViewController *aboutBoxVC = [[AboutBoxViewController alloc] init];
         [self.navigationController pushViewController:aboutBoxVC animated:YES];
         [self addNSNotificationCenter:aboutBoxVC];

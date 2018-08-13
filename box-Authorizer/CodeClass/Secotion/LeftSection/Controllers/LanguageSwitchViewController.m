@@ -8,7 +8,10 @@
 
 #import "LanguageSwitchViewController.h"
 #import "LanguageSwitchModel.h"
+#import "languageSwitchTableViewCell.h"
+
 #define  LanguageSwitchTitle  @"语言"
+#define CellReuseIdentifier  @"languageSwitch"
 
 @interface LanguageSwitchViewController ()<UITableViewDelegate, UITableViewDataSource>
 
@@ -33,8 +36,8 @@
     [self createView];
     NSDictionary *dict = @{
                            @"data":@[
-                                   @{@"titleName":@"中文"},
-                                   @{@"titleName":@"英文"}
+                                   @{@"titleName":SimplifiedChinese,@"select":@(YES)},
+                                   @{@"titleName":@"English",@"select":@(NO)}
                                    ]
                                    };
     for (NSDictionary *dataDic in dict[@"data"]) {
@@ -56,7 +59,7 @@
         make.right.offset(-0);
         make.bottom.equalTo(self.view.mas_bottom).offset(0);
     }];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [_tableView registerClass:[languageSwitchTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     // 去掉底部多余的表格线
     [_tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 }
@@ -70,23 +73,25 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"languageSwitch";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
-    }
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    languageSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellReuseIdentifier forIndexPath:indexPath];
     LanguageSwitchModel *model = self.sourceArray[indexPath.row];
-    cell.textLabel.text = model.titleName;
+    cell.model = model;
+    [cell setDataWithModel:model];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.navigationController popViewControllerAnimated:YES];
-    [self.sidePanelController setCenterPanelHidden:NO];
-    //[self.sidePanelController showCenterPanelAnimated:NO];
-    self.navigationController.navigationBar.hidden = YES;
+    LanguageSwitchModel *model = self.sourceArray[indexPath.row];
+    for (LanguageSwitchModel *languageSwitchModel in self.sourceArray) {
+        if (![languageSwitchModel.titleName isEqualToString:model.titleName]) {
+            if (languageSwitchModel.select) {
+                model.select = languageSwitchModel.select;
+                languageSwitchModel.select = !languageSwitchModel.select;
+            }
+        }
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - createBarItem
@@ -94,6 +99,19 @@
     UIImage *leftImage = [[UIImage imageNamed:@"icon_back"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
+    
+    UIBarButtonItem *buttonRight = [[UIBarButtonItem alloc]initWithTitle:Affirm style:UIBarButtonItemStyleDone target:self action:@selector(rightButtonAction:)];
+    self.navigationItem.rightBarButtonItem = buttonRight;
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(15),NSFontAttributeName,[UIColor colorWithHexString:@"#666666"],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:Font(15),NSFontAttributeName,[UIColor colorWithHexString:@"#666666"],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+}
+
+#pragma mark ----- rightBarButtonItemAction -----
+- (void)rightButtonAction:(UIBarButtonItem *)buttonItem{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.sidePanelController setCenterPanelHidden:NO];
+    //[self.sidePanelController showCenterPanelAnimated:NO];
+    self.navigationController.navigationBar.hidden = YES;
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem

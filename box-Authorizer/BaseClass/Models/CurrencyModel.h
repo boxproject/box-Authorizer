@@ -17,6 +17,7 @@
 @property (nonatomic,assign) BOOL select;
 @property (nonatomic,assign) NSInteger state;
 @property (nonatomic,strong) NSString *limit;
+@property (nonatomic,strong) NSString *tokenAddr;
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

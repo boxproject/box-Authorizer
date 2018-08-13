@@ -8,9 +8,6 @@
 
 #import "AboutBoxViewController.h"
 
-
-#define  AboutBoxVCTitle  @"关于BOX"
-
 @interface AboutBoxViewController ()
 
 @end
@@ -22,7 +19,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
     self.navigationController.navigationBar.hidden = NO;
-    self.title = AboutBoxVCTitle;
+    self.title = AboutBOX;
     [self createBarItem];
     [self createView];
 }
@@ -43,7 +40,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     UILabel *versonlab = [[UILabel alloc] init];
-    versonlab.text = [NSString stringWithFormat:@"当前版本号 V%@",app_Version];
+    versonlab.text = [NSString stringWithFormat:@"%@ V%@",CurrentVersion,app_Version];
     versonlab.font = Font(14);
     versonlab.textAlignment = NSTextAlignmentCenter;
     versonlab.textColor = [UIColor colorWithHexString:@"#999999"];

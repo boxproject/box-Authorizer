@@ -13,12 +13,6 @@
 #import "HomepageViewController.h"
 #import "LeftMenuViewController.h"
 
-#define BackupVCContentlab  @"私钥App持有者正在连接..."
-#define BackupVCbackupButton  @"立即备份"
-#define BackupVCSVProgressOne  @"密码备份成功"
-#define BackupVCWSProgressTwo  @"请等待下一位私钥App持有者连接..."
-#define BackupVCCheckPwd  @"密码必须为6-12位数字和字母组成"
-
 @interface BackupViewController ()<BackupViewDelegate>
 {
     NSTimer *timer;

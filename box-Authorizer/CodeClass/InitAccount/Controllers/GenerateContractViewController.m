@@ -11,14 +11,6 @@
 #import "ServiceStartViewController.h"
 #import "ServiceStartModel.h"
 
-#define GenerateContractVCTitle  @"生成合约"
-#define GenerateContractVCScanLab  @"请先向账户二维码充值"
-#define GenerateContractVCAccountCopyBtn  @"复制地址"
-#define GenerateContractVCAccountSaveBtn  @"保存二维码"
-#define GenerateContractVCscanTwoLab  @"合约二维码"
-#define GenerateContractVCprivateBtn  @"输入口令"
-#define GenerateContractVserviceStartBtn  @"启动服务"
-
 @interface GenerateContractViewController ()<UIScrollViewDelegate, UITextFieldDelegate,PrivatePasswordViewDelegate,MBProgressHUDDelegate>
 
 @property(nonatomic, strong)UIScrollView *contentView;
@@ -333,7 +325,7 @@
     //设置有遮罩
     //self.progressHUD.dimBackground = YES;
     //设置进度框中的提示文字
-    self.progressHUD.label.text = @"地址复制成功";
+    self.progressHUD.label.text = CopyAddressSucceed;
     [self.progressHUD showAnimated:YES];
     [self.progressHUD hideAnimated:YES afterDelay:0.5];
 }
@@ -367,10 +359,10 @@
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error) {
-        [SVProgressHUD showErrorWithStatus:@"保存失败"];
+        [SVProgressHUD showErrorWithStatus:SaveFailure];
         [SVProgressHUD dismissWithDelay:0.8];
     } else {
-        [SVProgressHUD showSuccessWithStatus:@"成功保存到相册"];
+        [SVProgressHUD showSuccessWithStatus:SavePicturesucceed];
         [SVProgressHUD dismissWithDelay:0.8];
     }
 }
@@ -451,7 +443,7 @@
                     NSInteger checkTime = [[BoxDataManager sharedManager].checkTime integerValue];
                     NSInteger elapseTime = (currentTime - checkTime)/1000;
                     if (elapseTime < 10) {
-                        [WSProgressHUD showSuccessWithStatus:@"密码已提交，等待校验"];
+                        [WSProgressHUD showSuccessWithStatus:PasswordWaitingForCheck];
                     }else{
                         [self handleReInputPassword];
                     }
@@ -459,7 +451,7 @@
                     [self handleReInputPassword];
                 }
             }else if(Status == 2){
-                [WSProgressHUD showErrorWithStatus:@"服务异常"];
+                [WSProgressHUD showErrorWithStatus:ServiceException];
             }
         }
     } fail:^(NSError *error) {
@@ -476,7 +468,7 @@
 
 -(void)handleReInputPassword
 {
-    [WSProgressHUD showErrorWithStatus:@"校验密码失败，请重新输入私钥密码"];
+    [WSProgressHUD showErrorWithStatus:CheckPasswordFailed];
     [_privateBtn setTitle:GenerateContractVCprivateBtn forState:UIControlStateNormal];
     _privateBtnState = 0;
     if ([BoxDataManager sharedManager].checkTime != nil) {
@@ -498,9 +490,9 @@
         NSDictionary *dict = responseObject;
         NSInteger RspNo = [dict[@"RspNo"] integerValue];
         if ([dict[@"RspNo"] isEqualToString:@"0"]) {
-            [WSProgressHUD showSuccessWithStatus:@"密码已提交，等待校验"];
+            [WSProgressHUD showSuccessWithStatus:PasswordWaitingForCheck];
             [_privatePasswordView removeFromSuperview];
-            [_privateBtn setTitle:@"刷新" forState:UIControlStateNormal];
+            [_privateBtn setTitle:Refresh forState:UIControlStateNormal];
             _privateBtnState = 1;
             [self handleCheckTime];
         }else{

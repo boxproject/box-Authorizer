@@ -8,9 +8,6 @@
 
 #import "ApprovalBusinessCollectionReusableView.h"
 
-#define ApprovalMenber  @"审批人员"
-#define ApprovalMenberAmount  @"需审批人数"
-
 @implementation ApprovalBusinessCollectionReusableView
 
 -(id)initWithFrame:(CGRect)frame

@@ -6,6 +6,134 @@
   Copyright © 2018年 2se. All rights reserved.
 */
 
+
+"InitAccountVCTitle" = "扫一扫";
+"PerfectInformationVCLaber" = "扫一扫完成初始化";
+"PerfectInformationVCSubLaber" = "扫一扫MAC端的签名机App完成初始化";
+
+"ScanCodeVCTitle" = "扫一扫";
+"PerfectInformationVCTorchlight" = "轻触关闭";
+"PerfectInformationVCTorchheight" = "轻触照亮";
+"PerfectInformationVCScanResult" = "将二维码放入框内，即可自动扫描";
+"PerfectInformationVCErrorCode" = "二维码无效";
+"Handing" = "正在处理";
+
+"PerfectInformationVCTitle" = "完善信息";
+"PerfectInformationVCNameText" = "请输入姓名";
+"PerfectInformationVCPasswordText" = "请输入密码(6-12位数字和字母组成，区分大小写)";
+"PerfectInformationVCVerifyText" = "请再次输入密码";
+"PerfectInformationVCAlert" = "密码切记不要遗忘，不可告知其他人，在输入时请面向自己，防止身后有人偷窥或用摄像头记录";
+"Submit" = "提交";
+"PerfectInformationVCAlertOne" = "请完善信息";
+"PerfectInformationVCAlertTwo" = "请输入密码";
+"PerfectInformationVCAlertThree" = "密码不一致";
+"PerfectInformationVCCheckPwd" = "密码格式为6-12位数字和字母组成，区分大小写";
+"SubmissionCompletion" = "提交完成";
+
+"BackupVCContentlab" = "私钥App持有者正在连接...";
+"BackupVCbackupButton" = "立即备份";
+"BackupVCSVProgressOne" = "密码备份成功";
+"BackupVCWSProgressTwo" = "请等待下一位私钥App持有者连接...";
+
+"ServiceStartAwaitBtn" = "已等待时间";
+"NextStep" = "下一步";
+"AwaitBackupVCContentLabText" = "所有私钥App持有者都已正确输入备份密码";
+"AwaitBackupVCContentLabStatusText" = "备份密码不一致";
+"AwaitBackupVnextButtonTitle" = "返回重新备份";
+"AwaitBackupVCContentLabNextText" = "等待下一个私钥App持有者输入正确的备份密码";
+
+"GenerateContractVCTitle" = "生成合约";
+"GenerateContractVCScanLab" = "请先向账户二维码充值";
+"GenerateContractVCAccountCopyBtn" = "复制地址";
+"GenerateContractVCAccountSaveBtn" = "保存二维码";
+"GenerateContractVCscanTwoLab" = "合约二维码";
+"GenerateContractVCprivateBtn" = "输入密码";
+"GenerateContractVserviceStartBtn" = "启动服务";
+"CopyAddressSucceed" = "地址复制成功";
+"SaveFailure" = "保存失败";
+"SavePicturesucceed" = "成功保存到相册";
+"PasswordWaitingForCheck" = "密码已提交，等待校验";
+"ServiceException" = "服务异常";
+"CheckPasswordFailed" = "校验密码失败，请重新输入私钥密码";
+"Refresh" = "刷新";
+
+"ServiceStartTitle" = "启动服务";
+"ServiceStartLaunchUnstart" = "未启动";
+"ServiceStartLaunchState" = "启动中";
+"ServiceStartLaunchStateSecceed" = "启动成功";
+"ServiceStartPassword" = "请输入密码";
+"ServiceStartRepassword" = "请再次输入密码";
+"ServiceStartCommitStart" = "同意启动";
+"ServiceStartCommitStartUse" = "开始使用";
+"ServiceStateTitle" = "启动成功";
+"ServiceStateDetail" = "继续等待下一位私钥App持有者启动服务";
+"ServiceStartAleartOne" = "请输入密码";
+"ServiceStartAleartTwo" = "密码不一致";
+"ServiceStartPwdTitle" = "输入密码";
+"StartupServiceFailed" = "启动服务失败，请重新启动";
+"AllPrivateAppStartedService" = "所有私钥App持有者都已启动服务";
+"BlueToothListVCTitle" = "蓝牙";
+
+"BackupViewBackupLab" = "备份口令";
+"BackupViewBackupText" = "请输入备份口令(6-12位数字和字母组成，区分大小写)";
+"BackupViewAlertLab" = "此备份口令需要所有私钥App持有者私下协商决定";
+"BackupViewCheckPwd" = "口令格式为6-12位数字和字母组成，区分大小写";
+
+"Confirm" = "确认";
+
+"ConnectionSuccess" = "连接成功";
+"Unconnected" = "未连接";
+"PrintAlertViewPrinting" = "正在连接打印机，请稍等...";
+"PrintImmediately" = "立即打印";
+"Reprint" = "重新打印";
+"PrintSuccessfully" = "打印已成功";
+"PrintAlertViewAlertLabText" = "为保证安全请将二维码1-3放入一个信封；将二维码4-6放入另一个信封分别将两个信封保存至两个银行的保险柜中。";
+"GenerateContract" = "生成合约";
+"PrintAlertViewBTPrinting" = "正在打印中，请稍后...";
+"PrintAlertViewBTConnectFail" = "连接失败，重新连接";
+
+"PrivatePasswordbackupLab" = "密码";
+"PrivatePasswordComfirm" = "确认";
+"PrivatePasswordPasswordTfPlaceholder" = "请输入密码";
+
+"HomepageMidOneLabStop" = "关停";
+"HomepageMidOneLabStart" = "启动";
+"HomepageMidOneLabDetailStop" = "您的服务为启动状态";
+"HomepageMidOneLabDetailStart" = "您的服务为关停状态";
+"HomepageMidOneLabDetailError" = "您的服务异常";
+"HomepageMidTwoLab" = "新增币种";
+"HomepageMidThreeLab" = "审批业务流";
+"HomepageMidFourLab" = "授权码";
+"HomepageMidFourDetailLab" = "授权员工最高权限";
+"HomepageFootTitle" = "最新动态";
+"HomepageTitle" = "首页";
+"HomepageNoApproval" = "暂无待审批";
+"HomepageNoCurrency" = "暂无开户币种";
+"OpenApp" = "打开私钥App";
+"NoDynamic" = "暂无动态";
+"WaitCheck" = "等待校验";
+"StartedService" = "已启动服务";
+"StoppedService" = "已关停服务";
+"NotConnected" = "服务异常";
+"HomepageSeverStartLaber" = "确定要关停服务吗？";
+"HomepageSeverStopLaber" = "确定要启动服务吗？";
+"HomepageSeverStartButton" = "确定关停？";
+"HomepageSeverStopButton" = "确定启动？";
+
+"AssetOverview" = "资产总览";
+"ServerAddress" = "服务器地址";
+"Language" = "语言";
+"AboutBOX" = "关于BOX";
+
+"AddCurrencyVCTitle" = "新增代币";
+"AddCurrencyVCCurrencyNameTf" = "请输入代币名称";
+"AddCurrencyVCCurrencyAdressTf" = "请输入代币地址";
+"AddCurrencyVCaccuracyTf" = "请输入代币精度 (位数)";
+"AddCurrencyVCCormfirmButton" = "确认增加";
+"AddCurrencyVCAddSuccess" = "新增成功";
+"OpenAccount" = "新增";
+
+
 "LimitTimes" = "额度恢复时间";
 "AccountPasswordHour" = "小时";
 "Limit" = "上限";
@@ -21,5 +149,60 @@
 "RefuseApprovalPlacehode" = "请输入拒绝原因";
 "Cancel" = " 取消";
 "RefuseTransfer" = "撤回转账申请";
+
+"Cancel" = "取消";
+"Affirm" = "确定";
+"delete" = "删除";
+"SureToDelete" = "确定删除？";
+"ScanAdressVCTitle" = "授权码";
+"ScanAdressVCScanLab" = "授权二维码";
+"ScanAdressVCDetailLab" = "用员工App扫描以上二维码，进行授权";
+"ScanAdressVCAuthorizeBtn" = "本机授权";
+"ScanAdressVCAleartLab" = "为避免资金风险，请勿分享授权码给他人，截屏自动失效";
+"ScanAdressVCIknown" = "我知道了";
+"ScanAdressVCAlertMessage" = "返回将不再绑定正在扫描二维码的员工App";
+"ApprovalBusinessDetailVCAgreeApprovalBtn" = "同意审批";
+"ApprovalBusinessDetailVCRefuseApprovalBtn" = "拒绝审批";
+"ApprovalBusinessDetailApprovaling" = "审批中";
+"ApprovalBusinessDetailSucceed" = "审批通过";
+"ApprovalBusinessDetailFail" = "已拒绝审批";
+"ApprovalBusinessDetailAwait" = "待审批";
+"ApprovalBusinessDetailAgreen" = "已同意审批";
+"IllegalApprovalFlow" = "非法审批流";
+"ApprovalBusinessVCTitle" = "审批流";
+"ApprovalBusinessVCSegmentedTitleOne" = "待审批";
+"ApprovalBusinessVCSegmentedTitleTwo" = "已审批";
+"ApprovalAwaitBusiness" = "待审批";
+"ApprovalingBusiness" = "审批中";
+"ApprovalSucceedBusiness" = "审批成功";
+"ApprovalFailBusiness" = "审批失败";
+"CurrencyAccountTableViewCellAddCurrency" = "新增代币";
+"ApprovalMenber" = "审批人员";
+"ApprovalMenberAmount" = "需审批人数";
+"CurrentVersion" = "当前版本号";
+"SimplifiedChinese" = "简体中文";
+"ModifyServerAddressVCTitle" = "修改服务器地址";
+"ModifyServerAddressVCAddress" = "地址";
+"ModifyServerAddressVCInfo" = "请输入服务器地址";
+"ModifyServerAddressVCVerifyBtn" = "确认修改";
+"ModifyServerAddressVCAleartSucceed" = "修改成功";
+"Detailed" = "明细";
+
+"TransferRecordTableViewCellTransferingAwait" = "待审批";
+"TransferRecordTableViewCellTransfering" = "审批中";
+"TransferRecordTableViewCellTransferStateSucceed" = "同意审批(转账成功)";
+"TransferRecordTableViewCellTransferStateSucceedTransfing" = "同意审批(转账中)";
+"TransferRecordTableViewCellTransferStateFail" = "同意审批(转账失败)";
+"TransferRecordTableViewCellRecharge" = "充值成功";
+"TransferRecordTableViewCellTransferFail" = "拒绝审批";
+
+"ApprovalBusinessCancel" = "已废审批流";
+"SystemApprovalSucceed" = "系统审批通过";
+"SystemApprovalFail" = "系统审批不通过";
+"ApprovalCancel" = "已作废";
+"ApprovalCreate" = "创建审批流";
+"Reason" = "原因";
+
+
 
 

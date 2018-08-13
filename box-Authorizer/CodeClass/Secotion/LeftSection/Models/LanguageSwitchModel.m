@@ -21,6 +21,9 @@
         if(![dict[@"titleName"] isKindOfClass:[NSNull class]]){
             self.titleName = [dict objectForKey:@"titleName"];
         }
+        if(![dict[@"select"] isKindOfClass:[NSNull class]]){
+            self.select = [[dict objectForKey:@"select"] boolValue];
+        }
     }
     return self;
 }

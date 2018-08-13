@@ -8,12 +8,6 @@
 
 #import "SeviceStateView.h"
 
-#define HomepageSeverStartLaber  @"确定要关停服务吗？"
-#define HomepageSeverStopLaber  @"确定要启动服务吗？"
-#define HomepageSeverStartButton  @"确定关停？"
-#define HomepageSeverStopButton  @"确定启动？"
-#define HomepageSeverCancel  @"取消"
-
 @interface SeviceStateView ()<UITextFieldDelegate>
 
 @property (nonatomic,strong)UIView *bigView;
@@ -55,7 +49,7 @@
     [self addSubview:_mainView];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_cancelBtn setTitle:HomepageSeverCancel forState:UIControlStateNormal];
+    [_cancelBtn setTitle:Cancel forState:UIControlStateNormal];
     [_cancelBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
     _cancelBtn.titleLabel.font = Font(13);
     [_cancelBtn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];

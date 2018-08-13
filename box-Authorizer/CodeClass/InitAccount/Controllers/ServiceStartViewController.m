@@ -13,21 +13,6 @@
 #import "HomepageViewController.h"
 #import "LeftMenuViewController.h"
 
-#define ServiceStartTitle  @"启动服务"
-#define ServiceStartLaunchUnstart  @"未启动"
-#define ServiceStartLaunchState  @"启动中"
-#define ServiceStartLaunchStateSecceed  @"启动成功"
-#define ServiceStartPassword  @"请输入口令"
-#define ServiceStartRepassword  @"请再次口令"
-#define ServiceStartCommitStart  @"同意启动"
-#define ServiceStartCommitStartUse  @"开始使用"
-#define ServiceStartAwaitBtn  @"已等待时间"
-#define ServiceStartUse  @"开始使用"
-#define ServiceStateTitle  @"启动成功"
-#define ServiceStateDetail  @"继续等待下一位私钥App持有者启动服务"
-#define ServiceStartAleartOne  @"请输入口令"
-#define ServiceStartAleartTwo  @"口令不一致"
-#define ServiceStartPwdTitle  @"输入口令"
 #define CellReuseIdentifier  @"ServiceStart"
 
 @interface ServiceStartViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
@@ -35,6 +20,7 @@
     NSTimer *timeTimer;
     NSTimer *dataTimer;
     NSInteger totalIn;
+    IQKeyboardReturnKeyHandler *returnKeyHandler;
 }
 //布局对象
 @property (nonatomic, strong) UICollectionViewFlowLayout *collectionFlowlayout;
@@ -84,6 +70,7 @@
     _sourceArray = [[NSMutableArray alloc] init];
     [self createView];
     [self createTimer];
+    returnKeyHandler = [[IQKeyboardReturnKeyHandler alloc] initWithViewController:self];
 }
 
 -(void)createTimer
@@ -101,7 +88,7 @@
 
 -(void)createView
 {
-    _contentView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, kTopHeight - 64, SCREEN_WIDTH, SCREEN_HEIGHT - kTopHeight)];
+    _contentView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - kTopHeight)];
     _contentView.delegate = self;
     //滚动的时候消失键盘
     _contentView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -156,31 +143,7 @@
         make.width.offset(SCREEN_WIDTH - 20);
         make.height.offset(236);
     }];
-    
-    /*
-    _passwordTf = [[UITextField alloc] init];
-    _passwordTf.delegate = self;
-    NSString *passwordText = ServiceStartPassword;
-    NSMutableAttributedString *backupHolder = [[NSMutableAttributedString alloc] initWithString:passwordText];
-    [backupHolder addAttribute:NSForegroundColorAttributeName
-                         value:[UIColor colorWithHexString:@"#cccccc"]
-                         range:NSMakeRange(0, passwordText.length)];
-    [backupHolder addAttribute:NSFontAttributeName
-                         value:Font(14)
-                         range:NSMakeRange(0, passwordText.length)];
-    _passwordTf.attributedPlaceholder = backupHolder;
-    _passwordTf.keyboardType = UIKeyboardTypeAlphabet;
-    _passwordTf.clearButtonMode=UITextFieldViewModeWhileEditing;
-    _passwordTf.secureTextEntry = YES;
-    [_importView addSubview:_passwordTf];
-    [_passwordTf mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.offset(13);
-        make.left.offset(25);
-        make.right.offset(-25);
-        make.height.offset(55);
-    }];
-     */
-    
+ 
     UILabel *titlelab = [[UILabel alloc] init];
     titlelab.text = ServiceStartPwdTitle;
     titlelab.textAlignment = NSTextAlignmentCenter;
@@ -235,9 +198,9 @@
     [_importView addSubview:_showPwdBtn];
     [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_rePasswordTf);
-        make.width.offset(36);
-        make.right.equalTo(lineOne.mas_right).offset(0);
-        make.height.offset(27);
+        make.width.offset(23);
+        make.right.equalTo(lineOne.mas_right).offset(-5);
+        make.height.offset(15);
     }];
     
     UIView *lineTwo = [[UIView alloc] init];
@@ -480,7 +443,7 @@
                 if (!_importView.hidden) {
                     return;
                 }
-                [WSProgressHUD showErrorWithStatus:@"启动服务失败，请重新启动"];
+                [WSProgressHUD showErrorWithStatus:StartupServiceFailed];
                 _currentTime = 0;
                 _importView.hidden = NO;
                 _startStateView.hidden = YES;
@@ -497,7 +460,7 @@
                 _stateUseBtn.hidden = NO;
                 _statedetailLab.hidden = YES;
                 _stateTitleLab.hidden = NO;
-                _stateTitleLab.text = @"所有私钥App持有者都已启动服务";
+                _stateTitleLab.text = AllPrivateAppStartedService;
                 for (NSDictionary *NodesAuthorizedDic in NodesAuthorizedArr) {
                     ServiceStartModel *model = [[ServiceStartModel alloc] initWithDict:NodesAuthorizedDic];
                     [_sourceArray addObject:model];
@@ -505,7 +468,7 @@
                 [self handleReloadData];
             }
             else if(Status == 2){
-                [WSProgressHUD showErrorWithStatus:@"服务异常"];
+                [WSProgressHUD showErrorWithStatus:ServiceException];
             }
         }
     } fail:^(NSError *error) {
@@ -572,6 +535,11 @@
     cell.model = model;
     [cell setDataWithModel:model];
     return cell;
+}
+
+-(void)dealloc
+{
+    returnKeyHandler = nil;
 }
 
 #pragma mark ----- UITextFieldDelegate -----

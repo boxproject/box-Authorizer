@@ -18,19 +18,12 @@
 
 #define CellReuseIdentifier  @"ApprovalBusinessDetail"
 #define headerReusableViewIdentifier  @"ApprovalBusinessDetail"
-#define ApprovalBusinessDetailVCAgreeApprovalBtn  @"同意审批"
-#define ApprovalBusinessDetailVCRefuseApprovalBtn  @"拒绝审批"
-#define ApprovalBusinessDetailApprovaling  @"审批中"
-#define ApprovalBusinessDetailSucceed  @"审批通过"
-#define ApprovalBusinessDetailFail  @"已拒绝审批"
-#define ApprovalBusinessDetailAwait  @"待审批"
-#define ApprovalBusinessDetailAgreen  @"已同意审批"
-
 
 @interface ApprovalBusinessDetailViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,PrivatePasswordViewDelegate,ApprovalBusinessTopDelegate,ApprovalBusinessFooterDelegate>
 {
     NSInteger tagIn;
     NSString *reasonStr;
+    IQKeyboardReturnKeyHandler *returnKeyHandler;
 }
 
 @property(nonatomic, strong)ApprovalBusinessTopView *approvalBusinessTopView;
@@ -67,6 +60,8 @@
     [self layoutCollectionView];
     [self createCollectionView:0];
     [self requestData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewEditChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    returnKeyHandler = [[IQKeyboardReturnKeyHandler alloc] initWithViewController:self];
 }
 
 #pragma mark ----- 布局 -----
@@ -196,7 +191,7 @@
         MemberInfoModel *menberInfoModel = menberArr[0];
         BOOL veryOK = [_aWrapper PKCSVerifyBytesSHA256withRSA:Flow signature:Sign publicStr:menberInfoModel.publicKey];
         if (!veryOK) {
-            [WSProgressHUD showErrorWithStatus:@"非法审批流"];
+            [WSProgressHUD showErrorWithStatus:IllegalApprovalFlow];
             return;
         }
     }
@@ -223,10 +218,10 @@
             _approvalStateBtn.hidden = NO;
             if (tagIn == 0) {
                 [_approvalStateBtn setTitle:ApprovalBusinessDetailFail forState:UIControlStateNormal];
-                [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", @"拒绝审批",_model.Name]];
+                [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", ApprovalBusinessDetailVCRefuseApprovalBtn,_model.Name]];
             }else if(tagIn == 1){
                 [_approvalStateBtn setTitle:ApprovalBusinessDetailAgreen forState:UIControlStateNormal];
-                [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", @"同意审批",_model.Name]];
+                [[NewsInfoModel sharedManager] insertNewsInfoNews:[NSString stringWithFormat:@"%@%@", ApprovalBusinessDetailVCAgreeApprovalBtn,_model.Name]];
             }
         }else{
             [ProgressHUD showStatus:[responseObject[@"RspNo"] integerValue]];
@@ -250,6 +245,36 @@
     }
 }
 
+- (void)textViewEditChanged:(NSNotification *)notification{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        UITextField *textField = alertController.textFields.firstObject;
+        UIAlertAction *submitAction = alertController.actions.lastObject;
+        submitAction.enabled = textField.text.length > 0;
+        // 需要限制的长度
+        NSUInteger maxLength = 0;
+        maxLength = 50;
+        if (maxLength == 0) return;
+        // text field 的内容
+        NSString *contentText = textField.text;
+        // 获取高亮内容的范围
+        UITextRange *selectedRange = [textField markedTextRange];
+        // 这行代码 可以认为是 获取高亮内容的长度
+        NSInteger markedTextLength = [textField offsetFromPosition:selectedRange.start toPosition:selectedRange.end];
+        // 没有高亮内容时,对已输入的文字进行操作
+        if (markedTextLength == 0) {
+            // 如果 text field 的内容长度大于我们限制的内容长度
+            if (contentText.length > maxLength) {
+                // 截取从前面开始maxLength长度的字符串
+                // textField.text = [contentText substringToIndex:maxLength];
+                // 此方法用于在字符串的一个range范围内，返回此range范围内完整的字符串的range
+                NSRange rangeRange = [contentText rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, maxLength)];
+                textField.text = [contentText substringWithRange:rangeRange];
+            }
+        }
+    }
+}
+
 -(void)showInputReason
 {
     NSString *title = RefuseApproval;
@@ -261,14 +286,16 @@
         textField.placeholder = RefuseApprovalPlacehode;
         textField.secureTextEntry = NO;
     }];
+    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:nil];
+    [alertDialog addAction:actionCancel];
     UIAlertAction *submit = [UIAlertAction actionWithTitle:submitTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UITextField *textField = alertDialog.textFields.firstObject;
         reasonStr = textField.text;
         [self showPrivatePasswordView];
     }];
     [alertDialog addAction:submit];
-    UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:cancelTitle style:UIAlertActionStyleCancel handler:nil];
-    [alertDialog addAction:actionCancel];
+    submit.enabled = NO;
+    
     [self presentViewController:alertDialog animated:YES completion:nil];
 }
 
@@ -336,7 +363,7 @@
             [self headertViewChange:flowLimitArr.count * 30];
             [_approvalBusinessTopView setValueWithData:mutableDic ];
             NSArray *approvaled_infoArr = flowDic[@"approval_info"];
-            [self footerViewChange:approvaled_infoArr];
+            [self footerViewChange:approvaled_infoArr headFloat:flowLimitArr.count * 30];
             for (NSDictionary *dic in approvaled_infoArr) {
                 ApprovalBusinessDetailModel *model = [[ApprovalBusinessDetailModel alloc] initWithDict:dic];
                 [_approvaledInfoArray addObject:model];
@@ -368,7 +395,7 @@
     _approvalBusinessTopView.frame = CGRectMake(0, -72 - 39  - 10 - headFloat, SCREEN_WIDTH - 22, 72 + 39  + 10 + headFloat);
 }
 
--(void)footerViewChange:(NSArray *)array
+-(void)footerViewChange:(NSArray *)array headFloat:(CGFloat)headFloat
 {
     CGFloat aa = 0.0;
     for (int i = 0; i < array.count; i ++) {
@@ -377,10 +404,11 @@
         NSInteger approversAll = 0;
         NSInteger approversIn = model.approvers.count % 4;
         if (approversIn >= 1) {
-            approversAll = model.approvers.count / 4 + approversIn;
+            approversAll = model.approvers.count / 4 + 1;
         }
         aa = aa + 30 + approversAll * 45 + 10;
     }
+    _collectionView.contentInset = UIEdgeInsetsMake(72 + 39 + 10 + headFloat, 0, 60 + 50, 0);
     _approvalBusinessFooterView = [[ApprovalBusinessFooterView alloc] initWithFrame: CGRectMake(0,aa, SCREEN_WIDTH - 22, 60)];
     _approvalBusinessFooterView.delegate = self;
     [_collectionView addSubview: _approvalBusinessFooterView];
@@ -416,7 +444,14 @@
         _approvalStateBtn.hidden = NO;
         _approvalBusinessTopView.rightLab.text = ApprovalBusinessDetailFail;
         [_approvalStateBtn setTitle:ApprovalBusinessDetailFail forState:UIControlStateNormal];
-    }else{
+    }else if([state isEqualToString:@"9"]){
+        _agreeApprovalBtn.hidden = YES;
+        _refuseApprovalBtn.hidden = YES;
+        _approvalStateBtn.hidden = NO;
+        _approvalBusinessTopView.rightLab.text = ApprovalCancel;
+        [_approvalStateBtn setTitle:ApprovalCancel forState:UIControlStateNormal];
+    }
+    else{
         _agreeApprovalBtn.hidden = YES;
         _refuseApprovalBtn.hidden = YES;
         _approvalStateBtn.hidden = NO;
@@ -463,6 +498,11 @@
     UIBarButtonItem *buttonLeft = [[UIBarButtonItem alloc]initWithImage:leftImage style:UIBarButtonItemStylePlain target:self action:@selector(backAction:)];
     self.navigationItem.leftBarButtonItem = buttonLeft;
     
+}
+
+-(void)dealloc
+{
+    returnKeyHandler = nil;
 }
 
 -(void)backAction:(UIBarButtonItem *)barButtonItem

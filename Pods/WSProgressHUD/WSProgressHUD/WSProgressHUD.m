@@ -140,11 +140,13 @@ static CGFloat const WSProgressHUDImageTypeWidthEdgeOffset = 16;
 
 + (void)showSuccessWithStatus:(NSString *)string
 {
+    [WSProgressHUD setProgressHUDFont:[UIFont systemFontOfSize:17]];
     [self showImage:WSProgressHUDSuccessDefaultImage() status:string];
 }
 
 + (void)showErrorWithStatus:(NSString *)string
 {
+    [WSProgressHUD setProgressHUDFont:[UIFont systemFontOfSize:17]];
     [self showImage:WSProgressHUDErrorDefaultImage() status:string];
 }
 
@@ -1395,7 +1397,7 @@ CG_INLINE UIImage * WSImageByAddTintColr(UIImage *image, UIColor *color)
 - (UIImageView *)imageView
 {
     if (!_imageView) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 22, 22)];
         _imageView.hidden = YES;
     }
     return _imageView;

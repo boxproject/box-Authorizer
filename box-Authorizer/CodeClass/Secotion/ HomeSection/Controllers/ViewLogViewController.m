@@ -42,10 +42,22 @@
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/approvaloplist" params:paramsDic success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] integerValue] == 0) {
+            if (_page == 1) {
+                [_sourceArray removeAllObjects];
+            }
             NSArray *listArray = dict[@"HashOperates"];
+            if([listArray isKindOfClass:[NSNull class]]){
+                return ;
+            }
             for (NSDictionary *listDic in listArray) {
                 ViewLogModel *model = [[ViewLogModel alloc] initWithDict:listDic];
-                [_sourceArray addObject:model];
+                if ([model.Option isEqualToString:@"4"]) {
+                    if([model.Opinion isEqualToString:@"5"] || [model.Opinion isEqualToString:@"2"] || [model.Opinion isEqualToString:@"7"]){
+                        [_sourceArray addObject:model];
+                    }
+                }else{
+                    [_sourceArray addObject:model];
+                }
             }
         }else{
         }
@@ -60,7 +72,16 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
     });
+}
+
+-(void)headerReflesh
+{
+    _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        self.page = 1;
+        [self requestData];
+    }];
 }
 
 -(void)createView
@@ -78,6 +99,7 @@
     }];
     [_tableView registerClass:[ViewLogTableViewCell class] forCellReuseIdentifier:CellReuseIdentifier];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self headerReflesh];
 }
 
 #pragma mark - createBarItem

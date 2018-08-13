@@ -19,6 +19,8 @@
 		170D788B205F6B9E00916F25 /* CurrencyAccountTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7882205F6B9E00916F25 /* CurrencyAccountTableViewCell.m */; };
 		170D789A205F92AC00916F25 /* AboutBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 170D7899205F92AC00916F25 /* AboutBoxViewController.m */; };
 		170F392420B7BF2F00B98E93 /* UIButton+touch.m in Sources */ = {isa = PBXBuildFile; fileRef = 170F392320B7BF2F00B98E93 /* UIButton+touch.m */; };
+		1718EC8E2106DBC1005BDC24 /* languageSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1718EC8D2106DBC1005BDC24 /* languageSwitchTableViewCell.m */; };
+		1719D421211803C600ED0917 /* libGprinterLabelPrinterSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1719D420211803C600ED0917 /* libGprinterLabelPrinterSDK.a */; };
 		171EA98E20B27E84006F53F1 /* AddressVerifyManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */; };
 		171EA99120B2EB3D006F53F1 /* AgentStatusManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EA99020B2EB3D006F53F1 /* AgentStatusManager.m */; };
 		171EC0E120A2A58500CA7F20 /* PassWordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EC0E020A2A58500CA7F20 /* PassWordManager.m */; };
@@ -157,6 +159,11 @@
 		170D7899205F92AC00916F25 /* AboutBoxViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutBoxViewController.m; sourceTree = "<group>"; };
 		170F392220B7BF2F00B98E93 /* UIButton+touch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+touch.h"; sourceTree = "<group>"; };
 		170F392320B7BF2F00B98E93 /* UIButton+touch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+touch.m"; sourceTree = "<group>"; };
+		1718EC8C2106DBC1005BDC24 /* languageSwitchTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = languageSwitchTableViewCell.h; sourceTree = "<group>"; };
+		1718EC8D2106DBC1005BDC24 /* languageSwitchTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = languageSwitchTableViewCell.m; sourceTree = "<group>"; };
+		1719D41E211803C600ED0917 /* GprinterLabelPrinterBluetooth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GprinterLabelPrinterBluetooth.h; sourceTree = "<group>"; };
+		1719D41F211803C600ED0917 /* GprinterLabelPrinterCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GprinterLabelPrinterCommand.h; sourceTree = "<group>"; };
+		1719D420211803C600ED0917 /* libGprinterLabelPrinterSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGprinterLabelPrinterSDK.a; sourceTree = "<group>"; };
 		171EA98C20B27E84006F53F1 /* AddressVerifyManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVerifyManager.h; sourceTree = "<group>"; };
 		171EA98D20B27E84006F53F1 /* AddressVerifyManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVerifyManager.m; sourceTree = "<group>"; };
 		171EA98F20B2EB3D006F53F1 /* AgentStatusManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AgentStatusManager.h; sourceTree = "<group>"; };
@@ -436,6 +443,7 @@
 				1783572D205773AE00CD6FA8 /* libcrypto.a in Frameworks */,
 				402C032A7E658ECCBF3FB289 /* libPods-box-Authorizer.a in Frameworks */,
 				1783572E205773AE00CD6FA8 /* libssl.a in Frameworks */,
+				1719D421211803C600ED0917 /* libGprinterLabelPrinterSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +534,8 @@
 				17B4FFC520F5F3240040ED73 /* TransferCollectionViewCell.m */,
 				17B4FFCC20F5F3470040ED73 /* TransferTopView.h */,
 				17B4FFCB20F5F3470040ED73 /* TransferTopView.m */,
+				1718EC8C2106DBC1005BDC24 /* languageSwitchTableViewCell.h */,
+				1718EC8D2106DBC1005BDC24 /* languageSwitchTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -601,6 +611,32 @@
 				17A812C020FD8B6C007A791A /* ViewLogTableViewCell.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		1718EC852105C56C005BDC24 /* GprinterSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1719D41C211803C600ED0917 /* include */,
+				1719D420211803C600ED0917 /* libGprinterLabelPrinterSDK.a */,
+			);
+			path = GprinterSDK;
+			sourceTree = "<group>";
+		};
+		1719D41C211803C600ED0917 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				1719D41D211803C600ED0917 /* GprinterLabelPrinterSDK */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		1719D41D211803C600ED0917 /* GprinterLabelPrinterSDK */ = {
+			isa = PBXGroup;
+			children = (
+				1719D41E211803C600ED0917 /* GprinterLabelPrinterBluetooth.h */,
+				1719D41F211803C600ED0917 /* GprinterLabelPrinterCommand.h */,
+			);
+			path = GprinterLabelPrinterSDK;
 			sourceTree = "<group>";
 		};
 		171EEA502050DC35002DABD3 /* ASE */ = {
@@ -1024,6 +1060,7 @@
 		5684457C2043B10D004891D8 /* globel */ = {
 			isa = PBXGroup;
 			children = (
+				1718EC852105C56C005BDC24 /* GprinterSDK */,
 				17835751205A288400CD6FA8 /* ManagerCommon */,
 				1783574620592AFA00CD6FA8 /* CIQRCode */,
 				178357302057757D00CD6FA8 /* OpenSSLManager */,
@@ -1386,6 +1423,7 @@
 				178357422057DAF400CD6FA8 /* PrintAlertView.m in Sources */,
 				171EEA8620513495002DABD3 /* BackupViewController.m in Sources */,
 				178357452058FAAA00CD6FA8 /* GenerateContractViewController.m in Sources */,
+				1718EC8E2106DBC1005BDC24 /* languageSwitchTableViewCell.m in Sources */,
 				176402C9207F29B000E125B2 /* ApprovalBusinessTopView.m in Sources */,
 				17B4FFB120F5ED4C0040ED73 /* AssetAmountViewController.m in Sources */,
 				17A812B820FD86CA007A791A /* ApprovalBusinessFooterView.m in Sources */,
@@ -1648,6 +1686,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
+					"$(PROJECT_DIR)/box-Authorizer/globel/GprinterSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1686,6 +1725,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/box-Authorizer/TheThird/OpenSSL/lib",
 					"$(PROJECT_DIR)/box-Authorizer/globel/OpenSSL/include",
+					"$(PROJECT_DIR)/box-Authorizer/globel/GprinterSDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.2se.boxAuthorizer;
 				PRODUCT_NAME = "$(TARGET_NAME)";

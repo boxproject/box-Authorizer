@@ -13,6 +13,6 @@
 
 @property (nonatomic,strong) BlueToothListModel *model;
 
-- (void)setDataWithModel:(BlueToothListModel *)model;
+- (void)setDataWithModel:(NSString *)model;
 
 @end

@@ -8,13 +8,6 @@
 
 #import "ScanAdressViewController.h"
 
-#define ScanAdressVCTitle  @" 授权码"
-#define ScanAdressVCScanLab  @"授权二维码"
-#define ScanAdressVCDetailLab  @"用员工App扫描以上二维码，进行授权"
-#define ScanAdressVCAuthorizeBtn  @"本机授权"
-#define ScanAdressVCAleartLab  @"为避免资金风险，请勿分享授权码给他人，截屏自动失效"
-#define ScanAdressVCIknown  @"我知道了"
-
 @interface ScanAdressViewController ()<UIScrollViewDelegate, UITextFieldDelegate,MBProgressHUDDelegate>
 {
     NSTimer *registTimer;
@@ -348,8 +341,8 @@
 -(void)backAction:(UIBarButtonItem *)barButtonItem
 {
     if (_aleartView.hidden) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"返回将不再绑定正在扫描二维码的员工App" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:ScanAdressVCAlertMessage preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Affirm style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
             [registTimer invalidate];
             registTimer = nil;
             [codeTimer invalidate];
@@ -358,7 +351,7 @@
             [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationUserDidTakeScreenshotNotification object:nil];
             
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:Cancel style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
         [self dismissViewControllerAnimated:YES completion:nil];

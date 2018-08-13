@@ -24,6 +24,7 @@
 #import "MJRefresh.h"
 #import "JASidePanelController.h"
 #import "UIViewController+JASidePanel.h"
+#import "IQKeyboardManager.h"
 
 #import "JsonObject.h"
 #import "CIQRCodeManager.h"

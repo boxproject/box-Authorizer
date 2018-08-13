@@ -7,15 +7,7 @@
 //
 
 #import "TransferRecordTableViewCell.h"
-
-#define TransferRecordTableViewCellTransferingAwait  @"待审批"
-#define TransferRecordTableViewCellTransfering  @"审批中"
-#define TransferRecordTableViewCellTransferStateSucceed  @"同意审批(转账成功)"
-#define TransferRecordTableViewCellTransferStateSucceedTransfing  @"同意审批(转账中)"
-#define TransferRecordTableViewCellTransferStateFail  @"同意审批(转账失败)"
-#define TransferRecordTableViewCellRecharge  @"充值成功"
-#define TransferRecordTableViewCellTransferFail  @"拒绝审批"
-
+ 
 @interface TransferRecordTableViewCell()
 
 @property (nonatomic,strong) UILabel *topLeftLab;
@@ -154,7 +146,7 @@
 
 - (NSString *)getElapseTimeToString:(NSInteger)second{
     NSDateFormatter  *dateformatter1 = [[NSDateFormatter alloc] init];
-    [dateformatter1 setDateFormat:@"M月d日 HH:mm"];
+    [dateformatter1 setDateFormat:@"MM:dd HH:mm"];
     NSTimeInterval timeInterval1 = second;
     NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:timeInterval1];
     NSString *dateStr1=[dateformatter1 stringFromDate:date1];

@@ -11,8 +11,6 @@
 #import "AuthorizerInfoModel.h"
 #import "GenerateContractViewController.h"
 
-#define ServiceStartAwaitBtn  @"已等待时间"
-
 @interface AwaitBackupViewController ()
 {
     NSTimer *timer;
@@ -88,9 +86,9 @@
                 [[BoxDataManager sharedManager] saveDataWithCoding:@"Address" codeValue:Address];
                 [[BoxDataManager sharedManager] saveDataWithCoding:@"stringD" codeValue:stringD];
                 _nextButton.hidden = NO;
-                [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+                [_nextButton setTitle:NextStep forState:UIControlStateNormal];
                 statusIn = 0;
-                _contentLab.text = @"所有私钥App持有者都已正确输入备份密码";
+                _contentLab.text = AwaitBackupVCContentLabText;
             }
         }
     } fail:^(NSError *error) {
@@ -100,9 +98,9 @@
 
 -(void)handleStatus:(NSInteger)status
 {
-    _contentLab.text = @"备份密码不一致";
+    _contentLab.text = AwaitBackupVCContentLabStatusText;
     _nextButton.hidden = NO;
-    [_nextButton setTitle:@"返回重新备份" forState:UIControlStateNormal];
+    [_nextButton setTitle:AwaitBackupVnextButtonTitle forState:UIControlStateNormal];
     statusIn = status;
 }
 
@@ -133,7 +131,7 @@
     }];
    
     _contentLab = [[UILabel alloc] init];
-    _contentLab.text = @"等待下一个私钥App持有者输入正确的备份密码";
+    _contentLab.text = AwaitBackupVCContentLabNextText;
     _contentLab.textAlignment = NSTextAlignmentCenter;
     _contentLab.font = Font(17);
     _contentLab.textColor = [UIColor colorWithHexString:@"#444444"];
@@ -147,7 +145,7 @@
     }];
     
     _nextButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nextButton setTitle:@"下一步" forState:UIControlStateNormal];
+    [_nextButton setTitle:NextStep forState:UIControlStateNormal];
     [_nextButton setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
      _nextButton.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _nextButton.titleLabel.font = Font(16);

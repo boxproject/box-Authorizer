@@ -30,7 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
-    self.title = [NSString stringWithFormat:@"%@明细",_currency];
+    self.title = [NSString stringWithFormat:@"%@%@",_currency,Detailed];
     _sourceArray = [[NSMutableArray alloc] init];
     [self createView];
     _page = 1;

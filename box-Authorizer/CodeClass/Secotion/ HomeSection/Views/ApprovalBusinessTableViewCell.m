@@ -7,12 +7,7 @@
 //
 
 #import "ApprovalBusinessTableViewCell.h"
-
-#define  ApprovalAwaitBusiness  @"待审批"
-#define  ApprovalingBusiness  @"审批中"
-#define  ApprovalSucceedBusiness  @"审批成功"
-#define  ApprovalFailBusiness  @"审批失败"
-
+ 
 @interface ApprovalBusinessTableViewCell()
 
 @property (nonatomic,strong) UILabel *approvalTitleLab;
@@ -95,10 +90,12 @@
  HASH_STATUS_0 = "0" //待申请
  HASH_STATUS_1 = "1" //私钥已申请提交
  HASH_STATUS_2 = "2" //私钥已拒绝提交 私钥A拒绝
- HASH_STATUS_3 = "3" //私链已申请确认
+ HASH_STATUS_3 = "3" //私链已申请确认(日志)
  HASH_STATUS_4 = "4" //私链已同意确认 私钥B、私钥C均同意
  HASH_STATUS_5 = "5" //私链已拒绝确认 私钥B、私钥C有不同意
- HASH_STATUS_6 = "6" //公链已同意
+ HASH_STATUS_6 = "6" //私链已同意(日志)
+ HASH_STATUS_7 = "7" //公链已同意
+ HASH_STATUS_8 = "8" //公链已拒绝
  */
 
 - (void)setDataWithModel:(ApprovalBusinessModel *)model
@@ -110,7 +107,10 @@
         _approvalStateLab.text = ApprovalFailBusiness;
     }else if([model.Status isEqualToString:@"7"]){
         _approvalStateLab.text = ApprovalSucceedBusiness;
-    }else {
+    }else if([model.Status isEqualToString:@"9"]){
+        _approvalStateLab.text = ApprovalCancel;
+    }
+    else {
         _approvalStateLab.text = ApprovalingBusiness;
     }
 }

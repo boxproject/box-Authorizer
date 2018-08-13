@@ -12,12 +12,6 @@
 
 #define ScanSize   [[UIScreen mainScreen] bounds].size.width - 70
 
-#define ScanCodeVCTitle  @"扫一扫"
-#define PerfectInformationVCTorchlight  @"轻触关闭"
-#define PerfectInformationVCTorchheight  @"轻触照亮"
-#define PerfectInformationVCScanResult  @"将二维码放入框内，即可自动扫描"
-#define PerfectInformationVCErrorCode  @"二维码无效"
-
 @interface ScanCodeViewController () <AVCaptureMetadataOutputObjectsDelegate,CALayerDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
 
 /** 扫描二维码范围的view */
@@ -424,7 +418,7 @@
         //判断的扫描的结果是否是二维码
         if ([[metadataObject type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             // 显示遮盖
-            [SVProgressHUD showWithStatus:@"正在处理"];
+            [SVProgressHUD showWithStatus:Handing];
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             // 当扫描到数据时，停止扫描
             [ _session stopRunning];

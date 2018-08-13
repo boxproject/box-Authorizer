@@ -76,7 +76,7 @@
     _imgTwo.hidden = YES;
     
     _printState = [[UILabel alloc]init];
-    _printState.text = @"正在连接打印机，请稍等...";
+    _printState.text = PrintAlertViewPrinting;
     _printState.textAlignment = NSTextAlignmentCenter;
     _printState.font = Font(15);
     _printState.textColor = kBlackColor;
@@ -89,7 +89,7 @@
     }];
     
     _printBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_printBtn setTitle:@"立即打印" forState:UIControlStateNormal];
+    [_printBtn setTitle:PrintImmediately forState:UIControlStateNormal];
     [_printBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
     _printBtn.layer.cornerRadius = 2.f;
     _printBtn.layer.masksToBounds = YES;
@@ -127,7 +127,7 @@
     }];
     
     _printAgainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_printAgainBtn setTitle:@"重新打印" forState:UIControlStateNormal];
+    [_printAgainBtn setTitle:Reprint forState:UIControlStateNormal];
     [_printAgainBtn setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
     _printAgainBtn.titleLabel.font = Font(13);
     [_printAgainBtn addTarget:self action:@selector(printAgainAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -140,7 +140,7 @@
     }];
     
     UILabel *printedLab = [[UILabel alloc]init];
-    printedLab.text = @"打印已成功";
+    printedLab.text = PrintSuccessfully;
     printedLab.textAlignment = NSTextAlignmentCenter;
     printedLab.font = Font(16);
     printedLab.textColor = [UIColor colorWithHexString:@"#444444"];
@@ -178,7 +178,7 @@
     }];
     
     UILabel *aleartLab = [[UILabel alloc]init];
-    aleartLab.text = @"为保证安全请将二维码1-3放入一个信封；将二维码4-6放入另一个信封分别将两个信封保存至两个银行的保险柜中。";
+    aleartLab.text = PrintAlertViewAlertLabText;
     aleartLab.textAlignment = NSTextAlignmentLeft;
     aleartLab.font = Font(12);
     aleartLab.textColor = [UIColor colorWithHexString:@"#d94122"];
@@ -193,7 +193,7 @@
     }];
     
     _contractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_contractBtn setTitle:@"生成合约" forState:UIControlStateNormal];
+    [_contractBtn setTitle:GenerateContract forState:UIControlStateNormal];
     [_contractBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _contractBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _contractBtn.titleLabel.font = Font(15);
@@ -240,7 +240,7 @@
     switch (state) {
         case BTConnectFail:
         {
-            _printState.text = @"连接失败，重新连接";
+            _printState.text = PrintAlertViewBTConnectFail;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self removeFromSuperview];
             });
@@ -262,7 +262,7 @@
             _imgTwo.image = [UIImage imageNamed:@"printingImg"];
             _printState.hidden = NO;
             _printBtn.hidden = YES;
-            _printState.text = @"正在打印中，请稍后...";
+            _printState.text = PrintAlertViewBTPrinting;
             break;
         }
         case BTPrintSuccess:

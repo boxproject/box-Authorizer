@@ -7,12 +7,6 @@
 //
 
 #import "ModifyServerAddressViewController.h"
-#define ModifyServerAddressVCTitle  @"修改服务器地址"
-#define ModifyServerAddressVCAddress  @"地址"
-#define ModifyServerAddressVCInfo  @"请输入服务器地址"
-#define ModifyServerAddressVCAleartSucceed  @"修改成功"
-#define ModifyServerAddressVCVerifyBtn  @"确认修改"
-
 
 @interface ModifyServerAddressViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
 

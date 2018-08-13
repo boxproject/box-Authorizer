@@ -8,9 +8,6 @@
 
 #import "TransferCollectionReusableView.h"
 
-#define ApprovalMenber  @"审批人员"
-#define ApprovalMenberAmount  @"需审批人数"
-
 @implementation TransferCollectionReusableView
 
 -(id)initWithFrame:(CGRect)frame

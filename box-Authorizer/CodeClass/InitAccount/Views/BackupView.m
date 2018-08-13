@@ -8,12 +8,6 @@
 
 #import "BackupView.h"
 
-#define BackupViewBackupLab  @"备份密码"
-#define BackupViewBackupText  @"请输入备份密码(6-12位数字和字母组成)"
-#define BackupViewAleartLab  @"此备份密码需要所有私钥App持有者私下协商决定"
-#define BackupViewConfirmBtn  @"确认"
-#define BackupViewCheckPwd  @"密码必须为6-12位数字和字母组成"
-
 @interface BackupView ()<UITextFieldDelegate>
 /** 密码 */
 @property (nonatomic,strong)UITextField *passwordTf;
@@ -108,8 +102,11 @@
                          value:[UIColor colorWithHexString:@"#cccccc"]
                        range:NSMakeRange(0, backupText.length)];
     [backupHolder addAttribute:NSFontAttributeName
-                       value:Font(15)
-                       range:NSMakeRange(0, backupText.length)];
+                           value:Font(14)
+                           range:NSMakeRange(0, 5)];
+    [backupHolder addAttribute:NSFontAttributeName
+                           value:Font(13)
+                           range:NSMakeRange(5, backupText.length - 5)];
     _passwordTf.attributedPlaceholder = backupHolder;
     _passwordTf.keyboardType = UIKeyboardTypeAlphabet;
     _passwordTf.secureTextEntry = YES;
@@ -129,9 +126,9 @@
     [_footView addSubview:_showPwdBtn];
     [_showPwdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_passwordTf);
-        make.width.offset(36);
-        make.right.offset(-16);
-        make.height.offset(27);
+        make.width.offset(23);
+        make.right.offset(-18);
+        make.height.offset(15);
     }];
     
     
@@ -146,7 +143,7 @@
     }];
     
     UILabel *aleartLab = [[UILabel alloc]init];
-    aleartLab.text = BackupViewAleartLab;
+    aleartLab.text = BackupViewAlertLab;
     aleartLab.textAlignment = NSTextAlignmentLeft;
     aleartLab.font = Font(11);
     aleartLab.textColor = [UIColor colorWithHexString:@"#666666"];
@@ -170,7 +167,7 @@
     }];
     
     _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_confirmBtn setTitle:BackupViewConfirmBtn forState:UIControlStateNormal];
+    [_confirmBtn setTitle:Confirm forState:UIControlStateNormal];
     [_confirmBtn setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
     _confirmBtn.backgroundColor = [UIColor colorWithHexString:@"#4c7afd"];
     _confirmBtn.layer.cornerRadius = 2.0f;

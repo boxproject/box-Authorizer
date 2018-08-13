@@ -84,7 +84,7 @@
                                value:[UIColor redColor]
                                range:NSMakeRange(CaptainName.length, str.length - CaptainName.length)];
             _leftLab.attributedText = strHolder;
-            _bottomLab.text = [NSString stringWithFormat:@"%@：%@", Reason, CaptainName];
+            _bottomLab.text = [NSString stringWithFormat:@"%@：%@", Reason, model.Opinion];
             break;
         }
         case 1:
@@ -94,7 +94,21 @@
         }
         case 2:
         {
-            _leftLab.text = [NSString stringWithFormat:@"%@%@", CaptainName, ApprovalBusinessSucceed];
+            _leftLab.text = [NSString stringWithFormat:@"%@%@", model.ApplyerAccount, ApprovalBusinessCancel];
+            break;
+        }
+        case 3:
+        {
+            _leftLab.text = [NSString stringWithFormat:@"%@%@", model.ApplyerAccount, ApprovalCreate];
+            break;
+        }
+        case 4:
+        {
+            if([model.Opinion isEqualToString:@"5"] || [model.Opinion isEqualToString:@"2"]){
+                _leftLab.text = SystemApprovalFail;
+            }else if([model.Opinion isEqualToString:@"7"]){
+                _leftLab.text = SystemApprovalSucceed;
+            }
             break;
         }
             
@@ -107,12 +121,11 @@
 
 + (CGFloat)defaultHeight:(ViewLogModel *)model
 {
-    if ([model.Option integerValue]  == ApprovalFail) {
+    if ([model.Option integerValue]  == 0) {
         return 51;
-    }else if([model.Option integerValue] == ApprovalSucceed){
+    }else {
         return 28;
     }
-    return 28;
 }
 
 - (NSString *)getElapseTimeToString:(NSInteger)second{

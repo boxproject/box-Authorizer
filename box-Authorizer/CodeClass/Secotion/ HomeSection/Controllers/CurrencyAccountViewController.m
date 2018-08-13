@@ -22,6 +22,7 @@
 @property (nonatomic,strong) UIView *viewLayer;
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic, strong)NSMutableArray *sourceArray;
+@property (nonatomic, strong)NSMutableArray *sourceTwoArray;
 @property (nonatomic,assign) NSInteger page;
 @property (nonatomic,assign) NSInteger pageSize;
 @property (nonatomic, strong) NSMutableArray *selectArray;
@@ -35,7 +36,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = kWhiteColor;
-     _sourceArray = [[NSMutableArray alloc] init];
+    _sourceArray = [[NSMutableArray alloc] init];
+    _sourceTwoArray = [[NSMutableArray alloc] init];
     _selectArray = [[NSMutableArray alloc] init];
     _aWrapper = [[DDRSAWrapper alloc] init];
     [self createView];
@@ -125,22 +127,22 @@
     [[NetworkManager shareInstance] requestWithMethod:GET withUrl:@"/agent/tokenlist" params:nil success:^(id responseObject) {
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] integerValue] == 0) {
-            [_sourceArray removeAllObjects];
+            [_sourceTwoArray removeAllObjects];
             if([dict[@"TokenInfos"] isKindOfClass:[NSNull class]]){
                 CurrencyAccountModel *model = [[CurrencyAccountModel alloc] init];
                 model.isType = 1;
-                [_sourceArray addObject:model];
+                [_sourceTwoArray addObject:model];
                 [self reloadAction];
                 return ;
             }
             NSArray *listArray = dict[@"TokenInfos"];
             for (NSDictionary *listDic in listArray) {
                 CurrencyAccountModel *model = [[CurrencyAccountModel alloc] initWithDict:listDic];
-                [_sourceArray addObject:model];
+                [_sourceTwoArray addObject:model];
             }
             CurrencyAccountModel *model = [[CurrencyAccountModel alloc] init];
             model.isType = 1;
-            [_sourceArray addObject:model];
+            [_sourceTwoArray addObject:model];
             
         }else{
             [ProgressHUD showStatus:[dict[@"RspNo"] integerValue]];
@@ -155,7 +157,7 @@
 
 -(void)handleRequestFailed
 {
-    [_sourceArray removeAllObjects];
+    //[_sourceArray removeAllObjects];
     [self reloadAction];
 }
 
@@ -203,19 +205,18 @@
 
 - (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"确定删除？" preferredStyle:UIAlertControllerStyleAlert];
-        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+    UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:delete handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:SureToDelete preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:Affirm style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
             [self deleteCurrentcy:indexPath];
         }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-        
+        [alert addAction:[UIAlertAction actionWithTitle:Cancel style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }];
     if (_segmentedView.selectedSegmentIndex == 0) {
         return @[];
     }else{
-        CurrencyAccountModel *model = _sourceArray[indexPath.row];
+        CurrencyAccountModel *model = _sourceTwoArray[indexPath.row];
         if (model.isType == AddCurrency) {
             return @[];
         }else{
@@ -227,7 +228,7 @@
 #pragma mark ----- 删除代币 -----
 -(void)deleteCurrentcy:(NSIndexPath *)indexPath
 {
-    CurrencyAccountModel *model = self.sourceArray[indexPath.row];
+    CurrencyAccountModel *model = self.sourceTwoArray[indexPath.row];
     NSMutableDictionary *paramsDic = [[NSMutableDictionary alloc]init];
     [paramsDic setObject:model.ContractAddr forKey:@"contractaddr"];
     [paramsDic setObject:[BoxDataManager sharedManager].app_account_id forKey:@"applyerid"];
@@ -238,7 +239,7 @@
         [WSProgressHUD dismiss];
         NSDictionary *dict = responseObject;
         if ([dict[@"RspNo"] integerValue] == 0) {
-            [self.sourceArray removeObjectAtIndex:indexPath.row];
+            [self.sourceTwoArray removeObjectAtIndex:indexPath.row];
             [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             
         }else{
@@ -290,7 +291,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.sourceArray.count;
+    if (_segmentedView.selectedSegmentIndex == 0) {
+        return self.sourceArray.count;
+    }else{
+        return self.sourceTwoArray.count;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -305,7 +310,7 @@
         cell.coinlistModel = model;
         [cell setDataWithCoinlistModel:model];
     }else{
-       CurrencyAccountModel *model = self.sourceArray[indexPath.row];
+       CurrencyAccountModel *model = self.sourceTwoArray[indexPath.row];
         cell.model = model;
        [cell setDataWithModel:model];
     }
@@ -318,7 +323,7 @@
     if (_segmentedView.selectedSegmentIndex == 0) {
         [self coinUsed:indexPath];
     }else{
-        CurrencyAccountModel *model = _sourceArray[indexPath.row];
+        CurrencyAccountModel *model = _sourceTwoArray[indexPath.row];
         if (model.isType == AddCurrency) {
             AddCurrencyViewController *addCurrencyVC = [[AddCurrencyViewController alloc] init];
             addCurrencyVC.delegate = self;
