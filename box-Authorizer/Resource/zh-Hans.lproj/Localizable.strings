@@ -195,6 +195,8 @@
 "TransferRecordTableViewCellTransferStateFail" = "同意审批(转账失败)";
 "TransferRecordTableViewCellRecharge" = "充值成功";
 "TransferRecordTableViewCellTransferFail" = "拒绝审批";
+"TransferRecordTableViewCellTransferCancel" = "转账申请已撤回";
+"TransferInvalid" = "已作废";
 
 "ApprovalBusinessCancel" = "已废审批流";
 "SystemApprovalSucceed" = "系统审批通过";

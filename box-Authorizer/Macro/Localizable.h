@@ -191,8 +191,10 @@
 #define SureToDeleteSection  NSLocalizedString(@"SureToDeleteSection", nil)
 #define ApprovalCreate  NSLocalizedString(@"ApprovalCreate", nil)
 
+#define TransferRecordTableViewCellTransferCancel  NSLocalizedString(@"TransferRecordTableViewCellTransferCancel", nil)
+#define TransferInvalid  NSLocalizedString(@"TransferInvalid", nil)
 
-
+ 
 
 
 #endif /* Localizable_h */

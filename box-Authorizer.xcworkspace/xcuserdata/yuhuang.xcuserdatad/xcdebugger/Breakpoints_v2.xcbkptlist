@@ -45,5 +45,116 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/Secotion/ HomeSection/Controllers/ApprovalBusinessViewController.m"
+            timestampString = "555831308.7965961"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+            timestampString = "555845167.359184"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+            timestampString = "555845167.35927"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+            timestampString = "555845167.359345"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "-requestData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[AssetAmountListViewController requestData]"
+                  moduleName = "box-Authorizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+                  timestampString = "555842014.106096"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "580">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__44-[AssetAmountListViewController requestData]_block_invoke"
+                  moduleName = "box-Authorizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+                  timestampString = "555842014.108043"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "98"
+                  endingLineNumber = "98"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.169"
+                  moduleName = "box-Authorizer"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuhuang/Desktop/box-Authorizer/box-Authorizer/CodeClass/Secotion/LeftSection/Controllers/AssetAmountListViewController.m"
+                  timestampString = "555842014.109967"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

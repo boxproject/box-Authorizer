@@ -139,6 +139,16 @@
             _bottomRightlab.text = TransferRecordTableViewCellTransferFail;
             break;
         }
+        case ApprovalCanceled:
+        {
+            _bottomRightlab.text = TransferRecordTableViewCellTransferCancel;
+            break;
+        }
+        case ApprovalTransferCancel:
+        {
+            _bottomRightlab.text = TransferInvalid;
+            break;
+        }
         default:
             break;
     }

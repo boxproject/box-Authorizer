@@ -75,6 +75,7 @@
         self.page += 1;
         [self requestData];
     }];
+    _tableView.mj_footer.ignoredScrollViewContentInsetBottom = kTabBarHeight > 49 ? 34 : 0;
 }
 
 -(void)headerReflesh
